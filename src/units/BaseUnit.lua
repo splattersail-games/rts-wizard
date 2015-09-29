@@ -43,7 +43,7 @@ function BaseUnit:draw()
 		love.graphics.circle('line', self:getX(), self:getY() + self.boundingBox.height / 4, self.boundingBox.width / 3)
 	end
 
-	self:drawCommands()
+	BaseUnit.drawCommands(self)
 end
 
 function BaseUnit:drawCommands()
