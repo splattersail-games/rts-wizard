@@ -50,7 +50,7 @@ function Player:draw()
 	love.graphics.draw(self.image, self:getX(), self:getY(), 0,
 		0.5, -- scale
 		0.5,
-		(2 * self.width),
-		(2 *self.height)
+		(self.image:getWidth() / 2),
+		(self.image:getHeight() / 2)
 	)
 end
