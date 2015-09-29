@@ -104,11 +104,11 @@ function camera:mousePosition()
 end
 
 function camera:scalePoint(x, y)
-	return x * self.scaleX + self.x, y * self.scaleY + self.y
+	return (x / 1.0) * self.scaleX + self.x, (y / 1.0) * self.scaleY + self.y
 end
 
 function camera:scalePointToCamera(x, y)
-	return x * self.scaleX - self.x, y * self.scaleY - self.y
+	return (x / 1.0) * self.scaleX - self.x, (y / 1.0) * self.scaleY - self.y
 end
 
 function camera:getLightTranslation()

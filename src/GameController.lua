@@ -19,7 +19,7 @@ GameController.keyToAction = {
 function GameController:update(dt)
 
 	--- set currTime
-	currTime = love.timer.getTime()
+	GameController.currTime = love.timer.getTime()
 	if (GameController.lastControlGroupRecall.centered) then
 		Game:centerOnSelected()
 	end
@@ -68,7 +68,7 @@ function GameController:keyboardEvents(dt)
 		end
 	end
 
-	local timeSinceKeyboardAction = (currTime - GameController.lastKeyboardInput) * 1000 * (dt * 1000)
+	local timeSinceKeyboardAction = (GameController.currTime - GameController.lastKeyboardInput) * 1000
 
 	-- for key, pressed in pairs(Input.__keysPressed) do
 	-- 	if pressed then
@@ -77,7 +77,7 @@ function GameController:keyboardEvents(dt)
 	-- 	end
 	-- end
 
-	if timeSinceKeyboardAction > (100 * (dt * 1000)) then
+	if timeSinceKeyboardAction > (200) then
 		if love.keyboard.isDown( "lctrl" ) or love.keyboard.isDown( "lshift" ) then
 			GameController.checkForModifierAction(dt)
 		end
@@ -91,6 +91,11 @@ function GameController:checkForNormalAction(dt)
 	if not love.keyboard.isDown( "lshift" ) then
 		GameController:checkForControlGroupRecall(dt)
 	end
+	if love.keyboard.isDown( "return" ) then
+		Hud.textConsole.visible = not Hud.textConsole.visible
+		GameController.lastKeyboardInput = love.timer.getTime()
+	end
+
 	GameController:checkForStopCommand(dt)
 end
 
@@ -109,14 +114,14 @@ end
 function GameController:checkForControlGroupRecall(dt)
 	for ctrlGroup = 0, 9 do
 		if love.keyboard.isDown( tostring(ctrlGroup) ) then
-			currTime = love.timer.getTime()
+			GameController.currTime = love.timer.getTime()
 			recalled = Game:recallControlGroup(ctrlGroup)
 
 			if recalled then
 				print("recalled")
 				if GameController.lastControlGroupRecall.controlGroup ~= -1 then
 					if GameController.lastControlGroupRecall.controlGroup == ctrlGroup and not GameController.lastControlGroupRecall.centered then				
-						val = (currTime - GameController.lastControlGroupRecall.time) * 1000 * (dt * 1000)
+						val = (GameController.currTime - GameController.lastControlGroupRecall.time) * 1000 * (dt * 1000)
 						if (val > (100 * (dt * 1000)) and (val < (250 * dt * 1000))) then
 							Game:centerOnSelected()
 							GameController.lastControlGroupRecall.centered = true
@@ -124,9 +129,9 @@ function GameController:checkForControlGroupRecall(dt)
 					end
 				end
 
-				GameController.lastKeyboardInput = currTime
+				GameController.lastKeyboardInput = GameController.currTime
 				GameController.lastControlGroupRecall.controlGroup = ctrlGroup
-				GameController.lastControlGroupRecall.time = currTime
+				GameController.lastControlGroupRecall.time = GameController.currTime
 			end
 		end
 	end

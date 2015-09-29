@@ -20,6 +20,8 @@ function Menu:load()
     Menu.bigfont = love.graphics.newFont(love._vera_ttf, 40)
     Menu.list.font = Menu.smallfont
 
+    love.graphics.draw(resources.UI.textbox)
+
     -- Find available demos.
     local files =  love.filesystem.getDirectoryItems("src/levels")
 	local n = 0
