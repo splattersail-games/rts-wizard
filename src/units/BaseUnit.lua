@@ -42,6 +42,8 @@ function BaseUnit:draw()
 		love.graphics.setColor(255, 255, 255, 192)
 		love.graphics.circle('line', self:getX(), self:getY() + self.boundingBox.height / 4, self.boundingBox.width / 3)
 	end
+
+	self:drawCommands()
 end
 
 function BaseUnit:drawCommands()
