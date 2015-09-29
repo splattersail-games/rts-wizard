@@ -25,7 +25,9 @@ end
 
 function World:loadWorld(worldFile)
 	local worldObj = JSON:decode(worldFile)
-	print ("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
+	if worldObj.properties.name ~= nil then
+		print ("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
+	end
 	self.gridScale = worldObj.tilewidth
 	self.gridWidth = worldObj.width
 	self.gridHeight = worldObj.height
