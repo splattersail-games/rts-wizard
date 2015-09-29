@@ -136,6 +136,7 @@ end
 function Entities:addEntity(entity)
     local id = self.size
     print ("Adding an entity")
+    entity.id = id
     self[id] = entity
     if entity:isInstanceOf(Player) then
     	self.Player = entity

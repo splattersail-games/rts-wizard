@@ -166,6 +166,10 @@ function Game:deselectObjects()
 	Game.selection:deselect(Entities)
 end
 
+function Game:isSelected(id)
+	return Game.selection.selected[id]
+end
+
 function Game:clearCommandQueue()
 
 	for id, gameObj in pairs(Entities.PlayerControlled) do

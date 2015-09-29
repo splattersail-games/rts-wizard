@@ -36,6 +36,15 @@ end
 function BaseUnit:draw()
 	MoveableEntity.draw(self)
 
+	-- Draw selected box
+	if Game:isSelected(self.id) then
+		love.graphics.setLineWidth(2)
+		love.graphics.setColor(255, 255, 255, 192)
+		love.graphics.circle('line', self:getX(), self:getY() + self.boundingBox.height / 4, self.boundingBox.width / 3)
+	end
+end
+
+function BaseUnit:drawCommands()
 	if Queue.empty( self.commandQueue ) or self.commandQueue.last == 0  then
 		return
 	end
@@ -57,10 +66,6 @@ function BaseUnit:draw()
 
 	end
 
-	-- Draw selected box
-
-	love.graphics.setLineWidth(0.5)
-	love.graphics.rectangle('line', self.boundingBox.x1, self.boundingBox.y1, self.boundingBox.width, self.boundingBox.height)
 end
 
 function BaseUnit:tryToSelect(x, y)
