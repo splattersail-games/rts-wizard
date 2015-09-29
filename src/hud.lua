@@ -11,7 +11,10 @@ Hud.selectionBox.rectangle = nil
 
 Hud.textConsole = {}
 Hud.textConsole.visible = false
-Hud.textConsole.textPadding = 16
+Hud.textConsole.textPadding = 12
+Hud.textConsole.fontSize = 14
+Hud.textConsole.text = {}
+Hud.textConsole.title = "A voice in the darkness. . . "
 
 local gWidth, gHeight
 local borderWidth
@@ -32,7 +35,12 @@ function Hud:init()
 	controlGroupViewX = math.floor((gWidth - cgContainerWidth) / 2)
 	controlGroupViewY = gHeight - math.floor(cgContainerHeight) - borderWidth
 
-	Hud.textConsole.font = love.graphics.newFont(love._vera_ttf, 14)
+	Hud.textConsole.font = love.graphics.newFont("resources/ui/fonts/GeosansLight.ttf", Hud.textConsole.fontSize)
+	Hud.textConsole.titleFont = love.graphics.newFont("resources/ui/fonts/Timeless.ttf", 18)
+
+	Hud.textConsole.text[0] = "Welcome to the dungeon"
+	Hud.textConsole.text[1] = ". . . "
+	Hud.textConsole.text[2] = "Now, fuck off!"
 end
 
 function Hud:startSelectionBox(x, y) 
@@ -122,7 +130,7 @@ function Hud:draw()
 		local w = resources.UI.textbox:getWidth()
 		local h = resources.UI.textbox:getHeight()
 
-		local x = (love.graphics.getWidth() / 2) - w / 2
+		local x = (love.graphics.getWidth() * 0.2) - w / 2
 		local y = (love.graphics.getHeight() * 0.8) - h / 2
 		posX, posY = x, y
 
@@ -132,9 +140,15 @@ function Hud:draw()
 
 		local padding = Hud.textConsole.textPadding
 	    love.graphics.setColor(255, 255, 255, 191)
+
+	    love.graphics.setFont(Hud.textConsole.titleFont)
+	    love.graphics.print(Hud.textConsole.title, posX + padding, posY + padding)
+
 	    love.graphics.setFont(Hud.textConsole.font)
-	    love.graphics.print("Nice Meme!", posX + padding, posY + padding)
-	    love.graphics.print("Dank!", posX + padding, posY + padding + 14)
+
+	    for i = 0, #Hud.textConsole.text do
+	    	love.graphics.print(Hud.textConsole.text[i], posX + padding, posY + padding + 40 + (i * Hud.textConsole.fontSize))
+	    end
 	end
 
 	Hud:drawSelectionBox()
