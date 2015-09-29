@@ -67,8 +67,9 @@ function Game:draw()
 
 	local x, y = camera:mousePosition()
 	love.graphics.draw(cursor, x, y, 0, 0.3)
-	Hud.draw()
 	camera:unset()
+
+	Hud.draw()
 end
 
 function Game:centerOnSelected()

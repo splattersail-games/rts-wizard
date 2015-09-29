@@ -81,7 +81,7 @@ end
 -- draws a box for each control group at the bottom of the screen
 function Hud:drawControlGroupView()
 
-	local startX, startY = camera:scalePoint(controlGroupViewX, controlGroupViewY)
+	local startX, startY = controlGroupViewX, controlGroupViewY
 	love.graphics.setColor(32, 32, 32, 100)
 	love.graphics.rectangle('fill', startX, startY, cgContainerWidth, cgContainerHeight)
 
@@ -110,7 +110,7 @@ function Hud:drawHudBorder()
 	love.graphics.setColor(32, 32, 32, 128)
 	love.graphics.setLineWidth(borderWidth)
 
-	local posX, posY = camera:scalePoint(borderWidth/2, borderWidth/2)
+	local posX, posY = borderWidth/2, borderWidth/2
 	love.graphics.rectangle('line', posX, posY, gWidth-borderWidth, gHeight-borderWidth)
 end
 
@@ -124,7 +124,7 @@ function Hud:draw()
 
 		local x = (love.graphics.getWidth() / 2) - w / 2
 		local y = (love.graphics.getHeight() * 0.8) - h / 2
-		posX, posY = camera:scalePoint(x, y)
+		posX, posY = x, y
 
 		love.graphics.rectangle('fill', posX, posY, w, h)
 		love.graphics.setColor(255, 255, 255)
