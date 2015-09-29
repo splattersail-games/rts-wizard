@@ -9,6 +9,10 @@ Hud.selectionBox.drawingSelectionBox = false
 Hud.selectionBox.lastClicked = {}
 Hud.selectionBox.rectangle = nil
 
+Hud.textConsole = {}
+Hud.textConsole.visible = false
+Hud.textConsole.textPadding = 16
+
 local gWidth, gHeight
 local borderWidth
 local panelSpacing
@@ -27,6 +31,8 @@ function Hud:init()
 	cgContainerHeight = cgSquareSize + (0.25 * cgSquareSize)
 	controlGroupViewX = math.floor((gWidth - cgContainerWidth) / 2)
 	controlGroupViewY = gHeight - math.floor(cgContainerHeight) - borderWidth
+
+	Hud.textConsole.font = love.graphics.newFont(love._vera_ttf, 14)
 end
 
 function Hud:startSelectionBox(x, y) 
@@ -74,6 +80,7 @@ end
 
 -- draws a box for each control group at the bottom of the screen
 function Hud:drawControlGroupView()
+
 	local startX, startY = camera:scalePoint(controlGroupViewX, controlGroupViewY)
 	love.graphics.setColor(32, 32, 32, 100)
 	love.graphics.rectangle('fill', startX, startY, cgContainerWidth, cgContainerHeight)
@@ -109,6 +116,27 @@ end
 
 function Hud:draw()
 	love.graphics.setBlendMode('alpha')
+
+	if Hud.textConsole.visible then
+		love.graphics.setColor(0, 0, 0, 192)
+		local w = resources.UI.textbox:getWidth()
+		local h = resources.UI.textbox:getHeight()
+
+		local x = (love.graphics.getWidth() / 2) - w / 2
+		local y = (love.graphics.getHeight() * 0.8) - h / 2
+		posX, posY = camera:scalePoint(x, y)
+
+		love.graphics.rectangle('fill', posX, posY, w, h)
+		love.graphics.setColor(255, 255, 255)
+		love.graphics.draw(resources.UI.textbox, posX, posY)
+
+		local padding = Hud.textConsole.textPadding
+	    love.graphics.setColor(255, 255, 255, 191)
+	    love.graphics.setFont(Hud.textConsole.font)
+	    love.graphics.print("Nice Meme!", posX + padding, posY + padding)
+	    love.graphics.print("Dank!", posX + padding, posY + padding + 14)
+	end
+
 	Hud:drawSelectionBox()
 	Hud:drawControlGroupView()
 	Hud:drawHudBorder()
