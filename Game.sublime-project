@@ -1,0 +1,31 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"auto_complete_triggers":
+		[
+			{
+				"characters": ".",
+				"selector": "source - comment"
+			},
+			{
+				"characters": ":",
+				"selector": "text.html - comment"
+			},
+			{
+				"characters": "<",
+				"selector": "text.html - comment"
+			},
+			{
+				"characters": " ",
+				"selector": "text.html - comment"
+			}
+		]
+	}
+}

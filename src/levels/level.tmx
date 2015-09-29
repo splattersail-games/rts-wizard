@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="77">
+ <properties>
+  <property name="name" value="Test Level"/>
+ </properties>
+ <tileset firstgid="1" source="Toolbelt.tsx"/>
+ <imagelayer name="Image Layer 1">
+  <image source="../../resources/levels/test.jpg"/>
+  <properties>
+   <property name="path" value="resources/levels/test.jpg"/>
+  </properties>
+ </imagelayer>
+ <objectgroup name="Walls">
+  <object id="50" type="wall" x="255" y="55" width="101" height="785"/>
+  <object id="51" type="wall" x="354" y="56" width="479" height="102"/>
+  <object id="53" type="wall" x="10" y="736" width="243" height="100"/>
+  <object id="54" type="wall" x="10" y="840" width="100" height="377"/>
+  <object id="55" type="wall" x="113" y="1117" width="547" height="102"/>
+  <object id="56" type="wall" x="558" y="477" width="100" height="638"/>
+  <object id="57" x="660" y="477" width="1006" height="100"/>
+ </objectgroup>
+ <objectgroup name="Objects">
+  <object id="29" name="Spawn" type="player" gid="1" x="918" y="451" width="32" height="32">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="r" value="255"/>
+   </properties>
+  </object>
+  <object id="44" name="Light" type="light" gid="3" x="550" y="438" width="32" height="32">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="500"/>
+   </properties>
+  </object>
+  <object id="47" name="Light" type="light" gid="3" x="559" y="7" width="32" height="32">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="500"/>
+   </properties>
+  </object>
+  <object id="58" name="Light" type="light" gid="3" x="321" y="1000" width="32" height="32">
+   <properties>
+    <property name="b" value="255"/>
+    <property name="g" value="120"/>
+    <property name="intensity" value="0.4"/>
+    <property name="r" value="120"/>
+    <property name="radius" value="500"/>
+   </properties>
+  </object>
+  <object id="66" name="Light" type="light" gid="3" x="1769" y="739" width="32" height="32">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="20"/>
+    <property name="intensity" value="0.8"/>
+    <property name="r" value="20"/>
+    <property name="radius" value="500"/>
+   </properties>
+  </object>
+  <object id="67" x="1268" y="1556" width="1380" height="170"/>
+  <object id="70" name="Light" type="light" gid="3" x="1522" y="1661" width="32" height="32">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="71" name="Light" type="light" gid="3" x="2125" y="1660" width="32" height="32">
+   <properties>
+    <property name="b" value="110"/>
+    <property name="g" value="100"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="72" name="Light" type="light" gid="3" x="2334" y="1661" width="32" height="32">
+   <properties>
+    <property name="b" value="120"/>
+    <property name="g" value="120"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="73" name="Light" type="light" gid="3" x="1726" y="1663" width="32" height="32">
+   <properties>
+    <property name="b" value="110"/>
+    <property name="g" value="100"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="74" name="Light" type="light" gid="3" x="1916" y="1660" width="32" height="32">
+   <properties>
+    <property name="b" value="110"/>
+    <property name="g" value="100"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="75" name="Light" type="light" gid="3" x="2578" y="1663" width="32" height="32">
+   <properties>
+    <property name="b" value="110"/>
+    <property name="g" value="100"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+  <object id="76" name="Light" type="light" gid="3" x="1362" y="1659" width="32" height="32">
+   <properties>
+    <property name="b" value="110"/>
+    <property name="g" value="100"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="300"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Toolbelt" visible="0">
+  <object id="15" name="Spawn" type="player" gid="1" x="691" y="161" width="32" height="32" visible="0">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="r" value="255"/>
+   </properties>
+  </object>
+  <object id="25" name="Light" type="light" gid="3" x="624" y="170" width="32" height="32" visible="0">
+   <properties>
+    <property name="b" value="180"/>
+    <property name="g" value="180"/>
+    <property name="intentsity" value="0.8"/>
+    <property name="r" value="255"/>
+    <property name="radius" value="500"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
