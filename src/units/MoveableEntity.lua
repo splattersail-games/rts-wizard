@@ -97,6 +97,7 @@ end
 function MoveableEntity:move(dt)
 	self.origin.x = self.origin.x + self.velocity.x
 	self.origin.y = self.origin.y + self.velocity.y
+
 end
 
 function MoveableEntity:draw()

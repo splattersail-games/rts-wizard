@@ -5,6 +5,8 @@ require 'src.Menu'
 Game = {}
 Game.selection = CGSelection:new()
 Game.mainMenu = true
+Game.drawAABBs = true
+Game.drawOrigin = true
 
 function Game:init(world)
 	love.mouse.setVisible(false)
