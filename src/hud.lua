@@ -58,8 +58,8 @@ function Hud:update(dt)
 	if self.drawingSelectionBox then
 		local x = Hud.selectionBox.lastClicked.x
 		local y = Hud.selectionBox.lastClicked.y
-
-		local otherX, otherY = camera:mousePosition()
+		x, y = camera:scalePointToCamera(x, y)
+		local otherX, otherY = love.mouse.getX(), love.mouse.getY()
 
 		local rectWidth = math.abs(otherX - x)
 		local rectHeight = math.abs(otherY - y)

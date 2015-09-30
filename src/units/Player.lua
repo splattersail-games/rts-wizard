@@ -40,6 +40,7 @@ end
 
 function Player:addLight(radius, colour)
 	self.light = World.lightWorld:newLight(x, y, colour.r, colour.g, colour.b, radius)
+	self.light.z = 1
 	self.light:setGlowStrength(0.4)
 end
 
