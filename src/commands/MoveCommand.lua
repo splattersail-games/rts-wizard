@@ -69,8 +69,9 @@ function MoveCommand:doCommand(gameObj)
 	local distanceToMove = distance < constant and distance or constant
 	local newPos = objPoint + (distanceToMove * dv)
 
-	gameObj.origin.x = newPos.x
-	gameObj.origin.y = newPos.y
+	local goalX, goalY = gameObj:scaleCoordsToAABB(newPos.x, newPos.y)
+	local actualX, actualY, cols, len = World.bump:move(gameObj, goalX, goalY)
+	gameObj.origin.x, gameObj.origin.y = gameObj:AABBToOrigin(actualX, actualY)
 
 	return newPos == destPoint
 end

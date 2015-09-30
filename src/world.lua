@@ -1,5 +1,7 @@
 -- The game world
 local LightWorld = require "lib"
+local bump = require 'src.libs.bump'
+
 require 'src.Entities'
 JSON = require 'src.libs.JSON'
 World = {}
@@ -13,6 +15,9 @@ function World:load(level)
 	    refractionStrength = 16.0,
 	    reflectionVisibility = 0.75
     })
+
+    -- create collisions world
+    self.bump = bump.newWorld(128)
 
 	self:loadWorld(level)
 	self.cameraStart = { x = self.width/2, y = self.height/2 }
@@ -84,6 +89,15 @@ function World:draw()
 			love.graphics.draw(layer.loveImage, layer.x, layer.y)
 		end
 	end
+
+	-- if Game.drawAABBs then
+	-- 	local items, len = World.bump:getItems()
+	-- 	for _, item in pairs(items) do
+	-- 		local x, y, w, h = World.bump:getRect(item)
+	-- 		love.graphics.setColor(255, 255, 255)
+	-- 		love.graphics.rectangle('fill', x, y, w, h)
+	-- 	end
+	-- end
 
 	-- love.graphics.setLineWidth(0.5)
 	-- for row = 0, self.gridHeight do
