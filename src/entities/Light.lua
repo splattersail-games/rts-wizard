@@ -1,5 +1,4 @@
 local class = require 'src.libs.middleclass'
-require 'src.units.MoveableEntity'
 Light = class('Light', MoveableEntity)
 
 function Light:initialize(x, y, light, bbSize)

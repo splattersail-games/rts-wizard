@@ -20,7 +20,6 @@ function World:load(level)
     self.bump = bump.newWorld(128)
 
 	self:loadWorld(level)
-	self.cameraStart = { x = self.width/2, y = self.height/2 }
 	--self.gridIncrement = 5
 end
 

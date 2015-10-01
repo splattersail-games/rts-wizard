@@ -1,10 +1,6 @@
 -- Player
 -- Modes: fill, line
 local class = require 'src.libs.middleclass'
-require 'src.utils.geometry'
-require 'src.utils.BoundingBox'
-require 'src.units.BaseUnit'
-require 'src.units.Light'
 Player = class('Player', BaseUnit)
 
 function Player:initialize(x, y, width, height, mode, colorTable)

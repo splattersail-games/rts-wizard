@@ -1,6 +1,5 @@
 local class = require 'src.libs.middleclass'
 vector = require 'src.utils.vector'
-require 'src.units.Entity'
 
 MoveableEntity = class('MoveableEntity', Entity)
 

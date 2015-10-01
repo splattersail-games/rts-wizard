@@ -103,7 +103,7 @@
     <property name="radius" value="500"/>
    </properties>
   </object>
-  <object id="2" name="Spawn" type="player" gid="201" x="741.333" y="868" width="64" height="64">
+  <object id="2" name="Spawn" type="player" gid="201" x="741.333" y="868" width="48" height="48">
    <properties>
     <property name="b" value="180"/>
     <property name="g" value="180"/>

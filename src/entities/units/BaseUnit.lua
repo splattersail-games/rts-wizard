@@ -1,6 +1,5 @@
 local class = require 'src.libs.middleclass'
 require 'src.utils.queue'
-require 'src.units.MoveableEntity'
 
 BaseUnit = class('BaseUnit', MoveableEntity)
 

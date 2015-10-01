@@ -1,10 +1,6 @@
 -- Wall
 -- Modes: fill, line
 local class = require 'src.libs.middleclass'
-require 'src.utils.geometry'
-require 'src.utils.BoundingBox'
-require 'src.units.BaseUnit'
-require 'src.units.Light'
 Wall = class('Wall', Entity)
 
 function Wall:initialize(x, y, width, height)
