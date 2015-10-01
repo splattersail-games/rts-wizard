@@ -5,18 +5,22 @@ require 'src.Menu'
 Game = {}
 Game.selection = CGSelection:new()
 Game.mainMenu = true
-Game.drawAABBs = true
-Game.drawOrigin = true
+Game.drawAABBs = false
+Game.drawOrigin = false
 
 function Game:init(world)
 	love.mouse.setVisible(false)
+
 	World:load(world)
 	camera:setBounds(0, 0, World.width, World.height)
-	--camera:lookAt(Entities.Player:getX(), Entities.Player:getY())
-	camera:lookAt(600, 600)
+	if Entities.camerasByName["start"] ~= nil then
+		local lookX, lookY = Entities.camerasByName["start"]:getLookAt()
+		print ("Setting camera to default start of " .. lookX .. ", " .. lookY)
+		camera:lookAt(Entities.camerasByName["start"]:getLookAt())
+	end
+	
 	Hud:init()
 
-	-- Clear all callbacks.
 	love.update = Game.update
 	love.draw = Game.draw
 	love.keypressed = Input.keypressed

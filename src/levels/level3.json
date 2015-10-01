@@ -905,7 +905,7 @@
                 }, 
                 {
                  "gid":129,
-                 "height":64,
+                 "height":48,
                  "id":74,
                  "name":"Spawn",
                  "properties":
@@ -917,7 +917,7 @@
                  "rotation":0,
                  "type":"player",
                  "visible":true,
-                 "width":64,
+                 "width":48,
                  "x":190,
                  "y":254
                 }, 

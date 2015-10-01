@@ -1,5 +1,4 @@
 local class = require 'src.libs.middleclass'
-require 'src.units.square'
 require 'src.utils.BoundingBox'
 
 Hud = {}
