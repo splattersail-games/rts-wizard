@@ -50,18 +50,7 @@ function Entities:loadAll(entities)
 			}
 			self:addLight(entity.x, entity.y, tonumber(entity.properties.radius), color, tonumber(entity.properties.intensity))
 		elseif entity.type == "player" then
-			print (" Player color: " .. entity.properties.r .. " " .. entity.properties.g .. " " .. entity.properties.b)
-			local color = { 
-				r = tonumber(entity.properties.r),
-				g = tonumber(entity.properties.g),
-				b = tonumber(entity.properties.b)
-			}
-			print (
-				"Adding the player at [" .. entity.x .. ", " .. entity.y .. "] " ..
-				"\n---- Width: " .. entity.width .. "\n---- Height: " .. entity.height ..
-				"\n---- RGB: (" .. color.r .. ", " .. color.g .. ", " .. color.b .. ")\n"
-			)
-			self:addPlayer(entity.x, entity.y, entity.width, entity.height, 'fill', color)
+			self:addPlayer(entity.x, entity.y, entity.width, entity.height)
 		elseif entity.type == "camera_location" then
             self:addCamera(entity)
         end
@@ -139,8 +128,8 @@ function Entities:addSquare(x, y, width, height, mode, colorTable)
 	Entities:add(toAdd)
 end
 
-function Entities:addPlayer(x, y, width, height, mode, colorTable)
-    local toAdd = Player:new(x, y, width, height, mode, colorTable)
+function Entities:addPlayer(x, y, width, height)
+    local toAdd = Player:new(x, y, width, height)
 	toAdd:addLight(300, {r = 220, g = 120, b = 120})
 	Entities:add(toAdd)
 end

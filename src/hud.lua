@@ -28,7 +28,7 @@ function Hud:init()
 	gWidth, gHeight = love.graphics.getWidth(), love.graphics.getHeight()
 	borderWidth = 10
 	panelSpacing = 5
-	cgSquareSize = ((gWidth / 10) / 4)
+	cgSquareSize = 32
 	cgContainerWidth = (cgSquareSize * 10) + (panelSpacing * 11)
 	cgContainerHeight = cgSquareSize + (0.25 * cgSquareSize)
 	controlGroupViewX = math.floor((gWidth - cgContainerWidth) / 2)
@@ -99,9 +99,17 @@ function Hud:drawControlGroupView()
 		love.graphics.setColor(20, 20, 20, 255)
 		love.graphics.rectangle('line', panelX, panelY, cgSquareSize, cgSquareSize)
 
-		love.graphics.setColor(255, 255, 255, 32)
-		love.graphics.rectangle('fill', panelX, panelY, cgSquareSize, cgSquareSize)
-		love.graphics.setColor(20, 20, 20, 255)
+		if cGroup == 0 then
+			love.graphics.setColor(255, 255, 255)
+			love.graphics.rectangle('fill', panelX, panelY, cgSquareSize, cgSquareSize)
+			love.graphics.setColor(255, 255, 255)
+			love.graphics.setBlendMode("alpha")
+			love.graphics.draw(resources.items.pickaxe, panelX, panelY, 0, 2, 2)
+		else 
+			love.graphics.setColor(255, 255, 255, 32)
+			love.graphics.rectangle('fill', panelX, panelY, cgSquareSize, cgSquareSize)
+			love.graphics.setColor(20, 20, 20, 255)
+		end
 		cGroup = cGroup + 1
 		if cGroup == 10 then cGroup = 0 end
 		love.graphics.print(tostring(cGroup), panelX + 2, panelY + 2)

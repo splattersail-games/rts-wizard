@@ -3,7 +3,7 @@
 local class = require 'src.libs.middleclass'
 Player = class('Player', BaseUnit)
 
-function Player:initialize(x, y, width, height, mode, colorTable)
+function Player:initialize(x, y, width, height)
 	BaseUnit.initialize(
 		self, 
 		x, 
@@ -23,8 +23,6 @@ function Player:initialize(x, y, width, height, mode, colorTable)
 	self.lightImage:setScale(0.5)
 	self.lightImage:setNormalMap(normalMap)
 	self.lightImage:setShadowType("image")
-	self.mode = mode
-	self.colorTable = colorTable
 	self.light = {}
 end
 
@@ -42,8 +40,6 @@ end
 
 function Player:draw()
 	BaseUnit.draw(self)
-	if not self.colorTable.a then self.colorTable.a = 255 end
-	love.graphics.setColor(self.colorTable.r, self.colorTable.g, self.colorTable.b, self.colorTable.a)
 	love.graphics.draw(self.image, self:getX(), self:getY(), 0,
 		0.5, -- scale
 		0.5,
