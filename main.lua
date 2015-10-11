@@ -17,14 +17,10 @@ require 'src.GameController'
 require 'src.Entities'
 require 'src.hud'
 
--- Called when the game gains or loses focus. 
--- True if gained, false otherwise.
-function love.focus(bool)
-	Game:setFocus(bool)
-end
 
 -- Run at game start --
 function love.load()
+	print("Loading Game. . . ")
 	love.mouse.setVisible(false)
 	love.graphics.setBackgroundColor(0, 0, 0, 255)
 	love.graphics.setColor(0, 0, 0)
@@ -50,5 +46,11 @@ end
 
 -- Game Quit --
 function love.quit()
+	print("Game Quit")
+end
 
+-- Called when the game gains or loses focus. 
+-- True if gained, false otherwise.
+function love.focus(bool)
+	Game:setFocus(bool)
 end

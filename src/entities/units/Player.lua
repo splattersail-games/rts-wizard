@@ -17,19 +17,13 @@ function Player:initialize(x, y, width, height)
 	)
 	self.width = width
 	self.height = height
-	self.image = love.graphics.newImage( "resources/spritesheets/wizardi.png" )
-	local normalMap = love.graphics.newImage( "resources/spritesheets/wizardi_normal.png" )	
-	self.lightImage = World.lightWorld:newImage(self.image, 0, 0)
-	self.lightImage:setScale(0.5)
-	self.lightImage:setNormalMap(normalMap)
-	self.lightImage:setShadowType("image")
+	self.image = love.graphics.newImage( "resources/spritesheets/pixeli.png" )	
 	self.light = {}
 end
 
 function Player:update(dt)
 	BaseUnit.update(self, dt)
 	self.light:setPosition(self:getX(), self:getY())
-	self.lightImage:setPosition(self:getX(), self:getY())
 end
 
 function Player:addLight(radius, colour)
@@ -40,9 +34,10 @@ end
 
 function Player:draw()
 	BaseUnit.draw(self)
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.draw(self.image, self:getX(), self:getY(), 0,
-		0.5, -- scale
-		0.5,
+		1.0, -- scale
+		1.0,
 		(self.image:getWidth() / 2),
 		(self.image:getHeight() / 2)
 	)

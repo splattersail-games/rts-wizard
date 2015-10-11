@@ -5,6 +5,7 @@ local bump = require 'src.libs.bump'
 require 'src.Entities'
 JSON = require 'src.libs.JSON'
 World = {}
+World.engine = nil
 
 function World:load(level)
 	print("Initializing world\n..................\n.................")
@@ -15,6 +16,8 @@ function World:load(level)
 	    refractionStrength = 16.0,
 	    reflectionVisibility = 0.75
     })
+
+	self.engine = Engine()
 
     -- create collisions world
     self.bump = bump.newWorld(128)
