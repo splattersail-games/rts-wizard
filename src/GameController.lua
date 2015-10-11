@@ -45,6 +45,11 @@ function GameController:mouseEvents(dt)
 	if Input.__mouse2Released then
 		Input:mouse2Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
 	end
+
+	if love.mouse.isDown( "r" ) then
+		local x, y = camera:scalePoint(love.mouse.getX(), love.mouse.getY())
+		Game:moveCommand(x, y)
+	end
 end
 
 function GameController:keyHeldLogic(dt)

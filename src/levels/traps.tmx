@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" nextobjectid="23">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="32" tileheight="32" nextobjectid="30">
  <tileset firstgid="1" source="../../resources/tilesets/dungeon.tsx"/>
  <tileset firstgid="129" source="../../resources/tilesets/decals.tsx"/>
- <tileset firstgid="130" name="Toolbelt" tilewidth="32" tileheight="32" tilecount="3">
+ <tileset firstgid="130" name="Toolbelt" tilewidth="32" tileheight="40" tilecount="3">
   <tile id="0">
    <properties>
     <property name="type" value="player"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/PlayerSpawn.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/PlayerSpawn.png"/>
   </tile>
   <tile id="1">
    <properties>
     <property name="type" value="wall"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/Wall.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/Wall.png"/>
   </tile>
   <tile id="2">
    <properties>
@@ -24,10 +24,16 @@
     <property name="radius" value="400"/>
     <property name="type" value="light"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/Light.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/Light.png"/>
   </tile>
  </tileset>
  <tileset firstgid="133" source="../../resources/tilesets/tools.tsx"/>
+ <tileset firstgid="149" name="rockstest" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../resources/spritesheets/rockstest.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="150" name="rocks" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="../../resources/spritesheets/rocks.png" width="32" height="32"/>
+ </tileset>
  <layer name="Tile Layer 1" width="64" height="64" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -60,10 +66,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,0,0,113,0,0,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,0,0,113,0,0,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,98,98,98,98,98,98,98,98,113,98,98,113,98,98,113,98,98,98,98,98,98,98,98,98,98,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,66,69,68,69,70,71,72,65,66,67,68,65,65,66,67,68,69,65,65,75,102,75,102,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,75,102,75,102,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,44,91,107,75,91,107,91,75,75,75,75,107,107,75,107,75,107,91,107,75,102,91,102,75,43,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,27,75,75,75,75,75,107,91,75,91,107,107,107,107,91,91,75,107,75,91,75,102,91,102,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,82,67,84,68,88,69,88,81,81,81,81,81,82,83,81,81,87,67,65,102,75,102,75,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,150,102,75,102,75,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,98,98,98,98,98,98,98,98,113,98,98,113,98,98,113,98,98,98,98,98,98,98,98,98,98,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,0,0,113,0,0,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,113,0,0,113,0,0,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -164,10 +170,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <imagelayer name="backround">
-  <image source="../../resources/levels/traps.png"/>
+ <imagelayer name="backround" x="-1">
+  <image source="../../resources/levels/traps2.png"/>
   <properties>
-   <property name="path" value="resources/levels/traps.png"/>
+   <property name="path" value="resources/levels/traps2.png"/>
   </properties>
  </imagelayer>
  <objectgroup name="walls">
@@ -189,13 +195,16 @@
   <object id="20" type="wall" x="1152" y="768" width="32" height="160"/>
  </objectgroup>
  <objectgroup name="gameobjects">
-  <object id="21" name="Spawn" type="player" gid="130" x="736" y="1046" width="48" height="48">
+  <object id="22" name="start" type="camera_location" gid="135" x="891" y="1038" width="32" height="32"/>
+  <object id="25" name="Spawn_location" type="player" gid="136" x="748" y="1047" width="48" height="48"/>
+  <object id="27" type="light" gid="134" x="1029" y="1033" width="32" height="32">
    <properties>
-    <property name="b" value="180"/>
-    <property name="g" value="180"/>
-    <property name="r" value="255"/>
+    <property name="b" value="80"/>
+    <property name="g" value="80"/>
+    <property name="intensity" value="0"/>
+    <property name="r" value="80"/>
+    <property name="radius" value="400"/>
    </properties>
   </object>
-  <object id="22" name="start" type="camera_location" gid="135" x="891" y="1038" width="32" height="32"/>
  </objectgroup>
 </map>

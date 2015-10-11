@@ -48,18 +48,10 @@
 	"buffers":
 	[
 		{
-			"file": "src/world.lua",
+			"file": "src/Settings.lua",
 			"settings":
 			{
-				"buffer_size": 3158,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/Game.lua",
-			"settings":
-			{
-				"buffer_size": 4779,
+				"buffer_size": 86,
 				"line_ending": "Windows"
 			}
 		},
@@ -67,112 +59,34 @@
 			"file": "src/hud.lua",
 			"settings":
 			{
-				"buffer_size": 5074,
+				"buffer_size": 5341,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/selection.lua",
+			"file": "src/entities/MoveableEntity.lua",
 			"settings":
 			{
-				"buffer_size": 2269,
+				"buffer_size": 2876,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/Entities.lua",
+			"file": "src/entities/Collidable.lua",
 			"settings":
 			{
-				"buffer_size": 5941,
+				"buffer_size": 1526,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/units/Player.lua",
-			"settings":
-			{
-				"buffer_size": 1599,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/units/MoveableEntity.lua",
-			"settings":
-			{
-				"buffer_size": 2903,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/commands/MoveCommand.lua",
-			"settings":
-			{
-				"buffer_size": 2176,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/units/Entity.lua",
-			"settings":
-			{
-				"buffer_size": 1503,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "resources/textmessage.txt",
-			"settings":
-			{
-				"buffer_size": 42,
-				"line_ending": "Windows",
-				"name": "In which our hero experiences Hope, the greatest g"
-			}
-		},
-		{
+			"contents": "require 'src.input'\n\nGameController = {}\nGameController.lastKeyboardInput = 0 -- time of last successful keyboard action, for example adding to control group\nGameController.currTime = 0\nGameController.keyPresses = {\n	\n} -- map from key to last time it was pressed\nGameController.lastControlGroupRecall = {\n	controlGroup = -1,\n	time = -1,\n	centered = false\n}\n\nGameController.keyToAction = {\n	s = function(dt) Game:StopCommand() end\n}\n\nfunction GameController:update(dt)\n\n	--- set currTime\n	GameController.currTime = love.timer.getTime()\n	if (GameController.lastControlGroupRecall.centered) then\n		Game:centerOnSelected()\n	end\n	GameController:keyHeldLogic(dt)\n	GameController:mouseEvents(dt)\n	GameController:keyboardEvents(dt)\n	GameController:checkForCameraScroll(dt)\nend\n\nfunction GameController:mouseEvents(dt)\n	if Input.__mouse1Pressed then\n		Input:mouse1Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)\n	end\n\n	if Input.__mouse1Released then\n		Input:mouse1Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)\n	end\n\n	if Input.__mouse2Pressed then\n		Input:mouse2Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)\n	end\n\n	if Input.__mouse2Released then\n		Input:mouse2Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)\n	end\n\n	if love.mouse.isDown( \"r\" ) then\n		local x, y = camera:scalePointToCamera\n		Game:moveCommand(love.mouse.getX(), love.mouse.getY())\n	end\nend\n\nfunction GameController:keyHeldLogic(dt)\n	for num = 0, 9 do\n		if GameController.lastControlGroupRecall.centered then\n			Game:centerOnSelected()\n		end\n	end\nend\n\nfunction GameController:keyboardEvents(dt)\n\n	for num = 0, 9 do\n		if Input.__keysReleased[tostring(num)] then\n			if GameController.lastControlGroupRecall.controlGroup == num then\n				if GameController.lastControlGroupRecall.centered then\n					GameController.lastControlGroupRecall.centered = false\n				end\n			end\n			Input:keyreleaseHandled(tostring(num))\n		end\n	end\n\n	local timeSinceKeyboardAction = (GameController.currTime - GameController.lastKeyboardInput) * 1000\n\n	-- for key, pressed in pairs(Input.__keysPressed) do\n	-- 	if pressed then\n	-- 		GameController.keyToAction[key](dt)\n	-- 		Input:keypressHandled(key)\n	-- 	end\n	-- end\n\n	if timeSinceKeyboardAction > (200) then\n		if love.keyboard.isDown( \"lctrl\" ) or love.keyboard.isDown( \"lshift\" ) then\n			GameController.checkForModifierAction(dt)\n		end\n\n	    GameController:checkForNormalAction(dt)\n	end\nend\n\nfunction GameController:checkForNormalAction(dt)\n\n	if not love.keyboard.isDown( \"lshift\" ) then\n		GameController:checkForControlGroupRecall(dt)\n	end\n	if love.keyboard.isDown( \"return\" ) then\n		Hud.textConsole.visible = not Hud.textConsole.visible\n		GameController.lastKeyboardInput = love.timer.getTime()\n	end\n\n	GameController:checkForStopCommand(dt)\nend\n\nfunction GameController:checkForStopCommand(dt)\n	if love.keyboard.isDown( \"s\" ) then\n		Game:stopCommand()\n	end\nend\n\nfunction GameController:checkForCameraScroll(dt)\n	scrollArea = 75\n	scrollSpeed = 1000\n	mPosX, mPosY = Game:checkForCameraScroll(scrollArea, scrollSpeed * dt)\nend\n\nfunction GameController:checkForControlGroupRecall(dt)\n	for ctrlGroup = 0, 9 do\n		if love.keyboard.isDown( tostring(ctrlGroup) ) then\n			GameController.currTime = love.timer.getTime()\n			recalled = Game:recallControlGroup(ctrlGroup)\n\n			if recalled then\n				print(\"recalled\")\n				if GameController.lastControlGroupRecall.controlGroup ~= -1 then\n					if GameController.lastControlGroupRecall.controlGroup == ctrlGroup and not GameController.lastControlGroupRecall.centered then				\n						val = (GameController.currTime - GameController.lastControlGroupRecall.time) * 1000 * (dt * 1000)\n						if (val > (100 * (dt * 1000)) and (val < (250 * dt * 1000))) then\n							Game:centerOnSelected()\n							GameController.lastControlGroupRecall.centered = true\n						end\n					end\n				end\n\n				GameController.lastKeyboardInput = GameController.currTime\n				GameController.lastControlGroupRecall.controlGroup = ctrlGroup\n				GameController.lastControlGroupRecall.time = GameController.currTime\n			end\n		end\n	end\n\n	return sentAction\nend\n\nfunction GameController:checkForModifierAction(dt)\n	local ctrlIsPressed = love.keyboard.isDown( 'lctrl' )\n	local shiftIsPressed = love.keyboard.isDown( 'lshift' )\n	GameController:checkForControlGroup(dt, ctrlIsPressed, shiftIsPressed)\n	GameController:checkForScreenCenter(dt, ctrlIsPressed)\nend\n\nfunction GameController:checkForScreenCenter(dt, ctrlPressed)\n	local fIsPressed = love.keyboard.isDown( 'f' )\n	if fIsPressed then\n		Game:centerOnSelected()\n	end\nend\n\nfunction GameController:checkForControlGroup(dt, ctrlPressed, shiftPressed)\n	for ctrlGroup = 0, 9 do\n		if love.keyboard.isDown( tostring(ctrlGroup) ) then\n			if ctrlPressed then\n				Game:createControlGroup(ctrlGroup)\n			elseif shiftPressed then\n			    Game:addToControlGroup(ctrlGroup)\n			end\n			GameController.lastKeyboardInput = love.timer.getTime()\n		end\n	end\nend",
 			"file": "src/GameController.lua",
+			"file_size": 5086,
+			"file_write_time": 130890081899822853,
 			"settings":
 			{
-				"buffer_size": 4819,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "conf.lua",
-			"settings":
-			{
-				"buffer_size": 2486,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/Menu.lua",
-			"settings":
-			{
-				"buffer_size": 8985,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/units/Light.lua",
-			"settings":
-			{
-				"buffer_size": 797,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 51,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/units/BaseUnit.lua",
-			"settings":
-			{
-				"buffer_size": 1912,
+				"buffer_size": 4957,
 				"line_ending": "Windows"
 			}
 		},
@@ -180,47 +94,18 @@
 			"file": "src/resource.lua",
 			"settings":
 			{
-				"buffer_size": 140,
+				"buffer_size": 244,
 				"line_ending": "Windows"
 			}
 		},
 		{
+			"contents": "-- SQUARE\n-- Modes: fill, line\nlocal class = require 'src.libs.middleclass'\nrequire 'src.utils.geometry'\nrequire 'src.utils.BoundingBox'\nrequire 'src.units.BaseUnit'\nrequire 'src.units.Light'\nSquare = class('Square', BaseUnit)\n\nfunction Square:initialize(x, y, width, height, mode, colorTable)\n	BaseUnit.initialize(\n		self, \n		x, \n		y, \n		BoundingBox:new(\n			x - (width / 2), \n			y - (height / 2),\n			x + (width / 2),\n			y + (height / 2)\n		)\n	)\n	self.mode = mode\n	self.colorTable = colorTable\n	self.light = {}\nend\n\nfunction Square:update(dt)\n	BaseUnit.update(self, dt)\n	self.light.setPosition(self:getX(), self:getY())\nend\n\nfunction Square:addLight(radius, colour)\n	self.light = World.lightWorld:newLight(self.getX(), self.getY(), colour.r, colour.g, colour.b, radius)\n	self.light:setGlowStrength(0.4)\nend\n\nfunction Square:draw()\n	BaseUnit.draw(self)\n	if not self.colorTable.a then self.colorTable.a = 255 end\n	love.graphics.setColor(self.colorTable.r, self.colorTable.g, self.colorTable.b, self.colorTable.a)\n	love.graphics.rectangle(self.mode, self.boundingBox.x1, self.boundingBox.y1, self.boundingBox.width, self.boundingBox.height)\nend",
 			"file": "src/units/square.lua",
+			"file_size": 1181,
+			"file_write_time": 130878148611044293,
 			"settings":
 			{
 				"buffer_size": 1140,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/utils/BoundingBox.lua",
-			"settings":
-			{
-				"buffer_size": 912,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/levels/level.json",
-			"settings":
-			{
-				"buffer_size": 12323,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/levels/test.json",
-			"settings":
-			{
-				"buffer_size": 6949,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/utils/camera.lua",
-			"settings":
-			{
-				"buffer_size": 3063,
 				"line_ending": "Windows"
 			}
 		}
@@ -242,6 +127,10 @@
 			],
 			[
 				"Love",
+				"Build With: LuaLove - Love2D"
+			],
+			[
+				"lvoe",
 				"Build With: LuaLove - Love2D"
 			],
 			[
@@ -444,44 +333,55 @@
 	[
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/commands",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/libs",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units"
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/units",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels"
 	],
 	"file_history":
 	[
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/input.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Game.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/BaseUnit.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/Light.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/Entity.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/Player.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/level3.json",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/resources/textmessage.txt",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/conf.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/hud.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Game.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/Light.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Menu.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/test.json",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/BoundingBox.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/input.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/BaseUnit.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/MoveableEntity.lua",
+		"/D/SteamLibrary/steamapps/common/MagickaWizardWars/data_win32_bundled/global.ini",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/world.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/CameraLocation.lua",
+		"/D/SteamLibrary/steamapps/common/MagickaWizardWars/data_win32_bundled/settings_client.ini",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/camera.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/test.json",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/level.json",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/BoundingBox.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/commands/MoveCommand.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/Wall.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/units/BaseUnit.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/units/Player.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/selection.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Entities.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/README.md",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Menu.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/conf.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/GameController.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/resources/textmessage.txt",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/main.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/Collidable.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/MoveableEntity.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/Entity.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/entities/Light.lua",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/level3.json",
+		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/hud.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/square.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/shader.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/camera.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Entities.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/main.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/level.json",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/Gameobjects.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/libs/JSON.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/Wall.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/units/MoveableEntity.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/levels/Toolbelt.tsx",
 		"/C/Users/NathanK/AppData/Local/Temp/Rar$DRa0.998/tutA_demo05.fla",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/utils/quadtree.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/GameController.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/libs/LoveFrames/init.lua",
 		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/resource.lua",
-		"/C/Users/NathanK/Documents/GitHub/Love2DExperiment/src/commands/MoveCommand.lua",
 		"/C/Users/Nathan/Documents/GitHub/Love2DExperiment/src/utils/shader.lua",
 		"/C/Users/Nathan/Documents/GitHub/Love2DExperiment/src/libs/LoveFrames/objects/base.lua",
 		"/C/Users/Nathan/Documents/GitHub/Love2DExperiment/src/libs/LoveFrames/objects/menu.lua",
@@ -566,19 +466,7 @@
 		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/BARREN.TIL",
 		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/BARREN.PAL",
 		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/PACKMAN.CFG",
-		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/PackmnEx.cfg",
-		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/spriteEx.ftg",
-		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/barren/sprites/go.bat",
-		"/C/Users/Nathan/Documents/LOVE/Game/utils/boundingbox.lua",
-		"/C/Users/Nathan/Documents/LOVE/Game/square.lua",
-		"/C/Users/Nathan/Documents/LOVE/Game/Gameobjects.lua",
-		"/C/Users/Nathan/Documents/LOVE/Game/utils/queue.lua",
-		"/C/Users/Nathan/Documents/LOVE/Game/geometry.lua",
-		"/C/Users/Nathan/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
-		"/C/Users/Nathan/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
-		"/C/Users/Nathan/Documents/LOVE/Game/camera.lua",
-		"/C/Users/Nathan/Documents/LOVE/Game/utils/stack.lua",
-		"/C/Users/Nathan/Documents/mm_workspace/trineo_ops_sandbox/src/classes/TaskManagerController.cls"
+		"/C/Users/Nathan/Desktop/Nathan/Games/dkreign17/Dark Reign 1.7/DARK/GRAPHICS/BARREN/PackmnEx.cfg"
 	],
 	"find":
 	{
@@ -598,6 +486,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"__mouse2Pressed",
+			"mouseEvents",
+			"camera:setBounds(0, 0, World.width, World.height)",
+			"cameraStart",
 			"check",
 			"rect_detectCollision",
 			"Player",
@@ -721,11 +613,7 @@
 			"local",
 			"startingY",
 			"startingX",
-			"startingY",
-			"startingX",
-			"255",
-			"MoveCommand",
-			"love.graphics.getWidth()"
+			"startingY"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -747,205 +635,29 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/world.lua",
+					"file": "src/Settings.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3158,
+						"buffer_size": 86,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2798,
-								2529
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1584.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/Game.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4779,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								181,
-								181
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 396.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/hud.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5074,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3019,
-								3019
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1320.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/selection.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2269,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								435,
-								435
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/Entities.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5941,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1000,
-								1000
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 528.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/units/Player.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1599,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1380,
-								1380
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 448.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/units/MoveableEntity.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2903,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2501,
-								2501
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Lua/Lua.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -955,20 +667,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "src/commands/MoveCommand.lua",
+					"buffer": 1,
+					"file": "src/hud.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2176,
+						"buffer_size": 5341,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2158,
-								2158
+								789,
+								789
 							]
 						],
 						"settings":
@@ -977,85 +689,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1110.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "src/units/Entity.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1503,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1305,
-								1305
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 924.0,
+						"translation.y": 626.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "resources/textmessage.txt",
+					"buffer": 2,
+					"file": "src/entities/MoveableEntity.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 42,
+						"buffer_size": 2876,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								42,
-								42
-							]
-						],
-						"settings":
-						{
-							"auto_name": "In which our hero experiences Hope, the greatest g",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "src/GameController.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4819,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4576,
-								4576
+								399,
+								399
 							]
 						],
 						"settings":
@@ -1064,173 +718,85 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2878.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "conf.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2486,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1042,
-								1042
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
-					"file": "src/Menu.lua",
+					"buffer": 3,
+					"file": "src/entities/Collidable.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8985,
+						"buffer_size": 1526,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1487,
-								1358
+								601,
+								601
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/GameController.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4957,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1381,
+								1381
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 660.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 17,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "src/units/Light.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 797,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								209,
-								209
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "README.md",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 51,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								51,
-								51
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 20,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "src/units/BaseUnit.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1912,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								901,
-								901
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 264.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
+					"buffer": 5,
 					"file": "src/resource.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 140,
+						"buffer_size": 244,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								140,
-								140
+								244,
+								244
 							]
 						],
 						"settings":
@@ -1241,11 +807,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 18,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 6,
 					"file": "src/units/square.lua",
 					"semi_transient": false,
 					"settings":
@@ -1257,8 +823,8 @@
 						"selection":
 						[
 							[
-								484,
-								484
+								165,
+								165
 							]
 						],
 						"settings":
@@ -1270,136 +836,14 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 18,
-					"file": "src/utils/BoundingBox.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 912,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								451,
-								451
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 132.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 19,
-					"file": "src/levels/level.json",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12323,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3938,
-								3938
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"history_list_is_closing": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2894.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 20,
-					"file": "src/levels/test.json",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6949,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								654,
-								654
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 37.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 21,
-					"type": "text"
-				},
-				{
-					"buffer": 21,
-					"file": "src/utils/camera.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3063,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2661,
-								2661
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2002.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1409,7 +853,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 38.0
 	},
 	"layout":
 	{
@@ -1431,7 +875,7 @@
 		"cols":
 		[
 			0.0,
-			0.542515666629,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1447,7 +891,7 @@
 	},
 	"output.exec":
 	{
-		"height": 142.0
+		"height": 161.0
 	},
 	"output.find_results":
 	{
@@ -1468,6 +912,10 @@
 		[
 			[
 				"camera",
+				"src\\entities\\Camera.lua"
+			],
+			[
+				"camer",
 				"src\\utils\\camera.lua"
 			],
 			[
@@ -1827,7 +1275,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
@@ -1835,7 +1283,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 219.0,
+	"side_bar_width": 449.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
