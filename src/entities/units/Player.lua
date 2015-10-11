@@ -1,6 +1,6 @@
 -- Player
 -- Modes: fill, line
-local class = require 'src.libs.middleclass'
+
 Player = class('Player', BaseUnit)
 
 function Player:initialize(x, y, width, height)

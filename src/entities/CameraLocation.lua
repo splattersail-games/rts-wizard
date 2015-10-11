@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 CameraLocation = class('CameraLocation', MoveableEntity)
 
 function CameraLocation:initialize(x, y, name)

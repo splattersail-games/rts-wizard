@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 Entity = class('Entity')
 
 function Entity:initialize(x, y, box)

@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 
 Selection = class('Selection')
 

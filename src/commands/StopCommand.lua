@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 require 'src.commands.Command'
 vector = require 'src.utils.vector'
 
