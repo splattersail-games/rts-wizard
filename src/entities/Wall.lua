@@ -1,6 +1,6 @@
 -- Wall
 -- Modes: fill, line
-local class = require 'src.libs.middleclass'
+
 Wall = class('Wall', Entity)
 
 function Wall:initialize(x, y, width, height)

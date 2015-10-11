@@ -1,4 +1,5 @@
 -- Main --
+class = require 'src.libs.middleclass'
 require 'src.Game'
 require 'src.Menu'
 require 'src.input'
@@ -21,8 +22,6 @@ end
 
 -- Run at game start --
 function love.load()
-	require('src.libs.LoveFrames')
-
 	love.mouse.setVisible(false)
 	love.graphics.setBackgroundColor(0, 0, 0, 255)
 	love.graphics.setColor(0, 0, 0)
@@ -39,13 +38,11 @@ function love.draw()
 
 	love.graphics.setBlendMode("alpha")
 	love.graphics.setColor(255, 255, 255)
-	loveframes.draw()
 	love.graphics.draw(cursor, love.mouse.getX(), love.mouse.getY(), 0, 0.3)
 	
 end
 
 function love.textinput(text)
-    loveframes.textinput(text)
 end
 
 -- Game Quit --

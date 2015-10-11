@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 Collidable = class('Collidable', MoveableEntity)
 
 function Entity:initialize(x, y, box)

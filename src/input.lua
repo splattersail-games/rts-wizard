@@ -18,8 +18,6 @@ function Input.mousepressed(x, y, button)
 	elseif button == 'r' then
 	    Input.__mouse2Pressed = true
 	end
-
-	loveframes.mousepressed(x, y, button)
 end
 
 function Input.mousereleased(x, y, button)
@@ -30,22 +28,16 @@ function Input.mousereleased(x, y, button)
 	elseif button == 'r' then
 		Input.__mouse2Released = true
 	end
-
-	loveframes.mousereleased(x, y, button)
 end
 
 function Input.keypressed( key, unicode )
 	print(key .. " pressed")
 	Input.__keysPressed[key] = true
-
-	loveframes.keypressed(key, unicode)
 end
 
 function Input.keyreleased( key, unicode )
 	print(key .. " released")
    	Input.__keysReleased[key] = true
-
-   	loveframes.keyreleased(key)
 end
 
 -------------- Functions to do stuff. These are called from controller and passed stuff

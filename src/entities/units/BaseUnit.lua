@@ -1,4 +1,4 @@
-local class = require 'src.libs.middleclass'
+
 require 'src.utils.queue'
 
 BaseUnit = class('BaseUnit', MoveableEntity)
