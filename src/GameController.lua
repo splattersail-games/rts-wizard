@@ -4,7 +4,7 @@ GameController = {}
 GameController.lastKeyboardInput = 0 -- time of last successful keyboard action, for example adding to control group
 GameController.currTime = 0
 GameController.keyPresses = {
-	
+
 } -- map from key to last time it was pressed
 GameController.lastControlGroupRecall = {
 	controlGroup = -1,
@@ -46,7 +46,7 @@ function GameController:mouseEvents(dt)
 		Input:mouse2Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
 	end
 
-	if love.mouse.isDown( "r" ) then
+	if love.mouse.isDown( 2 ) then
 		local x, y = camera:scalePoint(love.mouse.getX(), love.mouse.getY())
 		Game:moveCommand(x, y)
 	end
@@ -125,7 +125,7 @@ function GameController:checkForControlGroupRecall(dt)
 			if recalled then
 				print("recalled")
 				if GameController.lastControlGroupRecall.controlGroup ~= -1 then
-					if GameController.lastControlGroupRecall.controlGroup == ctrlGroup and not GameController.lastControlGroupRecall.centered then				
+					if GameController.lastControlGroupRecall.controlGroup == ctrlGroup and not GameController.lastControlGroupRecall.centered then
 						val = (GameController.currTime - GameController.lastControlGroupRecall.time) * 1000 * (dt * 1000)
 						if (val > (100 * (dt * 1000)) and (val < (250 * dt * 1000))) then
 							Game:centerOnSelected()
