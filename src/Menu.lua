@@ -20,8 +20,6 @@ function Menu:load()
     Menu.bigfont = love.graphics.newFont(love._vera_ttf, 40)
     Menu.list.font = Menu.smallfont
 
-    love.graphics.draw(resources.UI.textbox)
-
     -- Find available demos.
     local files =  love.filesystem.getDirectoryItems("src/levels")
 	local n = 0
@@ -47,15 +45,15 @@ function Menu.update(dt)
 end
 
 function Menu.draw()
-	love.graphics.setColor(48, 48, 48)
+	love.graphics.setColor(64, 64, 64)
 	love.graphics.rectangle("fill", 0, 0, love.window.getWidth(), love.window.getHeight())
 
     love.graphics.setColor(255, 255, 255, 191)
     love.graphics.setFont(Menu.bigfont)
     love.graphics.print("Levels:", 50, 50)
 
-    love.graphics.setFont(Menu.smallfont)
-    love.graphics.print("Browse and click on the level you \nwant to run. To return the the level \nselection screen, press escape.", 500, 80)
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.draw( resources.wafer, 400, 250, 0, 8, 8 )
 
     Menu.list:draw()
 	love.graphics.setColor(255, 255, 255)
@@ -188,7 +186,7 @@ function List:new()
     o.x = 50
     o.y = 70
 
-    o.width = 400
+    o.width = 250
     o.height = 500
 
     o.item_height = 23
@@ -336,6 +334,7 @@ function List:draw()
 
 		if hover then
 			love.graphics.setColor(255, 255, 255)
+			love.graphics.draw( resources.icon, self.width, y+i, 0, 0.5, 0.5 )
 		else
 			love.graphics.setColor(255, 255, 255, 127)
 		end
@@ -366,4 +365,7 @@ function List:draw()
     love.graphics.setColor(0, 0, 0, 63)
     love.graphics.rectangle("line", self.x+self.width, self.y, self.bar_width, self.height)
     love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+
+    love.graphics.setColor(32, 32, 32, 63)
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end

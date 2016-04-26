@@ -14,7 +14,7 @@ require 'src.commands.MoveCommand'
 require 'src.commands.StopCommand'
 require 'src.commands.Command'
 require 'src.GameController'
-require 'src.Entities'
+--srequire 'src.Entities'
 require 'src.hud'
 
 
@@ -26,7 +26,8 @@ function love.load()
 	love.graphics.setColor(0, 0, 0)
 	cursor = love.graphics.newImage("resources/cursor.png")
 	resources:init()
-	
+	success = love.window.setIcon( resources.icon:getData() )
+
 	Menu.load()
 end
 

@@ -13,11 +13,11 @@ function Game:init(world)
 
 	World:load(world)
 	camera:setBounds(0, 0, World.width, World.height)
-	if Entities.camerasByName["start"] ~= nil then
-		local lookX, lookY = Entities.camerasByName["start"]:getLookAt()
-		print ("Setting camera to default start of " .. lookX .. ", " .. lookY)
-		camera:lookAt(Entities.camerasByName["start"]:getLookAt())
-	end
+	-- if Entities.camerasByName["start"] ~= nil then
+	-- 	local lookX, lookY = Entities.camerasByName["start"]:getLookAt()
+	-- 	print ("Setting camera to default start of " .. lookX .. ", " .. lookY)
+	-- 	camera:lookAt(Entities.camerasByName["start"]:getLookAt())
+	-- end
 	
 	Hud:init()
 
@@ -38,26 +38,9 @@ end
 function Game.update(dt)
 	World:update(dt)
 	GameController:update(dt)
-	Entities:update(dt)
+	--Entities:update(dt)
 	--Game:resolveCollisions(dt)
 	Hud:update(dt)
-end
-
-function Game:resolveCollisions(dt)
-	for id, gameObj in pairs(Entities.GameObjects) do
-		for id2, gameObj2 in pairs(Entities.GameObjects) do
-			if id ~= id2 then
-				distance = gameObj.origin:dist(gameObj2.origin)
-				if distance < 50 then
-					local amountOfOverlap = 50 - distance
-					dir = gameObj.origin - gameObj2.origin
-					dir:normalize_inplace()
-					gameObj.origin = gameObj.origin + (dir * amountOfOverlap / 2)
-					gameObj2.origin = gameObj2.origin + (-dir * amountOfOverlap / 2)
-				end
-			end
-		end
-	end
 end
 
 function Game:draw()
@@ -68,7 +51,7 @@ function Game:draw()
 	camera:set()
     World.lightWorld:draw(function()
 		World:draw()
-		Entities:draw()
+		--Entities:draw()
     end)
 
 	local x, y = camera:mousePosition()
@@ -90,29 +73,29 @@ end
 -- If we have, adds it to the set of selected objects
 --
 function Game:checkForSelect(pointX, pointY)
-	for id, gameObj in pairs(Entities.PlayerControlled) do
+	-- for id, gameObj in pairs(Entities.PlayerControlled) do
 
-		if gameObj.tryToSelect ~= nil and (pointX ~= nil and pointY ~= nil) then
-			if gameObj:tryToSelect(pointX, pointY) then
-				if not love.keyboard.isDown( "lshift" ) then
-					Game:deselectObjects()
-				end
-				if love.keyboard.isDown( "lctrl" ) then
-					Game:selectAllOfType(gameObj.class)
-				end
-				Game.selection:add(id)
-				break
-			end
-		end
-	end
+	-- 	if gameObj.tryToSelect ~= nil and (pointX ~= nil and pointY ~= nil) then
+	-- 		if gameObj:tryToSelect(pointX, pointY) then
+	-- 			if not love.keyboard.isDown( "lshift" ) then
+	-- 				Game:deselectObjects()
+	-- 			end
+	-- 			if love.keyboard.isDown( "lctrl" ) then
+	-- 				Game:selectAllOfType(gameObj.class)
+	-- 			end
+	-- 			Game.selection:add(id)
+	-- 			break
+	-- 		end
+	-- 	end
+	-- end
 end
 
 function Game:selectAllOfType(c)
-	for id, gameObj in pairs(Entities.PlayerControlled) do
-		if gameObj:isInstanceOf(c) then
-			Game.selection:add(id)
-		end
-	end
+	-- for id, gameObj in pairs(Entities.PlayerControlled) do
+	-- 	if gameObj:isInstanceOf(c) then
+	-- 		Game.selection:add(id)
+	-- 	end
+	-- end
 end
 
 function Game:recallControlGroup(ctrlGroup)
@@ -133,24 +116,12 @@ end
 --
 function Game:checkForSelectInBox()
 
-	local selectionBox = Hud.selectionBox.rectangle
-	local initialDeselect = true
+	-- local selectionBox = Hud.selectionBox.rectangle
 
-	if selectionBox ~= nil then 
-		for id, gameObj in pairs(Entities.PlayerControlled) do
+end
 
-			if gameObj.tryToDragSelect ~= nil then
-				if gameObj:tryToDragSelect(selectionBox) then
-					if not love.keyboard.isDown( "lshift" ) and initialDeselect then
-						Game:deselectObjects()
-						initialDeselect = false
-					end
-					Game.selection:add(id)
-				end
-			end
-		end
-	end
-
+function Game:fireEvent(evt)
+	World.eventManager:fireEvent(evt)
 end
 
 function Game:setFocus(state)
@@ -179,27 +150,27 @@ end
 
 function Game:clearCommandQueue()
 
-	for id, gameObj in pairs(Entities.PlayerControlled) do
-		if Game.selection.selected[id] then
-			gameObj:clearCommandQueue()
-		end
-	end
+	-- for id, gameObj in pairs(Entities.PlayerControlled) do
+	-- 	if Game.selection.selected[id] then
+	-- 		gameObj:clearCommandQueue()
+	-- 	end
+	-- end
 end
 
 function Game:moveCommand(x, y)
 
-	for id, gameObj in pairs(Entities.PlayerControlled) do
-		if Game.selection.selected[id] then
-			gameObj:addCommandToQueue(MoveCommand:new(x, y))
-		end
-	end
+	-- for id, gameObj in pairs(Entities.PlayerControlled) do
+	-- 	if Game.selection.selected[id] then
+	-- 		gameObj:addCommandToQueue(MoveCommand:new(x, y))
+	-- 	end
+	-- end
 end
 
 function Game:stopCommand()
 
-	for id, gameObj in pairs(Entities.PlayerControlled) do
-		if Game.selection.selected[id] then
-			gameObj:addCommandToQueue(StopCommand:new())
-		end
-	end
+	-- for id, gameObj in pairs(Entities.PlayerControlled) do
+	-- 	if Game.selection.selected[id] then
+	-- 		gameObj:addCommandToQueue(StopCommand:new())
+	-- 	end
+	-- end
 end
