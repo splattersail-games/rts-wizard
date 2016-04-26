@@ -22,7 +22,7 @@ function Menu:load()
 
     -- Find available demos.
     local files =  love.filesystem.getDirectoryItems("src/levels")
-  local n = 0
+    local n = 0
 
     for i, v in ipairs(files) do
     if string.ends(v, "json") then
@@ -48,14 +48,14 @@ function Menu.draw()
   love.graphics.setColor(64, 64, 64)
   love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
-    love.graphics.setColor(255, 255, 255, 191)
-    love.graphics.setFont(Menu.bigfont)
-    love.graphics.print("Levels:", 50, 50)
+  love.graphics.setColor(255, 255, 255, 191)
+  love.graphics.setFont(Menu.bigfont)
+  love.graphics.print("Levels:", 50, 50)
 
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.draw( resources.wafer, 400, 250, 0, 8, 8 )
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.draw( resources.wafer, 400, 250, 0, 8, 8 )
 
-    Menu.list:draw()
+  Menu.list:draw()
   love.graphics.setColor(255, 255, 255)
 end
 
@@ -70,28 +70,28 @@ function Menu.mousepressed(x, y, b)
 end
 
 function Menu.mousereleased(x, y, b)
-    Menu.list:mousereleased(x, y, b)
+  Menu.list:mousereleased(x, y, b)
 end
 
 function Menu.getn(n)
-    local s = ""
-    n = tonumber(n)
-    local r = n
-    if r <= 0 then error("Example IDs must be bigger than 0. (Got: " .. r .. ")") end
-    if r >= 10000 then error("Example IDs must be less than 10000. (Got: " .. r .. ")") end
-    while r < 1000 do
-        s = s .. "0"
-        r = r * 10
-    end
-    s = s .. n
-    return s
+  local s = ""
+  n = tonumber(n)
+  local r = n
+  if r <= 0 then error("Example IDs must be bigger than 0. (Got: " .. r .. ")") end
+  if r >= 10000 then error("Example IDs must be less than 10000. (Got: " .. r .. ")") end
+  while r < 1000 do
+    s = s .. "0"
+    r = r * 10
+  end
+  s = s .. n
+  return s
 end
 
 function Menu.intable(t, e)
-    for k, v in ipairs(t) do
-        if v == e then return true end
-    end
-    return false
+  for k, v in ipairs(t) do
+    if v == e then return true end
+  end
+  return false
 end
 
 function Menu.start(item, file)
@@ -140,31 +140,31 @@ function Menu.start(item, file)
 end
 
 function Menu.clear()
-    love.graphics.setBackgroundColor(0,0,0)
-    love.graphics.setColor(255, 255, 255)
+  love.graphics.setBackgroundColor(0,0,0)
+  love.graphics.setColor(255, 255, 255)
   love.graphics.setLineWidth(1)
   love.graphics.setLineStyle("smooth")
-    --love.graphics.setLine(1, "smooth")
-    --love.graphics.setColorMode("replace")
-    love.graphics.setBlendMode("alpha")
-    love.mouse.setVisible(true)
+  --love.graphics.setLine(1, "smooth")
+  --love.graphics.setColorMode("replace")
+  love.graphics.setBlendMode("alpha")
+  love.mouse.setVisible(true)
 end
 
 function Menu.resume()
-    load = nil
-    love.update = Menu.update
-    love.draw = Menu.draw
-    love.keypressed = Menu.keypressed
-    love.keyreleased = Menu.keyreleased
-    love.mousepressed = Menu.mousepressed
-    love.mousereleased = Menu.mousereleased
+  load = nil
+  love.update = Menu.update
+  love.draw = Menu.draw
+  love.keypressed = Menu.keypressed
+  love.keyreleased = Menu.keyreleased
+  love.mousepressed = Menu.mousepressed
+  love.mousereleased = Menu.mousereleased
 
-    love.mouse.setVisible(true)
-    love.window.setTitle("Swag")
+  love.mouse.setVisible(true)
+  love.window.setTitle("Swag")
 end
 
 function inside(mx, my, x, y, w, h)
-    return mx >= x and mx <= (x+w) and my >= y and my <= (y+h)
+  return mx >= x and mx <= (x+w) and my >= y and my <= (y+h)
 end
 
 
@@ -176,29 +176,29 @@ end
 List = {}
 
 function List:new()
-    o = {}
-    setmetatable(o, self)
-    self.__index = self
+  o = {}
+  setmetatable(o, self)
+  self.__index = self
 
-    o.items = {}
+  o.items = {}
   o.files = {}
 
-    o.x = 50
-    o.y = 70
+  o.x = 50
+  o.y = 70
 
-    o.width = 250
-    o.height = 500
+  o.width = 250
+  o.height = 500
 
-    o.item_height = 23
-    o.sum_item_height = 0
+  o.item_height = 23
+  o.sum_item_height = 0
 
-    o.bar_size = 20
-    o.bar_pos = 0
-    o.bar_max_pos = 0
-    o.bar_width = 15
-    o.bar_lock = nil
+  o.bar_size = 20
+  o.bar_pos = 0
+  o.bar_max_pos = 0
+  o.bar_width = 15
+  o.bar_lock = nil
 
-    return o
+  return o
 end
 
 function List:add(item, file)
@@ -207,120 +207,120 @@ function List:add(item, file)
 end
 
 function List:done()
-    self.items.n = #self.items
+  self.items.n = #self.items
 
-    -- Recalc bar size.
-    self.bar_pos = 0
+  -- Recalc bar size.
+  self.bar_pos = 0
 
-    local num_items = (self.height/self.item_height)
-    local ratio = num_items/self.items.n
-    self.bar_size = self.height * ratio
-    self.bar_max_pos = self.height - self.bar_size - 3
+  local num_items = (self.height/self.item_height)
+  local ratio = num_items/self.items.n
+  self.bar_size = self.height * ratio
+  self.bar_max_pos = self.height - self.bar_size - 3
 
-    -- Calculate height of everything.
-    self.sum_item_height = (self.item_height+1) * self.items.n + 2
+  -- Calculate height of everything.
+  self.sum_item_height = (self.item_height+1) * self.items.n + 2
 end
 
 function List:hasBar()
-    return self.sum_item_height > self.height
+  return self.sum_item_height > self.height
 end
 
 function List:getBarRatio()
-    return self.bar_pos/self.bar_max_pos
+  return self.bar_pos/self.bar_max_pos
 end
 
 function List:getOffset()
-    local ratio = self.bar_pos/self.bar_max_pos
-    return math.floor((self.sum_item_height-self.height)*ratio + 0.5)
+  local ratio = self.bar_pos/self.bar_max_pos
+  return math.floor((self.sum_item_height-self.height)*ratio + 0.5)
 end
 
 function List:update(dt)
-    if self.bar_lock then
-  local dy = math.floor(love.mouse.getY()-self.bar_lock.y+0.5)
-  self.bar_pos = self.bar_pos + dy
+  if self.bar_lock then
+    local dy = math.floor(love.mouse.getY()-self.bar_lock.y+0.5)
+    self.bar_pos = self.bar_pos + dy
 
-  if self.bar_pos < 0 then
+    if self.bar_pos < 0 then
       self.bar_pos = 0
-  elseif self.bar_pos > self.bar_max_pos then
+    elseif self.bar_pos > self.bar_max_pos then
      self.bar_pos = self.bar_max_pos
-  end
-
-  self.bar_lock.y = love.mouse.getY()
-
     end
+
+    self.bar_lock.y = love.mouse.getY()
+
+  end
 end
 
 function List:mousepressed(mx, my, b)
-    if self:hasBar() then
-  if b == "l" then
+  if self:hasBar() then
+    if b == "l" then
       local x, y, w, h = self:getBarRect()
       if inside(mx, my, x, y, w, h) then
-    self.bar_lock = { x = mx, y = my }
+        self.bar_lock = { x = mx, y = my }
       end
-  end
+    end
 
-  local per_pixel = (self.sum_item_height-self.height)/self.bar_max_pos
-  local bar_pixel_dt = math.floor(((self.item_height)*3)/per_pixel + 0.5)
+    local per_pixel = (self.sum_item_height-self.height)/self.bar_max_pos
+    local bar_pixel_dt = math.floor(((self.item_height)*3)/per_pixel + 0.5)
 
-  if b == "wd" then
+    if b == "wd" then
       self.bar_pos = self.bar_pos + bar_pixel_dt
       if self.bar_pos > self.bar_max_pos then self.bar_pos = self.bar_max_pos end
-  elseif b == "wu" then
+    elseif b == "wu" then
       self.bar_pos = self.bar_pos - bar_pixel_dt
       if self.bar_pos < 0 then self.bar_pos = 0 end
-  end
     end
+  end
 
-    if b == "l" and inside(mx, my, self.x+2, self.y+1, self.width-3, self.height-3) then
-  local tx, ty = mx-self.x, my + self:getOffset() - self.y
-  local index = math.floor((ty/self.sum_item_height)*self.items.n)
-  local i = self.items[index+1]
-  local f = self.files[index+1]
-  if f then
+  if b == "l" and inside(mx, my, self.x+2, self.y+1, self.width-3, self.height-3) then
+    local tx, ty = mx-self.x, my + self:getOffset() - self.y
+    local index = math.floor((ty/self.sum_item_height)*self.items.n)
+    local i = self.items[index+1]
+    local f = self.files[index+1]
+    if f then
       Menu.start(i, f)
-  end
     end
+  end
 end
 
 function List:mousereleased(x, y, b)
-    if self:hasBar() then
-  if b == "l" then
+  if self:hasBar() then
+    if b == "l" then
       self.bar_lock = nil
-  end
     end
+  end
 end
 
 function List:getBarRect()
-    return
-  self.x+self.width+2, self.y+1+self.bar_pos,
-  self.bar_width-3, self.bar_size
+  return
+    self.x+self.width+2, self.y+1+self.bar_pos,
+    self.bar_width-3, self.bar_size
 end
 
 function List:getItemRect(i)
   return
-      self.x+2, self.y+((self.item_height+1)*(i-1)+1)-self:getOffset(),
-      self.width-3, self.item_height
+    self.x+2, self.y+((self.item_height+1)*(i-1)+1)-self:getOffset(),
+    self.width-3, self.item_height
 end
 
 function List:draw()
-    love.graphics.setLineWidth(2)
+  love.graphics.setLineWidth(2)
   love.graphics.setLineStyle("rough")
-    love.graphics.setFont(self.font)
+  love.graphics.setFont(self.font)
 
-    love.graphics.setColor(48, 156, 225)
+  love.graphics.setColor(48, 156, 225)
 
-    local mx, my = love.mouse.getPosition()
+  local mx, my = love.mouse.getPosition()
 
-    -- Get interval to display.
-    local start_i = math.floor( self:getOffset()/(self.item_height+1) ) + 1
-    local end_i = start_i+math.floor( self.height/(self.item_height+1) ) + 1
-    if end_i > self.items.n then end_i = self.items.n end
+  -- Get interval to display.
+  local start_i = math.floor( self:getOffset()/(self.item_height+1) ) + 1
+  local end_i = start_i+math.floor( self.height/(self.item_height+1) ) + 1
+  if end_i > self.items.n then end_i = self.items.n end
 
 
-    love.graphics.setScissor(self.x, self.y, self.width, self.height)
+  love.graphics.setScissor(self.x, self.y, self.width, self.height)
 
-    -- Items.
-    for i = start_i,end_i do
+  -- Items.
+  for i = start_i,end_i do
     local x, y, w, h = self:getItemRect(i)
     local hover = inside(mx, my, x, y, w, h)
 
@@ -344,28 +344,28 @@ function List:draw()
 
     love.graphics.print(e_id, x+10, y+i+6)  --Updated y placement -- Used to change position of Example IDs
     love.graphics.print(e_rest, x+50, y+i+6) --Updated y placement -- Used to change position of Example Titles
-    end
-
-    love.graphics.setScissor()
-
-    -- Bar.
-    if self:hasBar() then
-  local x, y, w, h = self:getBarRect()
-  local hover = inside(mx, my, x, y, w, h)
-
-  if hover or self.bar_lock then
-      love.graphics.setColor(0, 0, 0, 127)
-  else
-      love.graphics.setColor(0, 0, 0, 63)
   end
-  love.graphics.rectangle("fill", x, y, w, h)
+
+  love.graphics.setScissor()
+
+  -- Bar.
+  if self:hasBar() then
+    local x, y, w, h = self:getBarRect()
+    local hover = inside(mx, my, x, y, w, h)
+
+    if hover or self.bar_lock then
+        love.graphics.setColor(0, 0, 0, 127)
+    else
+        love.graphics.setColor(0, 0, 0, 63)
     end
+    love.graphics.rectangle("fill", x, y, w, h)
+  end
 
-    -- Border.
-    love.graphics.setColor(0, 0, 0, 63)
-    love.graphics.rectangle("line", self.x+self.width, self.y, self.bar_width, self.height)
-    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+  -- Border.
+  love.graphics.setColor(0, 0, 0, 63)
+  love.graphics.rectangle("line", self.x+self.width, self.y, self.bar_width, self.height)
+  love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 
-    love.graphics.setColor(32, 32, 32, 63)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+  love.graphics.setColor(32, 32, 32, 63)
+  love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
