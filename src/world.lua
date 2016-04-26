@@ -1,5 +1,5 @@
 -- The game world
-local LightWorld = require "lib"
+local LightWorld = require "lib/light_world/lib"
 local bump = require 'src.libs.bump'
 
 --require 'src.Entities'
@@ -55,7 +55,7 @@ function World:loadWorld(worldFile)
 
     for _, layer in pairs(World.layers) do
 
-        if layer.visible then 
+        if layer.visible then
             print("Loading " .. layer.name)
             if layer.type == "imagelayer" and layer.visible then
                 print ("Caching image: " .. layer.name)
@@ -73,14 +73,14 @@ function World:loadEntities(entities)
         print ("Adding a " .. entity.type)
         if entity.type == "wall" then
             local w, h = entity.width, entity.height
-            local x, y = 
-                entity.x + (w / 2), 
+            local x, y =
+                entity.x + (w / 2),
                 entity.y + (h / 2)
 
             local toAdd = Entity()
             toAdd:add(Position(x, y))
             toAdd:add(Collidable(BoundingBox:new(
-                x - (w / 2), 
+                x - (w / 2),
                 y - (h / 2),
                 x + (w / 2),
                 y + (h / 2)
@@ -89,29 +89,29 @@ function World:loadEntities(entities)
             self.lightWorld:newRectangle(
                 x,
                 y,
-                entity.width, 
+                entity.width,
                 entity.height
             )
             --self:addWall(x, y, entity.width, entity.height)
         elseif entity.type == "light" then
             print ("Reading a light " .. entity.properties.r)
-            local color = { 
-                r = tonumber(entity.properties.r), 
+            local color = {
+                r = tonumber(entity.properties.r),
                 g = tonumber(entity.properties.g),
                 b = tonumber(entity.properties.b)
             }
             local toAdd = Entity()
             toAdd:add(Position(entity.x, entity.y))
             toAdd:add(Light(
-                color, 
-                tonumber(entity.properties.radius), 
+                color,
+                tonumber(entity.properties.radius),
                 tonumber(entity.properties.intensity)
             ))
             self.engine:addEntity(toAdd)
 
             light = self.lightWorld:newLight(
                 entity.x, entity.y, color.r, color.g, color.b, toAdd:get("Light").radius)
-            if toAdd:get("Light").intensity ~= nil then 
+            if toAdd:get("Light").intensity ~= nil then
                 light:setGlowStrength(toAdd:get("Light").intensity)
             end
 
@@ -123,14 +123,14 @@ function World:loadEntities(entities)
             toAdd:add(Position(x, y))
             toAdd:add(Collidable(
                 BoundingBox:new(
-                    x - (w / 2), 
+                    x - (w / 2),
                     y - (h / 2),
                     x + (w / 2),
                     y + (h / 2)
                 )
             ))
 
-            local playerImage = love.graphics.newImage( "resources/spritesheets/pixeli.png" ) 
+            local playerImage = love.graphics.newImage( "resources/spritesheets/pixeli.png" )
             toAdd:add(Drawable(
                 playerImage,
                 0,
@@ -142,10 +142,10 @@ function World:loadEntities(entities)
             toAdd:add(PlayerControlled())
             toAdd.name = 'Player'
 
-            local color = {r = 220, g = 120, b = 120} 
+            local color = {r = 220, g = 120, b = 120}
             toAdd:add(Light(
-                color, 
-                300, 
+                color,
+                300,
                 0.4
             ))
             local light = World.lightWorld:newLight(x, y, color.r, color.g, color.b, 300)
@@ -170,11 +170,11 @@ end
 function World:nRandomLights(n)
     for i = 1, n do
         Entities:addLight(
-            love.math.random(0, self.width), love.math.random(0, self.height), 
-            love.math.random(300, 500), 
-            { 
-                r = (love.math.random() * 255), 
-                g = (love.math.random() * 255), 
+            love.math.random(0, self.width), love.math.random(0, self.height),
+            love.math.random(300, 500),
+            {
+                r = (love.math.random() * 255),
+                g = (love.math.random() * 255),
                 b = (love.math.random() * 255)
             },
             love.math.random()
