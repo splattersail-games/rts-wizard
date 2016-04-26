@@ -250,9 +250,9 @@ function List:update(dt)
   end
 end
 
-function List:mousepressed(mx, my, b)
+function List:mousepressed(mx, my, button, isTouch)
   if self:hasBar() then
-    if b == "l" then
+    if button == 1 then
       local x, y, w, h = self:getBarRect()
       if inside(mx, my, x, y, w, h) then
         self.bar_lock = { x = mx, y = my }
@@ -262,16 +262,16 @@ function List:mousepressed(mx, my, b)
     local per_pixel = (self.sum_item_height-self.height)/self.bar_max_pos
     local bar_pixel_dt = math.floor(((self.item_height)*3)/per_pixel + 0.5)
 
-    if b == "wd" then
+    if button == "wd" then
       self.bar_pos = self.bar_pos + bar_pixel_dt
       if self.bar_pos > self.bar_max_pos then self.bar_pos = self.bar_max_pos end
-    elseif b == "wu" then
+    elseif button == "wu" then
       self.bar_pos = self.bar_pos - bar_pixel_dt
       if self.bar_pos < 0 then self.bar_pos = 0 end
     end
   end
 
-  if b == "l" and inside(mx, my, self.x+2, self.y+1, self.width-3, self.height-3) then
+  if button == 1 and inside(mx, my, self.x+2, self.y+1, self.width-3, self.height-3) then
     local tx, ty = mx-self.x, my + self:getOffset() - self.y
     local index = math.floor((ty/self.sum_item_height)*self.items.n)
     local i = self.items[index+1]
@@ -282,9 +282,9 @@ function List:mousepressed(mx, my, b)
   end
 end
 
-function List:mousereleased(x, y, b)
+function List:mousereleased(x, y, button)
   if self:hasBar() then
-    if b == "l" then
+    if button == 1 then
       self.bar_lock = nil
     end
   end
