@@ -20,11 +20,14 @@ require 'src.engine.components.Logic.IsCamera'
 require 'src.engine.systems.DrawCollisionBoxesSystem'
 require 'src.engine.systems.DrawImageSystem'
 require 'src.engine.systems.DrawSelectedSystem'
+require 'src.engine.systems.MoveSystem'
 require 'src.engine.systems.events.SelectUnits'
+require 'src.engine.systems.events.PushMoveCommand'
 
 -- Requiring all Events
 require 'src.engine.events.ComponentAdded'
 require 'src.engine.events.ComponentRemoved'
+require 'src.engine.events.MousePressed'
 require 'src.engine.events.SelectionBoxReleased'
 
 lovetoyDebug = true
