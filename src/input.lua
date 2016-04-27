@@ -13,9 +13,9 @@ Input = {
 function Input.mousepressed(x, y, button)
 	x, y = camera:scalePoint(x, y)
 	Input.__lastMouseClickPoint = { x = x, y = y }
-	if button == 'l' then
+	if button == 1 then
 		Input.__mouse1Pressed = true
-	elseif button == 'r' then
+	elseif button == 2 then
 	    Input.__mouse2Pressed = true
 	end
 end
@@ -23,9 +23,9 @@ end
 function Input.mousereleased(x, y, button)
 	x, y = camera:scalePoint(x, y)
 	Input.__lastMouseReleasePoint = { x = x, y = y }
-	if button == 'l' then
+	if button == 1 then
 		Input.__mouse1Released = true
-	elseif button == 'r' then
+	elseif button == 2 then
 		Input.__mouse2Released = true
 	end
 end
@@ -52,7 +52,7 @@ function Input:mouse1Released(x, y)
 	Hud:endSelectionBox(x, y)
 
 	if Hud.selectionBox.rectangle then
-		local x1, y1, x2, y2 = 
+		local x1, y1, x2, y2 =
 			Hud.selectionBox.rectangle.x1,
 			Hud.selectionBox.rectangle.y1,
 			Hud.selectionBox.rectangle.x2,
