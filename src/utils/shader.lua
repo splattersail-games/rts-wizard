@@ -42,7 +42,7 @@ function Shader:drawLights(shadowCasters, lights, worldWidth, worldHeight)
 
 	-- The below didn't work, commented out to keep the train of thought
 	-- Fog of war
-	-- lg.setStencil(function() 
+	-- lg.setStencil(function()
 	-- 	for b = 0, shadowCasters.size-1 do
 	-- 		love.graphics.circle( "fill", shadowCasters[b]:getX(), shadowCasters[b]:getY(), 700, 100 )
 	-- 	end
@@ -70,7 +70,7 @@ function Shader:drawLights(shadowCasters, lights, worldWidth, worldHeight)
 							    nv = vector(vertices[i + 2], vertices[i + 3])
 							end
 
-							local edge = nv - cv 
+							local edge = nv - cv
 							local lightToVertex = vector(cv.x - light:getX(), cv.y - light:getY())
 							local edgeNormal = vector(edge.y, -edge.x)
 
@@ -92,7 +92,7 @@ function Shader:drawLights(shadowCasters, lights, worldWidth, worldHeight)
 			end
 		end)
 		lg.setColorMask(true, true, true, true)
-		
+
 		lg.setShader(shader)
 		local lx, ly = camera:scalePointToCamera(light:getX(), light:getY())
 		-- draw the light
@@ -110,7 +110,7 @@ function Shader:drawLights(shadowCasters, lights, worldWidth, worldHeight)
 		lg.setShader()
 	end -- for every light
 	lg.setShader()
-	
+
 	-- geometry
 
 	lg.setInvertedStencil()
