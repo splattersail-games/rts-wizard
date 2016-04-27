@@ -306,7 +306,6 @@ end
 function Engine:checkRequirements(entity, system) -- luacheck: ignore self
     local meetsrequirements = true
     local category = nil
-    print("Hello!!")
     for index, req in pairs(system:requires()) do
         if type(req) == "string" then
             if not entity.components[req] then
