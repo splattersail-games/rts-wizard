@@ -6,7 +6,7 @@ Menu.selectSound = nil
 Menu.backSound = nil
 
 function string.ends(String,End)
-   return End=='' or string.sub(String,-string.len(End))==End
+  return End=='' or string.sub(String,-string.len(End))==End
 end
 
 function Menu:load()
@@ -16,32 +16,32 @@ function Menu:load()
   Menu.backSound = love.audio.newSource("resources/sounds/menu_back.wav", "static")
 
   Menu.list = List:new()
-    Menu.smallfont = love.graphics.newFont(12)
-    Menu.bigfont = love.graphics.newFont(40)
-    Menu.list.font = Menu.smallfont
+  Menu.smallfont = love.graphics.newFont(12)
+  Menu.bigfont = love.graphics.newFont(40)
+  Menu.list.font = Menu.smallfont
 
-    -- Find available demos.
-    local files =  love.filesystem.getDirectoryItems("src/levels")
-    local n = 0
+  -- Find available demos.
+  local files = love.filesystem.getDirectoryItems("src/levels")
+  local n = 0
 
-    for i, v in ipairs(files) do
+  for i, v in ipairs(files) do
     if string.ends(v, "json") then
       n = n + 1
       table.insert(Menu.available, v);
-        local file = love.filesystem.newFile(v, love.file_read)
-        local title = Menu.getn(n) .. " " .. v
-        Menu.list:add(title, v)
+      local file = love.filesystem.newFile(v, love.file_read)
+      local title = Menu.getn(n) .. " " .. v
+      Menu.list:add(title, v)
     end
-    end
+  end
 
-    Menu.list:done()
-    Menu.resume()
+  Menu.list:done()
+  Menu.resume()
 end
 
 function Menu.empty() end
 
 function Menu.update(dt)
-    Menu.list:update(dt)
+  Menu.list:update(dt)
 end
 
 function Menu.draw()
@@ -66,7 +66,7 @@ function Menu.keyreleased(k)
 end
 
 function Menu.mousepressed(x, y, b)
-    Menu.list:mousepressed(x, y, b)
+  Menu.list:mousepressed(x, y, b)
 end
 
 function Menu.mousereleased(x, y, b)
@@ -104,35 +104,35 @@ function Menu.start(item, file)
       print("Could not load level .. " .. file)
     else
 
-    -- Clear all callbacks.
-    love.load = Menu.empty
-    love.update = Menu.empty
-    love.draw = Menu.empty
-    love.keypressed = Menu.empty
-    love.keyreleased = Menu.empty
-    love.mousepressed = Menu.empty
-    love.mousereleased = Menu.empty
+      -- Clear all callbacks.
+      love.load = Menu.empty
+      love.update = Menu.empty
+      love.draw = Menu.empty
+      love.keypressed = Menu.empty
+      love.keyreleased = Menu.empty
+      love.mousepressed = Menu.empty
+      love.mousereleased = Menu.empty
 
-    world = love.filesystem.read("src/levels/" .. file)
-    love.audio.play(Menu.selectSound)
-    Menu.clear()
-    Game:init(world)
+      world = love.filesystem.read("src/levels/" .. file)
+      love.audio.play(Menu.selectSound)
+      Menu.clear()
+      Game:init(world)
 
-    --love.window.setTitle(e_rest)
+      --love.window.setTitle(e_rest)
 
-    -- Redirect keypress
-    local o_keypressed = love.keypressed
-    love.keypressed =
-    function(k)
-      if k == "escape" then
-        Game:unload()
-        love.audio.play(Menu.backSound)
-        Menu.resume()
+      -- Redirect keypress
+      local o_keypressed = love.keypressed
+      love.keypressed =
+      function(k)
+        if k == "escape" then
+          Game:unload()
+          love.audio.play(Menu.backSound)
+          Menu.resume()
+        end
+        o_keypressed(k)
       end
-      o_keypressed(k)
-    end
 
-    love.load()
+      love.load()
     end
   else
     print("Example ".. e_id .. " does not exist.")
@@ -166,8 +166,6 @@ end
 function inside(mx, my, x, y, w, h)
   return mx >= x and mx <= (x+w) and my >= y and my <= (y+h)
 end
-
-
 
 ----------------------
 -- List object
@@ -242,7 +240,7 @@ function List:update(dt)
     if self.bar_pos < 0 then
       self.bar_pos = 0
     elseif self.bar_pos > self.bar_max_pos then
-     self.bar_pos = self.bar_max_pos
+      self.bar_pos = self.bar_max_pos
     end
 
     self.bar_lock.y = love.mouse.getY()
@@ -292,14 +290,14 @@ end
 
 function List:getBarRect()
   return
-    self.x+self.width+2, self.y+1+self.bar_pos,
-    self.bar_width-3, self.bar_size
+  self.x+self.width+2, self.y+1+self.bar_pos,
+  self.bar_width-3, self.bar_size
 end
 
 function List:getItemRect(i)
   return
-    self.x+2, self.y+((self.item_height+1)*(i-1)+1)-self:getOffset(),
-    self.width-3, self.item_height
+  self.x+2, self.y+((self.item_height+1)*(i-1)+1)-self:getOffset(),
+  self.width-3, self.item_height
 end
 
 function List:draw()
@@ -315,7 +313,6 @@ function List:draw()
   local start_i = math.floor( self:getOffset()/(self.item_height+1) ) + 1
   local end_i = start_i+math.floor( self.height/(self.item_height+1) ) + 1
   if end_i > self.items.n then end_i = self.items.n end
-
 
   love.graphics.setScissor(self.x, self.y, self.width, self.height)
 
@@ -342,7 +339,7 @@ function List:draw()
     local e_id = string.sub(self.items[i], 1, 5)
     local e_rest = string.sub(self.items[i], 5)
 
-    love.graphics.print(e_id, x+10, y+i+6)  --Updated y placement -- Used to change position of Example IDs
+    love.graphics.print(e_id, x+10, y+i+6) --Updated y placement -- Used to change position of Example IDs
     love.graphics.print(e_rest, x+50, y+i+6) --Updated y placement -- Used to change position of Example Titles
   end
 
@@ -354,9 +351,9 @@ function List:draw()
     local hover = inside(mx, my, x, y, w, h)
 
     if hover or self.bar_lock then
-        love.graphics.setColor(0, 0, 0, 127)
+      love.graphics.setColor(0, 0, 0, 127)
     else
-        love.graphics.setColor(0, 0, 0, 63)
+      love.graphics.setColor(0, 0, 0, 63)
     end
     love.graphics.rectangle("fill", x, y, w, h)
   end
