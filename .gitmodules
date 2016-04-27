@@ -1,0 +1,3 @@
+[submodule "lib/light_world"]
+	path = lib/light_world
+	url = https://github.com/nathanKramer/light_world.lua.git
