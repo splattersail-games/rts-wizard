@@ -1,12 +1,12 @@
 Settings = {
-	controls = {
+  controls = {
 
-	},
-	keyToAction = {
+  },
+  keyToAction = {
 
-	}
+  }
 }
 
-function Settings:init() 
+function Settings:init()
 
 end
