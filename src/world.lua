@@ -1,9 +1,9 @@
 -- The game world
 local LightWorld = require "lib/light_world/lib"
-local bump = require 'src.libs.bump'
+local bump = require 'lib.bump'
 
 --require 'src.Entities'
-JSON = require 'src.libs.JSON'
+JSON = require 'lib.JSON'
 World = {}
 World.engine = nil
 

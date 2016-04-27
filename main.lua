@@ -1,5 +1,5 @@
 -- Main --
-class = require 'src.libs.middleclass'
+class = require 'lib.middleclass'
 require 'engine-import'
 
 -- Main game
