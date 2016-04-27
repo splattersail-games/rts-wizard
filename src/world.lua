@@ -12,10 +12,10 @@ function World:load(level)
 
   -- create light world
   self.lightWorld = LightWorld({
-      ambient = {0, 0, 0}, --the general ambient light in the environment
-      refractionStrength = 16.0,
-      reflectionVisibility = 0.75
-    })
+    ambient = {0, 0, 0}, --the general ambient light in the environment
+    refractionStrength = 16.0,
+    reflectionVisibility = 0.75
+  })
 
   self.engine = Engine()
   self.eventManager = EventManager()
@@ -23,12 +23,20 @@ function World:load(level)
   local selectionSystem = SelectUnits()
   self.engine:addSystem(selectionSystem, "logic")
   self.engine:stopSystem(selectionSystem) -- Call this only when the event fires
+  local moveAction = PushMoveCommand()
+  self.engine:addSystem(moveAction, "logic")
+  self.engine:stopSystem(moveAction)
 
   self.eventManager:addListener("SelectionBoxReleased", selectionSystem, selectionSystem.fireEvent)
+  self.eventManager:addListener("MousePressed", moveAction, moveAction.fireEvent)
+
+  local moveSystem = MoveSystem()
+  self.engine:addSystem(moveSystem, "update")
 
   self.engine:addSystem(DrawSelectedSystem())
   self.engine:addSystem(DrawImageSystem())
   print("Systems: " .. #self.engine.systems["all"])
+  print("Update Systems: " .. #self.engine.systems["update"])
   -- create collisions world
   self.bump = bump.newWorld(128)
 
@@ -80,10 +88,10 @@ function World:loadEntities(entities)
       local toAdd = Entity()
       toAdd:add(Position(x, y))
       toAdd:add(Collidable(BoundingBox:new(
-            x - (w / 2),
-            y - (h / 2),
-            x + (w / 2),
-            y + (h / 2)
+          x - (w / 2),
+          y - (h / 2),
+          x + (w / 2),
+          y + (h / 2)
       )))
       self.engine:addEntity(toAdd)
       self.lightWorld:newRectangle(
@@ -138,6 +146,9 @@ function World:loadEntities(entities)
           1.0,
           playerImage:getWidth() / 2, -- offset
           playerImage:getHeight() / 2
+      ))
+      toAdd:add(Moveable(
+        nil, nil, nil
       ))
       toAdd:add(PlayerControlled())
       toAdd.name = 'Player'
