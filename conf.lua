@@ -3,7 +3,7 @@ function love.conf(t)
   t.version = "0.10.1"                -- The LÖVE version this game was made for (string)
   t.console = true                   -- Attach a console (boolean, Windows only)
 
-  t.window.title = "Synapse"         -- The window title (string)
+  t.window.title = "RTS Wizard"         -- The window title (string)
   t.author = 'Nathan'          -- Author (string)
   t.window.icon = nil                -- Filepath to an image to use as the window's icon (string)
   t.window.width = 800               -- The window width (number)
