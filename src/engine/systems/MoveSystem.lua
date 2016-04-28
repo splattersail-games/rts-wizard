@@ -1,5 +1,13 @@
 MoveSystem = class("MoveSystem", System)
 
+local function AABBToOrigin(boundingBox, x, y)
+  return x + (boundingBox.width / 2), y + (boundingBox.height / 2)
+end
+
+local function scaleCoordsToAABB(boundingBox, x, y)
+  return x - (boundingBox.width / 2), y - (boundingBox.height / 2)
+end
+
 function MoveSystem:update(dt)
   for index, entity in pairs(self.targets) do
     local moveComp = entity:get("Moveable")
@@ -20,10 +28,10 @@ function MoveSystem:update(dt)
 
       local goalX, goalY = newPos.x, newPos.y
       if bounding then
-        goalX, goalY = gameObj:scaleCoordsToAABB(newPos.x, newPos.y)
+        goalX, goalY = scaleCoordsToAABB(bounding.AABB, newPos.x, newPos.y)
 
-        local actualX, actualY, cols, len = World.bump:move(gameObj, goalX, goalY)
-        position.x, position.y = gameObj:AABBToOrigin(actualX, actualY)
+        local actualX, actualY, cols, len = World.bump:move(entity, goalX, goalY)
+        position.x, position.y = AABBToOrigin(bounding.AABB, actualX, actualY)
       else
         position.x, position.y = goalX, goalY
       end
