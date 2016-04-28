@@ -1,5 +1,5 @@
 -- Main --
-class = require 'lib.middleclass'
+require 'lib-import'
 require 'engine-import'
 
 -- Main game
@@ -32,13 +32,9 @@ end
 
 -- Draw what we updated in love.update() --
 function love.draw()
-  -- love.graphics.reset()
-  -- love.graphics.draw(resources.myImage, 100, 100)
-
   love.graphics.setBlendMode("alpha")
   love.graphics.setColor(255, 255, 255)
   love.graphics.draw(cursor, love.mouse.getX(), love.mouse.getY(), 0, 0.3)
-
 end
 
 function love.textinput(text)

@@ -48,7 +48,7 @@ function GameController:mouseEvents(dt)
 
   if love.mouse.isDown( 2 ) then
     local x, y = camera:scalePoint(love.mouse.getX(), love.mouse.getY())
-    Game:moveCommand(x, y)
+    Game:fireEvent(MousePressed(x, y, 2))
   end
 end
 
