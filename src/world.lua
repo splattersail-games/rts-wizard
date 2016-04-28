@@ -13,10 +13,10 @@ function World:load(level)
   print("Initialising lightworld\n")
   -- Initialise light world
   self.lightWorld = LightWorld({
-    ambient = {0, 0, 0}, --the general ambient light in the environment
-    refractionStrength = 16.0,
-    reflectionVisibility = 0.75
-  })
+      ambient = {0, 0, 0}, --the general ambient light in the environment
+      refractionStrength = 16.0,
+      reflectionVisibility = 0.75
+    })
 
   -- Initialise ECS
   print("Initialising ECS")
@@ -96,11 +96,12 @@ function World:loadEntities(entities)
       local toAdd = Entity()
       toAdd:add(Position(x, y))
       toAdd:add(Collidable(BoundingBox:new(
-          x - (w / 2),
-          y - (h / 2),
-          x + (w / 2),
-          y + (h / 2)
+            x - (w / 2),
+            y - (h / 2),
+            x + (w / 2),
+            y + (h / 2)
       )))
+      self.bump:add(toAdd, entity.x, entity.y, w, h)
       self.engine:addEntity(toAdd)
       self.lightWorld:newRectangle(
         x,
@@ -137,14 +138,18 @@ function World:loadEntities(entities)
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
       toAdd:add(Position(x, y))
-      toAdd:add(Collidable(
-          BoundingBox:new(
-            x - (w / 2),
-            y - (h / 2),
-            x + (w / 2),
-            y + (h / 2)
-          )
-      ))
+
+      local collisionsComponent = Collidable(
+        BoundingBox:new(
+          x - (w / 2),
+          y - (h / 2),
+          x + (w / 2),
+          y + (h / 2)
+        )
+      )
+      toAdd:add(collisionsComponent)
+      local b = collisionsComponent.AABB
+      self.bump:add(toAdd, b.x1, b.y1, b.width, b.height)
 
       local playerImage = love.graphics.newImage( "resources/spritesheets/pixeli.png" )
       toAdd:add(Drawable(
@@ -156,7 +161,7 @@ function World:loadEntities(entities)
           playerImage:getHeight() / 2
       ))
       toAdd:add(Moveable(
-        nil, nil, nil
+          nil, nil, nil
       ))
       toAdd:add(PlayerControlled())
       toAdd.name = 'Player'
@@ -212,24 +217,14 @@ function World:draw()
 
   World.engine:draw()
 
-  -- if Game.drawAABBs then
-  -- local items, len = World.bump:getItems()
-  -- for _, item in pairs(items) do
-  -- local x, y, w, h = World.bump:getRect(item)
-  -- love.graphics.setColor(255, 255, 255)
-  -- love.graphics.rectangle('fill', x, y, w, h)
-  -- end
-  -- end
+  if Game.drawAABBs then
+    local items, len = World.bump:getItems()
+    for _, item in pairs(items) do
+      local x, y, w, h = World.bump:getRect(item)
+      love.graphics.setColor(255, 255, 255)
+      love.graphics.rectangle('fill', x, y, w, h)
+    end
+  end
 
-  -- love.graphics.setLineWidth(0.5)
-  -- for row = 0, self.gridHeight do
-  -- local offset = row*self.gridScale
-  -- love.graphics.line(0, offset, self.width, offset)
-  -- end
-
-  -- for col = 0, self.gridWidth do
-  -- local offset = col*self.gridScale
-  -- love.graphics.line(offset, 0, offset, self.height)
-  -- end
   love.graphics.setColor({ 255, 255, 255})
 end
