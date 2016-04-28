@@ -10,30 +10,46 @@ World.engine = nil
 function World:load(level)
   print("Initializing world\n..................\n.................")
 
-  -- create light world
+  print("Initialising lightworld\n")
+  -- Initialise light world
   self.lightWorld = LightWorld({
       ambient = {0, 0, 0}, --the general ambient light in the environment
       refractionStrength = 16.0,
       reflectionVisibility = 0.75
     })
 
+  -- Initialise ECS
+  print("Initialising ECS")
   self.engine = Engine()
   self.eventManager = EventManager()
 
+  -- Initialise Systems
   local selectionSystem = SelectUnits()
   self.engine:addSystem(selectionSystem, "logic")
   self.engine:stopSystem(selectionSystem) -- Call this only when the event fires
-
   self.eventManager:addListener("SelectionBoxReleased", selectionSystem, selectionSystem.fireEvent)
+
+  local moveAction = PushMoveCommand()
+  self.engine:addSystem(moveAction, "logic")
+  self.engine:stopSystem(moveAction)
+  self.eventManager:addListener("MousePressed", moveAction, moveAction.fireEvent)
+
+  local moveSystem = MoveSystem()
+  self.engine:addSystem(moveSystem, "update")
 
   self.engine:addSystem(DrawSelectedSystem())
   self.engine:addSystem(DrawImageSystem())
+  print("ECS initialised.")
   print("Systems: " .. #self.engine.systems["all"])
-  -- create collisions world
+  print("Update Systems: " .. #self.engine.systems["update"])
+
+  print("Initialising bump world")
+  -- Initialise collisions world
   self.bump = bump.newWorld(128)
 
+  print("Loading a map")
+  -- Load up a map
   self:loadWorld(level)
-  --self.gridIncrement = 5
 end
 
 function World:unload()
@@ -85,6 +101,7 @@ function World:loadEntities(entities)
             x + (w / 2),
             y + (h / 2)
       )))
+      self.bump:add(toAdd, entity.x, entity.y, w, h)
       self.engine:addEntity(toAdd)
       self.lightWorld:newRectangle(
         x,
@@ -121,14 +138,18 @@ function World:loadEntities(entities)
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
       toAdd:add(Position(x, y))
-      toAdd:add(Collidable(
-          BoundingBox:new(
-            x - (w / 2),
-            y - (h / 2),
-            x + (w / 2),
-            y + (h / 2)
-          )
-      ))
+
+      local collisionsComponent = Collidable(
+        BoundingBox:new(
+          x - (w / 2),
+          y - (h / 2),
+          x + (w / 2),
+          y + (h / 2)
+        )
+      )
+      toAdd:add(collisionsComponent)
+      local b = collisionsComponent.AABB
+      self.bump:add(toAdd, b.x1, b.y1, b.width, b.height)
 
       local playerImage = love.graphics.newImage( "resources/spritesheets/pixeli.png" )
       toAdd:add(Drawable(
@@ -138,6 +159,9 @@ function World:loadEntities(entities)
           1.0,
           playerImage:getWidth() / 2, -- offset
           playerImage:getHeight() / 2
+      ))
+      toAdd:add(Moveable(
+          nil, nil, nil
       ))
       toAdd:add(PlayerControlled())
       toAdd.name = 'Player'
@@ -193,24 +217,14 @@ function World:draw()
 
   World.engine:draw()
 
-  -- if Game.drawAABBs then
-  -- local items, len = World.bump:getItems()
-  -- for _, item in pairs(items) do
-  -- local x, y, w, h = World.bump:getRect(item)
-  -- love.graphics.setColor(255, 255, 255)
-  -- love.graphics.rectangle('fill', x, y, w, h)
-  -- end
-  -- end
+  if Game.drawAABBs then
+    local items, len = World.bump:getItems()
+    for _, item in pairs(items) do
+      local x, y, w, h = World.bump:getRect(item)
+      love.graphics.setColor(255, 255, 255)
+      love.graphics.rectangle('fill', x, y, w, h)
+    end
+  end
 
-  -- love.graphics.setLineWidth(0.5)
-  -- for row = 0, self.gridHeight do
-  -- local offset = row*self.gridScale
-  -- love.graphics.line(0, offset, self.width, offset)
-  -- end
-
-  -- for col = 0, self.gridWidth do
-  -- local offset = col*self.gridScale
-  -- love.graphics.line(offset, 0, offset, self.height)
-  -- end
   love.graphics.setColor({ 255, 255, 255})
 end
