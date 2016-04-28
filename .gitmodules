@@ -1,3 +1,12 @@
 [submodule "lib/light_world"]
 	path = lib/light_world
 	url = https://github.com/nathanKramer/light_world.lua.git
+[submodule "lib/inspect"]
+	path = lib/inspect
+	url = git@github.com:nathanKramer/inspect.lua.git
+[submodule "libsrc/inspect"]
+	path = libsrc/inspect
+	url = git@github.com:nathanKramer/inspect.lua.git
+[submodule "libsrc/light_world"]
+	path = libsrc/light_world
+	url = git@github.com:nathanKramer/light_world.lua.git

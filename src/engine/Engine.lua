@@ -109,7 +109,6 @@ end
 
 function Engine:addSystem(system, typ)
   local name = system.class.name
-  print("Adding " .. name)
   -- Check if system has both function without specified type
   if system.draw and system.update and not typ then
     if lovetoyDebug then

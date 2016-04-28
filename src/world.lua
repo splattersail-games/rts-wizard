@@ -10,24 +10,28 @@ World.engine = nil
 function World:load(level)
   print("Initializing world\n..................\n.................")
 
-  -- create light world
+  print("Initialising lightworld\n")
+  -- Initialise light world
   self.lightWorld = LightWorld({
     ambient = {0, 0, 0}, --the general ambient light in the environment
     refractionStrength = 16.0,
     reflectionVisibility = 0.75
   })
 
+  -- Initialise ECS
+  print("Initialising ECS")
   self.engine = Engine()
   self.eventManager = EventManager()
 
+  -- Initialise Systems
   local selectionSystem = SelectUnits()
   self.engine:addSystem(selectionSystem, "logic")
   self.engine:stopSystem(selectionSystem) -- Call this only when the event fires
+  self.eventManager:addListener("SelectionBoxReleased", selectionSystem, selectionSystem.fireEvent)
+
   local moveAction = PushMoveCommand()
   self.engine:addSystem(moveAction, "logic")
   self.engine:stopSystem(moveAction)
-
-  self.eventManager:addListener("SelectionBoxReleased", selectionSystem, selectionSystem.fireEvent)
   self.eventManager:addListener("MousePressed", moveAction, moveAction.fireEvent)
 
   local moveSystem = MoveSystem()
@@ -35,13 +39,17 @@ function World:load(level)
 
   self.engine:addSystem(DrawSelectedSystem())
   self.engine:addSystem(DrawImageSystem())
+  print("ECS initialised.")
   print("Systems: " .. #self.engine.systems["all"])
   print("Update Systems: " .. #self.engine.systems["update"])
-  -- create collisions world
+
+  print("Initialising bump world")
+  -- Initialise collisions world
   self.bump = bump.newWorld(128)
 
+  print("Loading a map")
+  -- Load up a map
   self:loadWorld(level)
-  --self.gridIncrement = 5
 end
 
 function World:unload()
