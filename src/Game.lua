@@ -1,9 +1,7 @@
-require 'src.selection'
 require 'src.utils.camera'
 require 'src.Menu'
 
 Game = {}
-Game.selection = CGSelection:new()
 Game.mainMenu = true
 Game.drawAABBs = false
 Game.drawOrigin = false
@@ -30,7 +28,6 @@ function Game:init(world)
 end
 
 function Game:unload()
-  Game.selection = CGSelection:new()
   Game.mainMenu = true
   World:unload()
 end

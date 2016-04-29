@@ -1,7 +1,7 @@
 resources = {}
 
 function resources:init()
-  resources.icon = love.graphics.newImage("resources/spritesheets/pixeli.png")
+  resources.icon = love.graphics.newImage("resources/spritesheets/basick.png")
   resources.wafer = love.graphics.newImage("resources/spritesheets/wafer.png")
 
   resources.UI = {}

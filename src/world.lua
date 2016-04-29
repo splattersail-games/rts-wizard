@@ -1,12 +1,23 @@
 -- The game world
 local LightWorld = require "lib/light_world/lib"
 local bump = require 'lib.bump'
+require 'src.utils.BoundingBox'
 
---require 'src.Entities'
 JSON = require 'lib.JSON'
 World = {}
+
+-- Entity Component System
 World.engine = nil
 
+-- Lighting
+World.lightWorld = nil
+
+-- Collisions
+World.bump = nil
+
+--[[
+  Load a level
+]]
 function World:load(level)
   print("Initializing world\n..................\n.................")
 
@@ -24,11 +35,6 @@ function World:load(level)
   self.eventManager = EventManager()
 
   -- Initialise Systems
-  local selectionSystem = SelectUnits()
-  self.engine:addSystem(selectionSystem, "logic")
-  self.engine:stopSystem(selectionSystem) -- Call this only when the event fires
-  self.eventManager:addListener("SelectionBoxReleased", selectionSystem, selectionSystem.fireEvent)
-
   local moveAction = PushMoveCommand()
   self.engine:addSystem(moveAction, "logic")
   self.engine:stopSystem(moveAction)
@@ -37,7 +43,6 @@ function World:load(level)
   local moveSystem = MoveSystem()
   self.engine:addSystem(moveSystem, "update")
 
-  self.engine:addSystem(DrawSelectedSystem())
   self.engine:addSystem(DrawImageSystem())
   print("ECS initialised.")
   print("Systems: " .. #self.engine.systems["all"])
@@ -52,6 +57,9 @@ function World:load(level)
   self:loadWorld(level)
 end
 
+--[[
+  Unload a level
+]]
 function World:unload()
   --Entities:unload()
 end
@@ -76,7 +84,6 @@ function World:loadWorld(worldFile)
       if layer.type == "imagelayer" and layer.visible then
         print ("Caching image: " .. layer.name)
         layer.loveImage = love.graphics.newImage( layer.properties.path )
-        --World.lightWorld:newImage(layer.loveImage, 0, 0)
       elseif layer.type == "objectgroup" and layer.visible then
         World:loadEntities(layer.objects)
       end
@@ -137,7 +144,8 @@ function World:loadEntities(entities)
       local toAdd = Entity()
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
-      toAdd:add(Position(x, y))
+      local pos = Position(x, y)
+      toAdd:add(pos)
 
       local collisionsComponent = Collidable(
         BoundingBox:new(
@@ -151,12 +159,12 @@ function World:loadEntities(entities)
       local b = collisionsComponent.AABB
       self.bump:add(toAdd, b.x1, b.y1, b.width, b.height)
 
-      local playerImage = love.graphics.newImage( "resources/spritesheets/pixeli.png" )
+      local playerImage = love.graphics.newImage( "resources/spritesheets/basick.png" )
       toAdd:add(Drawable(
           playerImage,
           0,
-          1.0, -- scale
-          1.0,
+          0.7, -- scale
+          0.7,
           playerImage:getWidth() / 2, -- offset
           playerImage:getHeight() / 2
       ))
@@ -167,14 +175,10 @@ function World:loadEntities(entities)
       toAdd.name = 'Player'
 
       local color = {r = 220, g = 120, b = 120}
-      toAdd:add(Light(
-          color,
-          300,
-          0.4
-      ))
-      local light = World.lightWorld:newLight(x, y, color.r, color.g, color.b, 300)
-      light:setGlowStrength(0.4)
-
+      local theLight = World.lightWorld:newLight(pos.x, pos.y, color.r, color.g, color.b, 300)
+      theLight:setGlowStrength(0.4)
+      local lightComponent = Light(theLight)
+      toAdd:add(lightComponent)
       self.engine:addEntity(toAdd)
     elseif entity.type == "camera_location" then
       local toAdd = Entity()

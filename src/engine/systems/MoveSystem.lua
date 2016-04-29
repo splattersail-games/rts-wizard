@@ -13,6 +13,7 @@ function MoveSystem:update(dt)
     local moveComp = entity:get("Moveable")
     local position = entity:get("Position")
     local bounding = entity:get("Collidable")
+    local light = entity:get("Light")
 
     if moveComp and position and position.x and position.y and moveComp.tx and moveComp.ty and moveComp.speed then
       local destPoint = vector(moveComp.tx, moveComp.ty)
@@ -32,6 +33,9 @@ function MoveSystem:update(dt)
 
         local actualX, actualY, cols, len = World.bump:move(entity, goalX, goalY)
         position.x, position.y = AABBToOrigin(bounding.AABB, actualX, actualY)
+        if (light) then
+          light.x, light.y = position.x, position.y
+        end
       else
         position.x, position.y = goalX, goalY
       end

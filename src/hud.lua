@@ -1,11 +1,5 @@
-require 'src.utils.BoundingBox'
-
 Hud = {}
 Hud.size = 0
-Hud.selectionBox = {}
-Hud.selectionBox.drawingSelectionBox = false
-Hud.selectionBox.lastClicked = {}
-Hud.selectionBox.rectangle = nil
 
 Hud.textConsole = {}
 Hud.textConsole.visible = false
@@ -41,47 +35,8 @@ function Hud:init()
   Hud.textConsole.text[2] = "Now, fuck off!"
 end
 
-function Hud:startSelectionBox(x, y)
-  self.selectionBox.lastClicked = { x = x, y = y }
-  self.drawingSelectionBox = true
-end
-
-function Hud:endSelectionBox()
-  self.drawingSelectionBox = false
-end
 
 function Hud:update(dt)
-
-  -- Update selectionbox
-  if self.drawingSelectionBox then
-    local x = Hud.selectionBox.lastClicked.x
-    local y = Hud.selectionBox.lastClicked.y
-    x, y = camera:scalePointToCamera(x, y)
-    local otherX, otherY = love.mouse.getX(), love.mouse.getY()
-
-    local rectWidth = math.abs(otherX - x)
-    local rectHeight = math.abs(otherY - y)
-
-    local rectX = otherX < x and otherX or x
-    local rectY = otherY < y and otherY or y
-    Hud.selectionBox.square = BoundingBox:new(rectX, rectY, rectX + rectWidth, rectY + rectHeight)
-    Hud.selectionBox.rectangle = BoundingBox:new(rectX, rectY, rectX + rectWidth, rectY + rectHeight)
-  end
-end
-
-function Hud:drawSelectionBox()
-  love.graphics.setLineWidth(1)
-  if self.drawingSelectionBox then
-    local x, y, width, height =
-    Hud.selectionBox.square.x1,
-    Hud.selectionBox.square.y1,
-    Hud.selectionBox.square.width,
-    Hud.selectionBox.square.height
-    love.graphics.setColor(90, 120, 90)
-    love.graphics.rectangle('line', x, y, width, height )
-    love.graphics.setColor(10, 50, 10, 40)
-    love.graphics.rectangle('fill', x, y, width, height )
-  end
 end
 
 -- draws a box for each control group at the bottom of the screen
@@ -114,9 +69,6 @@ function Hud:drawControlGroupView()
     love.graphics.print(tostring(cGroup), panelX + 2, panelY + 2)
 
     love.graphics.setColor(20, 20, 20, 192)
-    local cg = Game.selection.controlGroups[cGroup]
-    local numSelected = cg and cg.selected.size or 0
-    love.graphics.print(tostring(numSelected), panelX + (cgSquareSize/2), panelY + (cgSquareSize/2))
   end
 end
 
@@ -157,7 +109,6 @@ function Hud:draw()
     end
   end
 
-  Hud:drawSelectionBox()
   Hud:drawControlGroupView()
   Hud:drawHudBorder()
 
