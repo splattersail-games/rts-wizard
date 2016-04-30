@@ -43,7 +43,10 @@ function World:load(level)
   local moveSystem = MoveSystem()
   self.engine:addSystem(moveSystem, "update")
   self.engine:addSystem(ParentPositionOffsetSystem(), "update")
-  self.engine:addSystem(DrawImageSystem())
+
+  -- Add Draw Systems
+  self.engine:addSystem(DrawImageSystem(), "draw")
+  self.engine:addSystem(DrawLivingEntity(), "draw")
   print("ECS initialised.")
   print("Systems: " .. #self.engine.systems["all"])
   print("Update Systems: " .. #self.engine.systems["update"])
@@ -171,7 +174,7 @@ function World:loadEntities(entities)
       player:add(Moveable(
           nil, nil, nil
       ))
-      player:add(Player('Tattersail'))
+      player:add(Player("Tattersail"))
 
       -- Create a light, and attach it to the player
       local color = {r = 220, g = 120, b = 120}
@@ -219,6 +222,8 @@ end
 
 function World:draw()
   love.graphics.setColor(255, 255, 255)
+
+  -- Migrate to system
   love.graphics.rectangle("fill", 0, 0, self.width, self.height)
   for _, layer in pairs(World.layers) do
     if layer.type == "imagelayer" and layer.loveImage ~= nil then
@@ -226,8 +231,7 @@ function World:draw()
     end
   end
 
-  World.engine:draw()
-
+  -- Migrate to system
   if Game.drawAABBs then
     local items, len = World.bump:getItems()
     for _, item in pairs(items) do
@@ -236,6 +240,8 @@ function World:draw()
       love.graphics.rectangle('fill', x, y, w, h)
     end
   end
+
+  World.engine:draw()
 
   love.graphics.setColor({ 255, 255, 255})
 end

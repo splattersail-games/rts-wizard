@@ -4,7 +4,7 @@ require 'src.Menu'
 Game = {}
 Game.mainMenu = true
 Game.drawAABBs = false
-Game.drawOrigin = false
+Game.drawOrigin = true
 
 function Game:init(world)
   love.mouse.setVisible(false)

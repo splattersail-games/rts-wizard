@@ -1,4 +1,4 @@
--- Selection box released
+-- Will convert this to an event handler on the Player entity
 PushMoveCommand = class("PushMoveCommand", System)
 
 function PushMoveCommand:fireEvent(evt)
@@ -11,5 +11,5 @@ function PushMoveCommand:fireEvent(evt)
 end
 
 function PushMoveCommand:requires()
-  return {"PlayerControlled", "Position", "Moveable"}
+  return {"Player", "Position", "Moveable"}
 end
