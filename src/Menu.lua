@@ -331,7 +331,6 @@ function List:draw()
 
     if hover then
       love.graphics.setColor(255, 255, 255)
-      love.graphics.draw( resources.icon, self.width, y+i, 0, 0.5, 0.5 )
     else
       love.graphics.setColor(255, 255, 255, 127)
     end
