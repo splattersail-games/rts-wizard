@@ -50,10 +50,10 @@ function Menu.draw()
 
   love.graphics.setColor(255, 255, 255, 191)
   love.graphics.setFont(Menu.bigfont)
-  love.graphics.print("Levels:", 50, 50)
+  love.graphics.print("Levels:", 50, 20)
 
   love.graphics.setColor(255, 255, 255)
-  love.graphics.draw( resources.wafer, 400, 250, 0, 8, 8 )
+  love.graphics.draw( resources.icon, 400, 250, 0, 1, 1 )
 
   Menu.list:draw()
   love.graphics.setColor(255, 255, 255)
