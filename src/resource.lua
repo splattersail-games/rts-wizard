@@ -9,4 +9,16 @@ function resources:init()
 
   resources.items = {}
   resources.items.pickaxe = love.graphics.newImage("resources/items/pickaxe.png")
+
+  -- Declare fonts used by the game
+  resources.fonts = {}
+  resources.fonts.default = {
+    size14 = love.graphics.newFont(14)
+  }
+
+  -- Text Resource cache
+  resources.textCache = {
+    -- World level cache that we can nuke when we're done with a map
+    currentWorld = {}
+  }
 end

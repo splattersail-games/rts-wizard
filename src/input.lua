@@ -40,7 +40,7 @@ function Input.keyreleased( key, unicode )
 end
 
 function Input:mouse1Pressed(x, y)
-  Game:fireEvent(MousePressed(x, y, 2))
+  Game:fireEvent(MousePressed(x, y, 1))
 
   Input.__mouse1Pressed = false
 end

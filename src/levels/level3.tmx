@@ -230,7 +230,7 @@
   <object id="71" type="wall" x="1216" y="1152" width="256" height="32"/>
   <object id="72" type="wall" x="1440" y="992" width="32" height="160"/>
   <object id="73" type="wall" x="1472" y="992" width="96" height="32"/>
-  <object id="74" name="Spawn" type="player" gid="129" x="190" y="254" width="48" height="48">
+  <object id="74" name="Spawn" type="player" gid="129" x="190" y="254" width="64" height="90">
    <properties>
     <property name="b" value="180"/>
     <property name="g" value="180"/>
