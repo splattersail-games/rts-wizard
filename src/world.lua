@@ -42,7 +42,7 @@ function World:load(level)
 
   local moveSystem = MoveSystem()
   self.engine:addSystem(moveSystem, "update")
-
+  self.engine:addSystem(ParentPositionOffsetSystem(), "update")
   self.engine:addSystem(DrawImageSystem())
   print("ECS initialised.")
   print("Systems: " .. #self.engine.systems["all"])
@@ -141,11 +141,11 @@ function World:loadEntities(entities)
 
     elseif entity.type == "player" then
       --self:addPlayer(entity.x, entity.y, entity.width, entity.height)
-      local toAdd = Entity()
+      local player = Entity()
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
       local pos = Position(x, y)
-      toAdd:add(pos)
+      player:add(pos)
 
       local collisionsComponent = Collidable(
         BoundingBox:new(
@@ -155,12 +155,12 @@ function World:loadEntities(entities)
           y + (h / 2)
         )
       )
-      toAdd:add(collisionsComponent)
+      player:add(collisionsComponent)
       local b = collisionsComponent.AABB
-      self.bump:add(toAdd, b.x1, b.y1, b.width, b.height)
+      self.bump:add(player, b.x1, b.y1, b.width, b.height)
 
       local playerImage = love.graphics.newImage( "resources/spritesheets/basick.png" )
-      toAdd:add(Drawable(
+      player:add(Drawable(
           playerImage,
           0,
           0.7, -- scale
@@ -168,18 +168,26 @@ function World:loadEntities(entities)
           playerImage:getWidth() / 2, -- offset
           playerImage:getHeight() / 2
       ))
-      toAdd:add(Moveable(
+      player:add(Moveable(
           nil, nil, nil
       ))
-      toAdd:add(PlayerControlled())
-      toAdd.name = 'Player'
+      player:add(PlayerControlled())
+      player.name = 'Player'
 
+      -- Create a light, and attach it to the player
       local color = {r = 220, g = 120, b = 120}
       local theLight = World.lightWorld:newLight(pos.x, pos.y, color.r, color.g, color.b, 300)
       theLight:setGlowStrength(0.4)
       local lightComponent = Light(theLight)
-      toAdd:add(lightComponent)
-      self.engine:addEntity(toAdd)
+      local attachmentComponent = ParentPositionOffset(0, 0)
+      local positionComponent = Position(pos.x, pos.y)
+      local lightEntity = Entity()
+      lightEntity:add(lightComponent)
+      lightEntity:add(attachmentComponent)
+      lightEntity:add(positionComponent)
+      lightEntity:setParent(player)
+      self.engine:addEntity(player)
+      self.engine:addEntity(lightEntity)
     elseif entity.type == "camera_location" then
       local toAdd = Entity()
       local x, y = entity.x, entity.y

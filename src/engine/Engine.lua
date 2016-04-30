@@ -308,7 +308,6 @@ function Engine:checkRequirements(entity, system) -- luacheck: ignore self
   for index, req in pairs(system:requires()) do
     if type(req) == "string" then
       if not entity.components[req] then
-        print(entity.name .. " does not have component " .. req)
         meetsrequirements = false
         break
       end
