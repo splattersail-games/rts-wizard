@@ -39,8 +39,9 @@ function Input.keyreleased( key, unicode )
   Input.__keysReleased[key] = true
 end
 
--------------- Functions to do stuff. These are called from controller and passed stuff
 function Input:mouse1Pressed(x, y)
+  Game:fireEvent(MousePressed(x, y, 2))
+
   Input.__mouse1Pressed = false
 end
 
