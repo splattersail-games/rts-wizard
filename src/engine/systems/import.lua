@@ -1,0 +1,5 @@
+require 'src.engine.systems.DrawCollisionBoxesSystem'
+require 'src.engine.systems.DrawImageSystem'
+require 'src.engine.systems.MoveSystem'
+require 'src.engine.systems.ParentPositionOffsetSystem'
+require 'src.engine.systems.events.PushMoveCommand'
