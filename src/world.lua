@@ -171,8 +171,7 @@ function World:loadEntities(entities)
       player:add(Moveable(
           nil, nil, nil
       ))
-      player:add(PlayerControlled())
-      player.name = 'Player'
+      player:add(Player('Tattersail'))
 
       -- Create a light, and attach it to the player
       local color = {r = 220, g = 120, b = 120}
