@@ -1,6 +1,8 @@
 -- Main --
 require 'lib-import'
-require 'engine-import'
+
+-- Importing ECS
+require 'src.engine.import'
 
 -- Main game
 require 'src.Game'
