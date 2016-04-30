@@ -3,21 +3,21 @@
  <properties>
   <property name="name" value="Level 3"/>
  </properties>
- <tileset firstgid="1" name="floors" tilewidth="32" tileheight="32" tilecount="128">
+ <tileset firstgid="1" name="floors" tilewidth="32" tileheight="32" tilecount="128" columns="16">
   <image source="../../resources/spritesheets/tileset/floors.png" width="512" height="256"/>
  </tileset>
- <tileset firstgid="129" name="Toolbelt" tilewidth="32" tileheight="32" tilecount="3">
+ <tileset firstgid="129" name="Toolbelt" tilewidth="32" tileheight="40" tilecount="3" columns="0">
   <tile id="0">
    <properties>
     <property name="type" value="player"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/PlayerSpawn.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/PlayerSpawn.png"/>
   </tile>
   <tile id="1">
    <properties>
     <property name="type" value="wall"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/Wall.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/Wall.png"/>
   </tile>
   <tile id="2">
    <properties>
@@ -28,10 +28,10 @@
     <property name="radius" value="400"/>
     <property name="type" value="light"/>
    </properties>
-   <image width="32" height="32" source="../../resources/spritesheets/Light.png"/>
+   <image width="32" height="40" source="../../resources/spritesheets/Light.png"/>
   </tile>
  </tileset>
- <tileset firstgid="132" name="Decals" tilewidth="129" tileheight="128" tilecount="1">
+ <tileset firstgid="132" name="Decals" tilewidth="129" tileheight="128" tilecount="1" columns="0">
   <tile id="0">
    <image width="129" height="128" source="../../resources/spritesheets/pentagram.png"/>
   </tile>
@@ -145,21 +145,12 @@
 </data>
  </layer>
  <imagelayer name="Background">
-  <image source="../../resources/levels/level3.png" trans="000000"/>
+  <image source="../../resources/levels/level3.png" trans="000000" width="1600" height="1600"/>
   <properties>
    <property name="path" value="resources/levels/level3.png"/>
   </properties>
  </imagelayer>
  <objectgroup name="objects">
-  <object id="1" name="Light" type="light" gid="131" x="34.6667" y="474.667" width="32" height="32">
-   <properties>
-    <property name="b" value="180"/>
-    <property name="g" value="180"/>
-    <property name="intentsity" value="0.8"/>
-    <property name="r" value="255"/>
-    <property name="radius" value="500"/>
-   </properties>
-  </object>
   <object id="6" name="Light" type="light" gid="131" x="641.333" y="738.667" width="32" height="32" rotation="-4.55995">
    <properties>
     <property name="b" value="5"/>
