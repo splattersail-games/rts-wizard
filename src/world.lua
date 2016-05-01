@@ -149,6 +149,9 @@ function World:loadEntities(entities)
     elseif entity.type == "player" then
       --self:addPlayer(entity.x, entity.y, entity.width, entity.height)
       local player = Entity()
+      player.name = "Tattersail"
+      local text = love.graphics.newText(resources.fonts.default.size14, player.name)
+      resources.textCache.currentWorld[player.name] = text
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
       local pos = Position(x, y)
