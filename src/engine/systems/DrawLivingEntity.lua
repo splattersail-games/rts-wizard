@@ -9,11 +9,14 @@ function DrawLivingEntity:draw()
     local positionComponent = entity:get("Position")
 
     if entity.name and positionComponent.x and positionComponent.y then
-      love.graphics.print(
-        entity.name,
-        positionComponent.x - 28, -- Hardcoded position for now as POC
+      local text = resources.textCache.currentWorld[entity.name]
+      love.graphics.setColor(0, 255, 0)
+      love.graphics.draw(
+        text,
+        positionComponent.x - (text:getWidth() / 2),
         positionComponent.y - 50
       )
+      love.graphics.setColor(255, 255, 255)
     end
   end
 end
