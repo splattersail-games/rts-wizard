@@ -19,9 +19,10 @@ World.bump = nil
   Load a level
 ]]
 function World:load(level)
-  print("Initializing world\n..................\n.................")
+  LOG.setScope("Loading World", LOG.logLevel.DEBUG) -- Print logs greater or equal to debug severity
 
-  print("Initialising lightworld\n")
+  LOG.debug("Initializing world")
+  LOG.debug("Initialising lightworld")
   -- Initialise light world
   self.lightWorld = LightWorld({
       ambient = {0, 0, 0}, --the general ambient light in the environment
@@ -30,7 +31,8 @@ function World:load(level)
     })
 
   -- Initialise ECS
-  print("Initialising ECS")
+  LOG.setScope("Initialising ECS", LOG.logLevel.DEBUG)
+  LOG.debug("Starting. . . ")
   self.engine = Engine()
   self.eventManager = EventManager()
 
@@ -47,17 +49,19 @@ function World:load(level)
   -- Add Draw Systems
   self.engine:addSystem(DrawImageSystem(), "draw")
   self.engine:addSystem(DrawLivingEntity(), "draw")
-  print("ECS initialised.")
-  print("Systems: " .. #self.engine.systems["all"])
-  print("Update Systems: " .. #self.engine.systems["update"])
+  LOG.debug("Done.")
+  LOG.debug("Systems: " .. #self.engine.systems["all"])
+  LOG.debug("Update Systems: " .. #self.engine.systems["update"])
+  LOG.endScope()
 
-  print("Initialising bump world")
+  LOG.debug("Initialising bump world")
   -- Initialise collisions world
   self.bump = bump.newWorld(128)
 
-  print("Loading a map")
+  LOG.debug("Loading a map")
   -- Load up a map
   self:loadWorld(level)
+  LOG.endScope()
 end
 
 --[[
@@ -70,7 +74,7 @@ end
 function World:loadWorld(worldFile)
   local worldObj = JSON:decode(worldFile)
   if worldObj.properties.name ~= nil then
-    print ("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
+    LOG.debug("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
   end
   self.gridScale = worldObj.tilewidth
   self.gridWidth = worldObj.width
@@ -83,9 +87,9 @@ function World:loadWorld(worldFile)
   for _, layer in pairs(World.layers) do
 
     if layer.visible then
-      print("Loading " .. layer.name)
+      LOG.debug("Loading " .. layer.name)
       if layer.type == "imagelayer" and layer.visible then
-        print ("Caching image: " .. layer.name)
+        LOG.debug("Caching image: " .. layer.name)
         layer.loveImage = love.graphics.newImage( layer.properties.path )
       elseif layer.type == "objectgroup" and layer.visible then
         World:loadEntities(layer.objects)
@@ -95,8 +99,8 @@ function World:loadWorld(worldFile)
 end
 
 function World:loadEntities(entities)
+  LOG.setScope("Read Entities", LOG.logLevel.DEBUG)
   for _, entity in pairs(entities) do
-    print ("Adding a " .. entity.type)
     if entity.type == "wall" then
       local w, h = entity.width, entity.height
       local x, y =
@@ -121,7 +125,7 @@ function World:loadEntities(entities)
       )
       --self:addWall(x, y, entity.width, entity.height)
     elseif entity.type == "light" then
-      print ("Reading a light " .. entity.properties.r)
+      LOG.debug("Reading a light " .. entity.properties.r)
       local color = {
         r = tonumber(entity.properties.r),
         g = tonumber(entity.properties.g),
@@ -198,6 +202,7 @@ function World:loadEntities(entities)
       self.engine:addEntity(toAdd)
     end
   end
+  LOG.endScope()
 end
 
 function World:update(dt)

@@ -327,7 +327,6 @@ function Engine:checkRequirements(entity, system) -- luacheck: ignore self
   end
   if meetsrequirements == true and category == nil then
     system:addEntity(entity)
-    print("Added to system")
   end
 
   if entity.name then
