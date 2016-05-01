@@ -1,3 +1,7 @@
+--[[
+My legacy shader code, we ended up using a third-party library called light_world
+Because it was so complete.
+]]
 local vector = require 'src.utils.vector'
 Shader = {}
 
