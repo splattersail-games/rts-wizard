@@ -18,9 +18,7 @@ end
 function Entity:add(component)
   local name = component.class.name
   if self.components[name] then
-    if lovetoyDebug then
-      print("Trying to add Component '" .. name .. "', but it's already existing. Please use Entity:set to overwrite a component in an entity.")
-    end
+    print("Trying to add Component '" .. name .. "', but it already exists. Use set instead.")
   else
     self.components[name] = component
     if self.eventManager then

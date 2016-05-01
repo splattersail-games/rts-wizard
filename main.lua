@@ -4,6 +4,9 @@ require 'lib-import'
 -- Importing ECS
 require 'src.engine.import'
 
+-- Global logger
+LOG = require 'src.utils.debug'
+
 -- Main game
 require 'src.Game'
 require 'src.Menu'
@@ -16,7 +19,6 @@ require 'src.commands.MoveCommand'
 require 'src.commands.StopCommand'
 require 'src.commands.Command'
 require 'src.GameController'
---srequire 'src.Entities'
 require 'src.hud'
 
 -- Run at game start --
