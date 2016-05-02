@@ -1,5 +1,4 @@
 resources = {}
-local elements = require 'src.game.elements'
 
 function resources:init()
   resources.icon = love.graphics.newImage("resources/spritesheets/basick.png")
@@ -11,8 +10,10 @@ function resources:init()
   resources.images = {
     elements = {}
   }
-  for element, _ in pairs(elements) do
+  for element, v in pairs(elements) do
+    -- Cache image in both string an integer keys for convenience
     resources.images.elements[element] = love.graphics.newImage("resources/spritesheets/elements/" .. string.lower(element) .. ".png")
+    resources.images.elements[v] = resources.images.elements[element]
   end
 
   resources.items = {}

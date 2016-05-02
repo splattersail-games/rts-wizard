@@ -4,6 +4,10 @@ If the entity has a name, display's it above the health
 ]]
 DrawLivingEntity = class("DrawLivingEntity", System)
 
+local healthBarWidth = 50
+local border = 2
+local healthBarHeight = 5
+
 function DrawLivingEntity:initialize()
   System.initialize(self)
   self.group = 'camera_overlay'
@@ -35,10 +39,6 @@ function DrawLivingEntity:draw()
       )
 
       -- Draw a cheeky wee health bar. Arbitrary at this stage
-      local healthBarWidth = 50
-      local border = 2
-      local healthBarHeight = 5
-
       local healthPortionLeft = (livingCompotent.life / livingCompotent.maxLife)
 
       posX = positionComponent.x - (healthBarWidth / 2)
