@@ -44,6 +44,7 @@ function World:load(level)
 
   local moveSystem = MoveSystem()
   self.engine:addSystem(moveSystem, "update")
+  self.engine:addSystem(ReadPlayerInput(), "update")
   self.engine:addSystem(ParentPositionOffsetSystem(), "update")
 
   -- Add Draw Systems
@@ -186,9 +187,6 @@ function World:loadEntities(entities)
       player:add(Living(1500, 1500))
 
       local spellCasterComp = SpellCaster()
-      spellCasterComp.spell:push(elements.EARTH)
-      spellCasterComp.spell:push(elements.LIGHT)
-      spellCasterComp.spell:push(elements.SHIELD)
       player:add(spellCasterComp)
 
       -- Create a light, and attach it to the player
