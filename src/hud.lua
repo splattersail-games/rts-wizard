@@ -1,3 +1,4 @@
+local elements = require 'src.game.elements'
 Hud = {}
 Hud.size = 0
 
@@ -11,21 +12,22 @@ Hud.textConsole.title = "A voice in the darkness. . . "
 local gWidth, gHeight
 local borderWidth
 local panelSpacing
-local cgSquareSize
-local cgContainerWidth
-local cgContainerHeight
-local controlGroupViewX
-local controlGroupViewY
+local elementSize
+local elementsContainerWidth
+local elementsContainerHeight
+local elementsViewX
+local elementsViewY
 
 function Hud:init()
   gWidth, gHeight = love.graphics.getWidth(), love.graphics.getHeight()
   borderWidth = 10
   panelSpacing = 5
-  cgSquareSize = 32
-  cgContainerWidth = (cgSquareSize * 10) + (panelSpacing * 11)
-  cgContainerHeight = cgSquareSize + (0.25 * cgSquareSize)
-  controlGroupViewX = math.floor((gWidth - cgContainerWidth) / 2)
-  controlGroupViewY = gHeight - math.floor(cgContainerHeight) - borderWidth
+  elementScale = 0.7
+  elementSize = resources.images.elements['WATER']:getWidth() * elementScale
+  elementsContainerWidth = (elementSize * 8) + (panelSpacing * 11)
+  elementsContainerHeight = (elementSize * 2) + (panelSpacing * 2)
+  elementsViewX = math.floor((gWidth - elementsContainerWidth) / 2)
+  elementsViewY = gHeight - math.floor(elementsContainerHeight) - borderWidth
 
   Hud.textConsole.font = love.graphics.newFont("resources/ui/fonts/GeosansLight.ttf", Hud.textConsole.fontSize)
   Hud.textConsole.titleFont = love.graphics.newFont("resources/ui/fonts/Timeless.ttf", 18)
@@ -40,36 +42,38 @@ function Hud:update(dt)
 end
 
 -- draws a box for each control group at the bottom of the screen
-function Hud:drawControlGroupView()
+function Hud:drawElements()
 
-  local startX, startY = controlGroupViewX, controlGroupViewY
-  love.graphics.setColor(32, 32, 32, 100)
-  love.graphics.rectangle('fill', startX, startY, cgContainerWidth, cgContainerHeight)
+  local startX, startY = elementsViewX, elementsViewY
+  love.graphics.setColor(40, 50, 40)
+  love.graphics.rectangle('fill', startX, startY, elementsContainerWidth, elementsContainerHeight)
+  love.graphics.setColor(255, 255, 255)
+  panelX = startX + panelSpacing
+  panelY = startY + panelSpacing
+  love.graphics.draw(resources.images.elements['WATER'], panelX, panelY, 0, elementScale, elementScale)
 
-  for cGroup = 0, 9 do
-    panelX = startX + panelSpacing + (cGroup * (panelSpacing + cgSquareSize))
-    panelY = startY + panelSpacing
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['LIGHT'], panelX, panelY, 0, elementScale, elementScale)
 
-    love.graphics.setColor(20, 20, 20, 255)
-    love.graphics.rectangle('line', panelX, panelY, cgSquareSize, cgSquareSize)
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['SHIELD'], panelX, panelY, 0, elementScale, elementScale)
 
-    if cGroup == 0 then
-      love.graphics.setColor(255, 255, 255)
-      love.graphics.rectangle('fill', panelX, panelY, cgSquareSize, cgSquareSize)
-      love.graphics.setColor(255, 255, 255)
-      love.graphics.setBlendMode("alpha")
-      love.graphics.draw(resources.items.pickaxe, panelX, panelY, 0, 2, 2)
-    else
-      love.graphics.setColor(255, 255, 255, 32)
-      love.graphics.rectangle('fill', panelX, panelY, cgSquareSize, cgSquareSize)
-      love.graphics.setColor(20, 20, 20, 255)
-    end
-    cGroup = cGroup + 1
-    if cGroup == 10 then cGroup = 0 end
-    love.graphics.print(tostring(cGroup), panelX + 2, panelY + 2)
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['COLD'], panelX, panelY, 0, elementScale, elementScale)
 
-    love.graphics.setColor(20, 20, 20, 192)
-  end
+  -- Shimmy this row down underneath the preceding 4
+  panelX = startX + panelSpacing + (elementSize / 2)
+  panelY = startY + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['LIGHTNING'], panelX, panelY, 0, elementScale, elementScale)
+
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['DARK'], panelX, panelY, 0, elementScale, elementScale)
+
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['EARTH'], panelX, panelY, 0, elementScale, elementScale)
+
+  panelX = panelX + (elementSize + panelSpacing)
+  love.graphics.draw(resources.images.elements['FIRE'], panelX, panelY, 0, elementScale, elementScale)
 end
 
 function Hud:drawHudBorder()
@@ -109,7 +113,7 @@ function Hud:draw()
     end
   end
 
-  Hud:drawControlGroupView()
+  Hud:drawElements()
   Hud:drawHudBorder()
 
 end
