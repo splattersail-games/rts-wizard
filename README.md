@@ -1,11 +1,11 @@
-RTS Wizard starring Matt Damon
+Bitwizards
 =======
 
 ![Game Screenshot]
-(http://i.imgur.com/Q94SF9v.png)
+(http://i.imgur.com/zxgyfv5.png)
 
 # What is it?
-RTS Wizard (Which is just a silly codename) is an unambitious MWW inspired game.
+Bitwizards is an unambitious MWW inspired game.
 
 # Helping out
 - Are you an artist?
