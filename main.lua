@@ -15,6 +15,7 @@ require 'src.resource'
 require 'src.Game'
 require 'src.Menu'
 require 'src.input'
+require 'src.Settings'
 
 -- stuff that needs updating and drawing
 require 'src.world'
