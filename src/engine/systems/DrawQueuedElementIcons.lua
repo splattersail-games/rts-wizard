@@ -16,9 +16,7 @@ end
 function DrawQueuedElementIcons:draw()
   --[[
   Get the current blend mode so that we can give it back after we are done.
-  Then draw all the various components of a living entity:
-  - A title
-  - A healthbar
+  Then draw a spell caster's queued elements.
   ]]
   local previousBlendMode = love.graphics.getBlendMode()
   love.graphics.setBlendMode('alpha')
