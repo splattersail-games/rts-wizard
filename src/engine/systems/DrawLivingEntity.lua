@@ -4,6 +4,11 @@ If the entity has a name, display's it above the health
 ]]
 DrawLivingEntity = class("DrawLivingEntity", System)
 
+function DrawLivingEntity:initialize()
+  System.initialize(self)
+  self.group = 'camera_overlay'
+end
+
 function DrawLivingEntity:draw()
   --[[
   Get the current blend mode so that we can give it back after we are done.
@@ -20,16 +25,8 @@ function DrawLivingEntity:draw()
     if entity.name and positionComponent.x and positionComponent.y then
       local text = resources.textCache.currentWorld[entity.name]
       local posX = positionComponent.x - (text:getWidth() / 2)
-      local posY = positionComponent.y - 85
+      local posY = positionComponent.y - 70
       love.graphics.setColor(0, 255, 0, 255)
-      love.graphics.setLineWidth(1)
-      love.graphics.rectangle(
-        'line',
-        posX,
-        posY,
-        text:getWidth(),
-        text:getHeight()
-      )
       love.graphics.draw(
         text,
         posX,
@@ -42,7 +39,7 @@ function DrawLivingEntity:draw()
       local healthBarHeight = 5
 
       posX = positionComponent.x - (healthBarWidth / 2)
-      posY = posY + 30
+      posY = posY + 20
       love.graphics.setColor(0, 0, 0, 255)
       love.graphics.rectangle('fill', posX - border, posY - border, healthBarWidth + (2 * border), healthBarHeight + (2 * border))
       love.graphics.setColor(0, 255, 0, 255)

@@ -1,5 +1,10 @@
 DrawImageSystem = class("DrawImageSystem", System)
 
+function DrawImageSystem:initialize()
+  System.initialize(self)
+  self.group = 'world'
+end
+
 function DrawImageSystem:draw()
   love.graphics.setColor(255,255,255)
   for index, entity in pairs(self.targets) do

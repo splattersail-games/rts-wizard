@@ -249,7 +249,7 @@ function World:draw()
     end
   end
 
-  World.engine:draw()
+  World.engine:draw({ group = 'world' })
 
   love.graphics.setColor(255, 255, 255)
 end
