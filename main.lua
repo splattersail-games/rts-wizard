@@ -17,9 +17,6 @@ require 'src.input'
 -- stuff that needs updating and drawing
 require 'src.world'
 require 'src.resource'
-require 'src.commands.MoveCommand'
-require 'src.commands.StopCommand'
-require 'src.commands.Command'
 require 'src.GameController'
 require 'src.hud'
 
