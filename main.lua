@@ -8,6 +8,8 @@ require 'src.engine'
 LOG = require 'src.utils.debug'
 
 -- Main game
+require 'src.game.elements'
+require 'src.game.spell'
 require 'src.Game'
 require 'src.Menu'
 require 'src.input'
