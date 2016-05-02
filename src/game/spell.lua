@@ -18,6 +18,6 @@ function Spell:push(element)
 
   if self.currentElementCount < 3 then
     self.elements.push(element)
-    self.currentElementCount += 1
+    self.currentElementCount = self.currentElementCount + 1
   end
 end
