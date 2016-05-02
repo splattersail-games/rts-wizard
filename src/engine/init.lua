@@ -6,10 +6,10 @@ require 'src.engine.Component'
 require 'src.engine.util'
 
 -- Requiring all Components
-require 'src.engine.components.import'
+require 'src.engine.components'
 
 -- Requiring all systems
-require 'src.engine.systems.import'
+require 'src.engine.systems'
 
 -- Requiring all Events
 require 'src.engine.events.ComponentAdded'

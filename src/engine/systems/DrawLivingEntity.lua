@@ -21,6 +21,7 @@ function DrawLivingEntity:draw()
 
   for id, entity in pairs(self.targets) do
     local positionComponent = entity:get("Position")
+    local livingCompotent = entity:get("Living")
 
     if entity.name and positionComponent.x and positionComponent.y then
       local text = resources.textCache.currentWorld[entity.name]
@@ -38,12 +39,14 @@ function DrawLivingEntity:draw()
       local border = 2
       local healthBarHeight = 5
 
+      local healthPortionLeft = (livingCompotent.life / livingCompotent.maxLife)
+
       posX = positionComponent.x - (healthBarWidth / 2)
       posY = posY + 20
       love.graphics.setColor(0, 0, 0, 255)
       love.graphics.rectangle('fill', posX - border, posY - border, healthBarWidth + (2 * border), healthBarHeight + (2 * border))
       love.graphics.setColor(0, 255, 0, 255)
-      love.graphics.rectangle('fill', posX, posY, healthBarWidth * 0.67, healthBarHeight)
+      love.graphics.rectangle('fill', posX, posY, healthBarWidth * healthPortionLeft, healthBarHeight)
       love.graphics.setColor(255, 255, 255)
     end
   end
@@ -51,5 +54,5 @@ function DrawLivingEntity:draw()
 end
 
 function DrawLivingEntity:requires()
-  return {"Player", "Position"}
+  return {"Living", "Position"}
 end
