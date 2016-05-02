@@ -25,7 +25,7 @@ function World:load(level)
   LOG.debug("Initialising lightworld")
   -- Initialise light world
   self.lightWorld = LightWorld({
-      ambient = {0, 0, 0}, --the general ambient light in the environment
+      ambient = {30, 30, 30}, --the general ambient light in the environment
       refractionStrength = 16.0,
       reflectionVisibility = 0.75
     })
@@ -150,7 +150,7 @@ function World:loadEntities(entities)
       --self:addPlayer(entity.x, entity.y, entity.width, entity.height)
       local player = Entity()
       player.name = "Tattersail"
-      local text = love.graphics.newText(resources.fonts.default.size14, player.name)
+      local text = love.graphics.newText(resources.fonts.default.medium, player.name)
       resources.textCache.currentWorld[player.name] = text
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
@@ -181,10 +181,10 @@ function World:loadEntities(entities)
       player:add(Moveable(
           nil, nil, nil
       ))
-      player:add(Player("Tattersail"))
+      player:add(Player())
 
       -- Create a light, and attach it to the player
-      local color = {r = 220, g = 120, b = 120}
+      local color = {r = 90, g = 90, b = 90}
       local theLight = World.lightWorld:newLight(pos.x, pos.y, color.r, color.g, color.b, 300)
       theLight:setGlowStrength(0.4)
       local lightComponent = Light(theLight)
@@ -251,5 +251,5 @@ function World:draw()
 
   World.engine:draw()
 
-  love.graphics.setColor({ 255, 255, 255})
+  love.graphics.setColor(255, 255, 255)
 end
