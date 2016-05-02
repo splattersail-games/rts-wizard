@@ -106,7 +106,7 @@ end
 
 function GameController:checkForStopCommand(dt)
   if love.keyboard.isDown( "s" ) then
-    Game:stopCommand()
+    --Game:stopCommand()
   end
 end
 
