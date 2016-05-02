@@ -17,7 +17,7 @@ function Spell:push(element)
   ]]
 
   if self.currentElementCount < 3 then
-    self.elements.push(element)
+    Queue.push(self.elements, element)
     self.currentElementCount = self.currentElementCount + 1
   end
 end

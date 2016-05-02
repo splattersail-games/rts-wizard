@@ -8,15 +8,16 @@ require 'src.engine'
 LOG = require 'src.utils.debug'
 
 -- Main game
-require 'src.game.elements'
 require 'src.game.spell'
+elements = require 'src.game.elements'
+require 'src.resource'
+
 require 'src.Game'
 require 'src.Menu'
 require 'src.input'
 
 -- stuff that needs updating and drawing
 require 'src.world'
-require 'src.resource'
 require 'src.GameController'
 require 'src.hud'
 

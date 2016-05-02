@@ -5,15 +5,8 @@ function Queue.new()
 end
 
 function Queue.push( queue, value )
-
-  local shouldLink = not Queue.empty( queue )
-
   queue.last = queue.last + 1
   queue[queue.last] = value
-
-  if shouldLink then
-    queue[queue.last-1].next = queue[queue.last]
-  end
 end
 
 function Queue.pop( queue )

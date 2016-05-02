@@ -49,6 +49,7 @@ function World:load(level)
   -- Add Draw Systems
   self.engine:addSystem(DrawImageSystem(), "draw")
   self.engine:addSystem(DrawLivingEntity(), "draw")
+  self.engine:addSystem(DrawQueuedElementIcons(), "draw")
   LOG.debug("Done.")
   LOG.debug("Systems: " .. #self.engine.systems["all"])
   LOG.debug("Update Systems: " .. #self.engine.systems["update"])
@@ -183,7 +184,12 @@ function World:loadEntities(entities)
       ))
       player:add(Player())
       player:add(Living(1500, 1500))
-      player:add(SpellCaster())
+
+      local spellCasterComp = SpellCaster()
+      spellCasterComp.spell:push(elements.EARTH)
+      spellCasterComp.spell:push(elements.LIGHT)
+      spellCasterComp.spell:push(elements.SHIELD)
+      player:add(spellCasterComp)
 
       -- Create a light, and attach it to the player
       local color = {r = 90, g = 90, b = 90}
