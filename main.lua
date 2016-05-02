@@ -2,7 +2,7 @@
 require 'lib-import'
 
 -- Importing ECS
-require 'src.engine.import'
+require 'src.engine'
 
 -- Global logger
 LOG = require 'src.utils.debug'

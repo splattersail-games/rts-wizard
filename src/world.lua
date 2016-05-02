@@ -182,6 +182,7 @@ function World:loadEntities(entities)
           nil, nil, nil
       ))
       player:add(Player())
+      player:add(Living(1500, 1500))
 
       -- Create a light, and attach it to the player
       local color = {r = 90, g = 90, b = 90}
