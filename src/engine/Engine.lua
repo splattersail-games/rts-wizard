@@ -246,10 +246,23 @@ function Engine:removeInitializer(name)
   self.initializer[name] = nil
 end
 
-function Engine:draw()
-  for _, system in ipairs(self.systems["draw"]) do
-    if system.active then
-      system:draw()
+-- options table:
+-- group: draw systems that are in the given group
+function Engine:draw(options)
+  if options and options.group then
+    -- Draw systems in the given group
+    -- We don't have many systems so at this stage I'm comfortable iterating over all here
+    for _, system in ipairs(self.systems["draw"]) do
+      if system.group and system.group == options.group then
+        system:draw()
+      end
+    end
+  else
+    -- Draw all active systems
+    for _, system in ipairs(self.systems["draw"]) do
+      if system.active then
+        system:draw()
+      end
     end
   end
 end

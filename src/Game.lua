@@ -45,8 +45,8 @@ function Game:draw()
 
   local x, y = camera:mousePosition()
   love.graphics.draw(cursor, x, y, 0, 0.3)
+  World.engine:draw({ group = 'camera_overlay' })
   camera:unset()
-
   Hud.draw()
 end
 

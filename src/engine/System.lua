@@ -3,6 +3,7 @@ System = class("System")
 function System:initialize()
   -- Liste aller Entities, die die RequiredComponents dieses Systems haben
   self.targets = {}
+  self.group = '' -- System group name. Does not need to be set
   self.active = true
 end
 
