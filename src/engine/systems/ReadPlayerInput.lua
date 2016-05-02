@@ -10,9 +10,12 @@ function ReadPlayerInput:update(dt)
     local position = entity:get("Position")
     local spellCaster = entity:get("SpellCaster")
 
-    if Input.__keysPressed['q'] then
-      spellCaster.spell:push(elements.WATER)
-      Input:keypressHandled('q')
+    -- Read element casts
+    for element, key in pairs(Settings.controls.elements) do
+      if Input.__keysPressed[key] then
+        spellCaster.spell:push(elements[element])
+        Input:keypressHandled(key)
+      end
     end
   end
 end
