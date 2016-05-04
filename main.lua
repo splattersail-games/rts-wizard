@@ -3,16 +3,6 @@ require 'lib-import'
 
 -- Importing ECS
 require 'src.engine'
-
--- Global logger
-LOG = require 'src.utils.debug'
-
--- Main game
-require 'src.game.spell'
-elements = require 'src.game.elements'
-require 'src.game.caster'
-require 'src.resource'
-
 require 'src.Game'
 require 'src.Menu'
 require 'src.input'
@@ -30,8 +20,8 @@ function love.load()
   love.graphics.setBackgroundColor(0, 0, 0, 255)
   love.graphics.setColor(0, 0, 0)
   cursor = love.graphics.newImage("resources/cursor.png")
-  resources:init()
-  success = love.window.setIcon( resources.icon:getData() )
+  Game.resources:init()
+  success = love.window.setIcon( Game.resources.icon:getData() )
 
   Menu.load()
 end

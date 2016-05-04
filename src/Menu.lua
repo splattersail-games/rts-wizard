@@ -53,7 +53,7 @@ function Menu.draw()
   love.graphics.print("Levels:", 50, 20)
 
   love.graphics.setColor(255, 255, 255)
-  love.graphics.draw( resources.icon, 400, 250, 0, 1, 1 )
+  love.graphics.draw( Game.resources.icon, 400, 250, 0, 1, 1 )
 
   Menu.list:draw()
   love.graphics.setColor(255, 255, 255)

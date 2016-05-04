@@ -23,7 +23,7 @@ function Hud:init()
   borderWidth = 10
   panelSpacing = 5
   elementScale = 0.7
-  elementSize = resources.images.elements['WATER']:getWidth() * elementScale
+  elementSize = Game.resources.images.elements['WATER']:getWidth() * elementScale
   elementsContainerWidth = (elementSize * 8) + (panelSpacing * 11)
   elementsContainerHeight = (elementSize * 2) + (panelSpacing * 2)
   elementsViewX = math.floor((gWidth - elementsContainerWidth) / 2)
@@ -50,30 +50,30 @@ function Hud:drawElements()
   love.graphics.setColor(255, 255, 255)
   panelX = startX + panelSpacing
   panelY = startY + panelSpacing
-  love.graphics.draw(resources.images.elements['WATER'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['WATER'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['LIGHT'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['LIGHT'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['SHIELD'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['SHIELD'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['COLD'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['COLD'], panelX, panelY, 0, elementScale, elementScale)
 
   -- Shimmy this row down underneath the preceding 4
   panelX = startX + panelSpacing + (elementSize / 2)
   panelY = startY + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['LIGHTNING'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['LIGHTNING'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['DARK'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['DARK'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['EARTH'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['EARTH'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(resources.images.elements['FIRE'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['FIRE'], panelX, panelY, 0, elementScale, elementScale)
 end
 
 function Hud:drawHudBorder()
@@ -98,7 +98,7 @@ function Hud:draw()
 
     love.graphics.rectangle('fill', posX, posY, w, h)
     love.graphics.setColor(255, 255, 255)
-    love.graphics.draw(resources.UI.textbox, posX, posY)
+    love.graphics.draw(Game.resources.UI.textbox, posX, posY)
 
     local padding = Hud.textConsole.textPadding
     love.graphics.setColor(255, 255, 255, 191)
