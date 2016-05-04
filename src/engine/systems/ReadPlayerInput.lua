@@ -27,10 +27,13 @@ function ReadPlayerInput:update(dt)
     end
 
     -- Mouse 2 is currently hardcoded as spell cast
-    if Input.__mouse2Pressed then
+    if Input.__mousePressed[2] then
       local x, y = love.mouse.getX(), love.mouse.getY()
       x, y = camera:scalePoint(x, y)
       caster.cast(spellCaster.spell)
+    end
+
+    if Input.__mousePressed[3] then
     end
   end
 end

@@ -30,23 +30,15 @@ function GameController:update(dt)
 end
 
 function GameController:mouseEvents(dt)
-  if Input.__mouse1Pressed then
-    Input:mouse1Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
-  end
+  local m
+  for m = 1, 3 do
+    if Input.__mousePressed[m] then
+      Input:mousepressHandled(m, Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
+    end
 
-  if Input.__mouse1Released then
-    Input:mouse1Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
-  end
-
-  if Input.__mouse2Pressed then
-    Input:mouse2Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
-  end
-
-  if Input.__mouse2Released then
-    Input:mouse2Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
-  end
-
-  if love.mouse.isDown( 2 ) then
+    if Input.__mouseReleased[m] then
+      Input:mousereleaseHandled(m, Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
+    end
   end
 end
 
