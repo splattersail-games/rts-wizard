@@ -11,6 +11,13 @@ local elements = {
   LIGHT = 6,
   EARTH = 7
 }
+ELEMENT_CONFLICT_MAP = {}
+ELEMENT_CONFLICT_MAP[elements.WATER] = elements.LIGHTNING
+ELEMENT_CONFLICT_MAP[elements.LIGHTNING] = elements.EARTH
+ELEMENT_CONFLICT_MAP[elements.SHIELD] = elements.SHIELD
+ELEMENT_CONFLICT_MAP[elements.DARK] = elements.LIGHT
+ELEMENT_CONFLICT_MAP[elements.FIRE] = elements.COLD
+
 -- Lock down the element values so code can't mess with them, (in lieu of constants)
 setmetatable(elements, {
   __newindex = function(t, k, v)
