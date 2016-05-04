@@ -19,10 +19,10 @@ World.bump = nil
   Load a level
 ]]
 function World:load(level)
-  LOG.setScope("Loading World", LOG.logLevel.DEBUG) -- Print logs greater or equal to debug severity
+  Game.log.setScope("Loading World", Game.log.logLevel.DEBUG) -- Print logs greater or equal to debug severity
 
-  LOG.debug("Initializing world")
-  LOG.debug("Initialising lightworld")
+  Game.log.debug("Initializing world")
+  Game.log.debug("Initialising lightworld")
   -- Initialise light world
   self.lightWorld = LightWorld({
       ambient = {30, 30, 30}, --the general ambient light in the environment
@@ -31,8 +31,8 @@ function World:load(level)
     })
 
   -- Initialise ECS
-  LOG.setScope("Initialising ECS", LOG.logLevel.DEBUG)
-  LOG.debug("Starting. . . ")
+  Game.log.setScope("Initialising ECS", Game.log.logLevel.DEBUG)
+  Game.log.debug("Starting. . . ")
   self.engine = Engine()
   self.eventManager = EventManager()
 
@@ -51,19 +51,19 @@ function World:load(level)
   self.engine:addSystem(DrawImageSystem(), "draw")
   self.engine:addSystem(DrawLivingEntity(), "draw")
   self.engine:addSystem(DrawQueuedElementIcons(), "draw")
-  LOG.debug("Done.")
-  LOG.debug("Systems: " .. #self.engine.systems["all"])
-  LOG.debug("Update Systems: " .. #self.engine.systems["update"])
-  LOG.endScope()
+  Game.log.debug("Done.")
+  Game.log.debug("Systems: " .. #self.engine.systems["all"])
+  Game.log.debug("Update Systems: " .. #self.engine.systems["update"])
+  Game.log.endScope()
 
-  LOG.debug("Initialising bump world")
+  Game.log.debug("Initialising bump world")
   -- Initialise collisions world
   self.bump = bump.newWorld(128)
 
-  LOG.debug("Loading a map")
+  Game.log.debug("Loading a map")
   -- Load up a map
   self:loadWorld(level)
-  LOG.endScope()
+  Game.log.endScope()
 end
 
 --[[
@@ -76,7 +76,7 @@ end
 function World:loadWorld(worldFile)
   local worldObj = JSON:decode(worldFile)
   if worldObj.properties.name ~= nil then
-    LOG.debug("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
+    Game.log.debug("Loaded " .. worldObj.properties.name .. " v" .. worldObj.version)
   end
   self.gridScale = worldObj.tilewidth
   self.gridWidth = worldObj.width
@@ -89,9 +89,9 @@ function World:loadWorld(worldFile)
   for _, layer in pairs(World.layers) do
 
     if layer.visible then
-      LOG.debug("Loading " .. layer.name)
+      Game.log.debug("Loading " .. layer.name)
       if layer.type == "imagelayer" and layer.visible then
-        LOG.debug("Caching image: " .. layer.name)
+        Game.log.debug("Caching image: " .. layer.name)
         layer.loveImage = love.graphics.newImage( layer.properties.path )
       elseif layer.type == "objectgroup" and layer.visible then
         World:loadEntities(layer.objects)
@@ -101,7 +101,7 @@ function World:loadWorld(worldFile)
 end
 
 function World:loadEntities(entities)
-  LOG.setScope("Read Entities", LOG.logLevel.DEBUG)
+  Game.log.setScope("Read Entities", Game.log.logLevel.DEBUG)
   for _, entity in pairs(entities) do
     if entity.type == "wall" then
       local w, h = entity.width, entity.height
@@ -127,7 +127,7 @@ function World:loadEntities(entities)
       )
       --self:addWall(x, y, entity.width, entity.height)
     elseif entity.type == "light" then
-      LOG.debug("Reading a light " .. entity.properties.r)
+      Game.log.debug("Reading a light " .. entity.properties.r)
       local color = {
         r = tonumber(entity.properties.r),
         g = tonumber(entity.properties.g),
@@ -152,8 +152,8 @@ function World:loadEntities(entities)
       --self:addPlayer(entity.x, entity.y, entity.width, entity.height)
       local player = Entity()
       player.name = "Tattersail"
-      local text = love.graphics.newText(resources.fonts.default.medium, player.name)
-      resources.textCache.currentWorld[player.name] = text
+      local text = love.graphics.newText(Game.resources.fonts.default.medium, player.name)
+      Game.resources.textCache.currentWorld[player.name] = text
       local x, y = entity.x, entity.y
       local w, h = entity.width, entity.height
       local pos = Position(x, y)
@@ -211,7 +211,7 @@ function World:loadEntities(entities)
       self.engine:addEntity(toAdd)
     end
   end
-  LOG.endScope()
+  Game.log.endScope()
 end
 
 function World:update(dt)

@@ -21,7 +21,7 @@ function ReadPlayerInput:update(dt)
     -- Read element casts
     for element, key in pairs(Settings.controls.elements) do
       if Input.__keysPressed[key] then
-        spellCaster.spell:push(elements[element])
+        spellCaster.spell:push(Game.elements[element])
         Input:keypressHandled(key)
       end
     end
@@ -30,10 +30,13 @@ function ReadPlayerInput:update(dt)
     if Input.__mousePressed[2] then
       local x, y = love.mouse.getX(), love.mouse.getY()
       x, y = camera:scalePoint(x, y)
-      caster.cast(spellCaster.spell)
+      Game.caster.cast(spellCaster.spell, x, y, { castType = 0 })
     end
 
+    -- Mouse 3 is currently hardcoded as self cast (have also arbitrarily used an options object with castType=1 to indicate self cast. This will and probably should change)
+    -- We will also need to give the spell caster access to some sort of callback API to the ECS / collision world so that it can do its work
     if Input.__mousePressed[3] then
+      Game.caster.cast(spellCaster.spell, x, y, { castType = 1 })
     end
   end
 end

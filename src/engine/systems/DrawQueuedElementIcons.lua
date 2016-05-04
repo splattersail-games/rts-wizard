@@ -8,7 +8,7 @@ function DrawQueuedElementIcons:initialize()
   System.initialize(self)
   self.group = 'camera_overlay'
   self.elementScale = 0.4
-  self.elementSize = resources.images.elements["WATER"]:getWidth() * self.elementScale
+  self.elementSize = Game.resources.images.elements["WATER"]:getWidth() * self.elementScale
   self.elementPadding = 2
   self.elementRowWidth = (self.elementPadding * 4) + (self.elementSize * 3)
 end
@@ -36,7 +36,7 @@ function DrawQueuedElementIcons:draw()
       local index = els.first
       local element = els[index]
       while element do
-        love.graphics.draw(resources.images.elements[element], posX, posY, 0, self.elementScale, self.elementScale)
+        love.graphics.draw(Game.resources.images.elements[element], posX, posY, 0, self.elementScale, self.elementScale)
         posX = posX + self.elementSize + self.elementPadding
 
         index = index + 1

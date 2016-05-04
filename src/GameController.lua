@@ -1,3 +1,8 @@
+--[[
+This file doesn't serve much of a purpose and is left over from this project's origins as a more traditional RTS game
+Will likely completely remove this file at some point and migrate anything that is actually useful elsewhere
+]]
+
 require 'src.input'
 
 GameController = {}
@@ -50,7 +55,6 @@ function GameController:keyHeldLogic(dt)
 end
 
 function GameController:keyboardEvents(dt)
-
   for num = 0, 9 do
     if Input.__keysReleased[tostring(num)] then
       Input:keyreleaseHandled(tostring(num))
