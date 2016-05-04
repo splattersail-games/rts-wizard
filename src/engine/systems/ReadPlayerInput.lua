@@ -13,22 +13,23 @@ function ReadPlayerInput:update(dt)
     -- Mouse 1 is currently hardcoded as move command
     if love.mouse.isDown(1) then
       local x, y = love.mouse.getX(), love.mouse.getY()
-      camera:scalePoint(x, y)
+      x, y = camera:scalePoint(x, y)
       moveComp = Moveable(x, y, 130)
       entity:set(moveComp)
     end
 
     -- Read element casts
     for element, key in pairs(Settings.controls.elements) do
-      if love.keyboard.isDown(key) then
+      if Input.__keysPressed[key] then
         spellCaster.spell:push(elements[element])
+        Input:keypressHandled(key)
       end
     end
 
     -- Mouse 2 is currently hardcoded as spell cast
-    if love.mouse.isDown(2) then
+    if Input.__mouse2Pressed then
       local x, y = love.mouse.getX(), love.mouse.getY()
-      camera:scalePoint(x, y)
+      x, y = camera:scalePoint(x, y)
       caster.cast(spellCaster.spell)
     end
   end

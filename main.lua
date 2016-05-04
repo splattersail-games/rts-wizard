@@ -10,6 +10,7 @@ LOG = require 'src.utils.debug'
 -- Main game
 require 'src.game.spell'
 elements = require 'src.game.elements'
+require 'src.game.caster'
 require 'src.resource'
 
 require 'src.Game'
