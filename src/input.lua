@@ -50,8 +50,6 @@ function Input:mouse1Released(x, y)
 end
 
 function Input:mouse2Pressed(x, y)
-  Game:fireEvent(MousePressed(x, y, 2))
-
   Input.__mouse2Pressed = false
 end
 

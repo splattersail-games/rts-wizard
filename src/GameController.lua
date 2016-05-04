@@ -47,15 +47,12 @@ function GameController:mouseEvents(dt)
   end
 
   if love.mouse.isDown( 2 ) then
-    local x, y = camera:scalePoint(love.mouse.getX(), love.mouse.getY())
-    Game:fireEvent(MousePressed(x, y, 2))
   end
 end
 
 function GameController:keyHeldLogic(dt)
   for num = 0, 9 do
     if GameController.lastControlGroupRecall.centered then
-      Game:centerOnSelected()
     end
   end
 end
@@ -64,11 +61,6 @@ function GameController:keyboardEvents(dt)
 
   for num = 0, 9 do
     if Input.__keysReleased[tostring(num)] then
-      if GameController.lastControlGroupRecall.controlGroup == num then
-        if GameController.lastControlGroupRecall.centered then
-          GameController.lastControlGroupRecall.centered = false
-        end
-      end
       Input:keyreleaseHandled(tostring(num))
     end
   end
@@ -81,14 +73,6 @@ function GameController:keyboardEvents(dt)
   -- Input:keypressHandled(key)
   -- end
   -- end
-
-  if timeSinceKeyboardAction > (200) then
-    if love.keyboard.isDown( "lctrl" ) or love.keyboard.isDown( "lshift" ) then
-      GameController.checkForModifierAction(dt)
-    end
-
-    GameController:checkForNormalAction(dt)
-  end
 end
 
 function GameController:checkForNormalAction(dt)
