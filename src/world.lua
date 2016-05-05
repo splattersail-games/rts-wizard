@@ -48,6 +48,7 @@ function World:load(level)
   self.engine:addSystem(ParentPositionOffsetSystem(), "update")
 
   -- Add Draw Systems
+  self.engine:addSystem(DrawWard(), "draw")
   self.engine:addSystem(DrawImageSystem(), "draw")
   self.engine:addSystem(DrawLivingEntity(), "draw")
   self.engine:addSystem(DrawQueuedElementIcons(), "draw")
@@ -188,6 +189,13 @@ function World:loadEntities(entities)
 
       local spellCasterComp = SpellCaster()
       player:add(spellCasterComp)
+
+      -- Hardcode a ward component to test
+      local wardComp = Ward()
+      wardComp[0] = Game.elements.FIRE
+      wardComp[1] = Game.elements.WATER
+      wardComp.size = 2
+      player:add(wardComp)
 
       -- Create a light, and attach it to the player
       local color = {r = 90, g = 90, b = 90}

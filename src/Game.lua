@@ -50,6 +50,10 @@ function Game:draw()
       World:draw()
     end)
 
+  -- We really need some way of stenciling entities / physical objects so that we can draw "world" level objects that aren't effected by lighting
+  -- For example, wards. I want physical objects to draw over the top of wards, but I don't want wards to be effected by lighting.
+  -- I'm pretty sure this is a good stencil use case.
+
   local x, y = camera:mousePosition()
   love.graphics.draw(cursor, x, y, 0, 0.3)
   World.engine:draw({ group = 'camera_overlay' })
