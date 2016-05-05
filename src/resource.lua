@@ -1,4 +1,4 @@
-resources = {}
+local resources = {}
 
 function resources:init()
   resources.icon = love.graphics.newImage("resources/spritesheets/basick.png")
@@ -8,12 +8,62 @@ function resources:init()
   resources.UI.textbox = love.graphics.newImage("resources/ui/textbox.png")
 
   resources.images = {
-    elements = {}
+    elements = {
+      RGB = {
+        WATER     = { 0, 0, 255 },
+        FIRE      = { 255, 90, 90 },
+        SHIELD    = { 255, 255, 0 },
+        COLD      = { 200, 200, 255 },
+        LIGHTNING = { 255, 20, 147 },
+        DARK      = { 128, 0, 0 },
+        LIGHT     = { 0, 255, 0 },
+        EARTH     = { 128, 128, 128 }
+      }
+    },
+    ward = {}
   }
-  for element, v in pairs(elements) do
+
+  resources.images.ward.innerAlpha = love.graphics.newImage("resources/images/wards/inner_alpha.png")
+  resources.images.ward.outerAlpha = love.graphics.newImage("resources/images/wards/outer_alpha.png")
+  resources.images.ward.inner = {}
+  resources.images.ward.outer = {}
+  resources.images.ward.scale = 0.5
+  resources.images.ward.width = resources.images.ward.innerAlpha:getWidth() * resources.images.ward.scale
+  resources.images.ward.offset = resources.images.ward.width / 2
+
+  for element, v in pairs(Game.elements) do
     -- Cache image in both string an integer keys for convenience
-    resources.images.elements[element] = love.graphics.newImage("resources/spritesheets/elements/" .. string.lower(element) .. ".png")
+    resources.images.elements[element] = love.graphics.newImage("resources/images/elements/" .. string.lower(element) .. ".png")
     resources.images.elements[v] = resources.images.elements[element]
+
+    local w, h =
+      resources.images.ward.width,
+      resources.images.ward.width
+    local innerCanvas = love.graphics.newCanvas(w, h)
+    innerCanvas:renderTo(function()
+      love.graphics.setBlendMode("alpha")
+      love.graphics.setColor(255, 255, 255)
+      love.graphics.draw(resources.images.ward.innerAlpha, 0, 0, 0, resources.images.ward.scale)
+      love.graphics.setBlendMode("multiply")
+      love.graphics.setColor(resources.images.elements.RGB[element])
+      love.graphics.rectangle("fill", 0, 0, w, h)
+    end)
+    resources.images.ward.inner[element] = innerCanvas
+    resources.images.ward.inner[v] = resources.images.ward.inner[element]
+
+    local outerCanvas = love.graphics.newCanvas(w, h)
+    outerCanvas:renderTo(function()
+      love.graphics.setBlendMode("alpha")
+      love.graphics.setColor(255, 255, 255)
+      love.graphics.draw(resources.images.ward.outerAlpha, 0, 0, 0, resources.images.ward.scale)
+      love.graphics.setBlendMode("multiply")
+      love.graphics.setColor(resources.images.elements.RGB[element])
+      love.graphics.rectangle("fill", 0, 0, w, h)
+    end)
+    love.graphics.setBlendMode("alpha")
+
+    resources.images.ward.outer[element] = outerCanvas
+    resources.images.ward.outer[v] = resources.images.ward.outer[element]
   end
 
   resources.items = {}
@@ -33,3 +83,5 @@ function resources:init()
     currentWorld = {}
   }
 end
+
+return resources

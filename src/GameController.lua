@@ -1,3 +1,8 @@
+--[[
+This file doesn't serve much of a purpose and is left over from this project's origins as a more traditional RTS game
+Will likely completely remove this file at some point and migrate anything that is actually useful elsewhere
+]]
+
 require 'src.input'
 
 GameController = {}
@@ -30,45 +35,28 @@ function GameController:update(dt)
 end
 
 function GameController:mouseEvents(dt)
-  if Input.__mouse1Pressed then
-    Input:mouse1Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
-  end
+  local m
+  for m = 1, 3 do
+    if Input.__mousePressed[m] then
+      Input:mousepressHandled(m, Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
+    end
 
-  if Input.__mouse1Released then
-    Input:mouse1Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
-  end
-
-  if Input.__mouse2Pressed then
-    Input:mouse2Pressed(Input.__lastMouseClickPoint.x, Input.__lastMouseClickPoint.y)
-  end
-
-  if Input.__mouse2Released then
-    Input:mouse2Released(Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
-  end
-
-  if love.mouse.isDown( 2 ) then
-    local x, y = camera:scalePoint(love.mouse.getX(), love.mouse.getY())
-    Game:fireEvent(MousePressed(x, y, 2))
+    if Input.__mouseReleased[m] then
+      Input:mousereleaseHandled(m, Input.__lastMouseReleasePoint.x, Input.__lastMouseReleasePoint.y)
+    end
   end
 end
 
 function GameController:keyHeldLogic(dt)
   for num = 0, 9 do
     if GameController.lastControlGroupRecall.centered then
-      Game:centerOnSelected()
     end
   end
 end
 
 function GameController:keyboardEvents(dt)
-
   for num = 0, 9 do
     if Input.__keysReleased[tostring(num)] then
-      if GameController.lastControlGroupRecall.controlGroup == num then
-        if GameController.lastControlGroupRecall.centered then
-          GameController.lastControlGroupRecall.centered = false
-        end
-      end
       Input:keyreleaseHandled(tostring(num))
     end
   end
@@ -81,14 +69,6 @@ function GameController:keyboardEvents(dt)
   -- Input:keypressHandled(key)
   -- end
   -- end
-
-  if timeSinceKeyboardAction > (200) then
-    if love.keyboard.isDown( "lctrl" ) or love.keyboard.isDown( "lshift" ) then
-      GameController.checkForModifierAction(dt)
-    end
-
-    GameController:checkForNormalAction(dt)
-  end
 end
 
 function GameController:checkForNormalAction(dt)
