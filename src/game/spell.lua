@@ -37,10 +37,8 @@ function Spell:push(element)
   while iter >= 0 do
     local elementInQueue = elementsCopy[iter]
     for el1, el2 in pairs(ELEMENT_CONFLICT_MAP) do
-      print (el1 .. el2)
       local conflict = (element == el1 and elementInQueue == el2) or (elementInQueue == el1 and element == el2)
       if conflict then
-        print("Removed a conflict")
         elementsCopy[iter] = nil
         dequeuedAnElement = true
         break
@@ -58,7 +56,6 @@ function Spell:push(element)
     local i = elementsCopy.first
     while i <= elementsCopy.last do
       if elementsCopy[i] then
-        print("Copied over an existing element: " .. elementsCopy[i])
         Queue.push(self.elements, elementsCopy[i])
       end
       i = i + 1
@@ -68,7 +65,6 @@ function Spell:push(element)
   end
 
   if self.currentElementCount < MAX_ELEMENTS then
-    print("Pushed a fresh element")
     Queue.push(self.elements, element)
     self.currentElementCount = self.currentElementCount + 1
   end

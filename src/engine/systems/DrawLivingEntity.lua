@@ -28,7 +28,7 @@ function DrawLivingEntity:draw()
     local livingCompotent = entity:get("Living")
 
     if entity.name and positionComponent.x and positionComponent.y then
-      local text = resources.textCache.currentWorld[entity.name]
+      local text = Game.resources.textCache.currentWorld[entity.name]
       local posX = positionComponent.x - (text:getWidth() / 2)
       local posY = positionComponent.y - 70
       love.graphics.setColor(0, 255, 0, 255)
