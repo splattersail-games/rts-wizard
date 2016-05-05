@@ -36,6 +36,23 @@ function ReadPlayerInput:update(dt)
     -- Mouse 3 is currently hardcoded as self cast (have also arbitrarily used an options object with castType=1 to indicate self cast. This will and probably should change)
     -- We will also need to give the spell caster access to some sort of callback API to the ECS / collision world so that it can do its work
     if Input.__mousePressed[3] then
+
+      -- Just gonna hard code warding logic here for POC
+      local hasShield = false
+      for el, v in pairs(spellCaster.spell.elements) do
+        hasShield = hasShield or (v == Game.elements.SHIELD)
+      end
+
+      if hasShield then
+        local wardComp = entity:get("Ward")
+        local elCount = 0
+        for el, v in pairs(spellCaster.spell.elements) do
+          if v ~= Game.elements.SHIELD then
+            wardComp[elCount] = v
+            elCount = elCount + 1
+          end
+        end
+      end
       Game.caster.cast(spellCaster.spell, x, y, { castType = 1 })
     end
   end
