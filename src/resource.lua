@@ -8,12 +8,15 @@ function resources:init()
   resources.UI.textbox = love.graphics.newImage("resources/ui/textbox.png")
 
   resources.images = {
-    elements = {}
+    elements = {},
+    ward = {}
   }
   for element, v in pairs(Game.elements) do
     -- Cache image in both string an integer keys for convenience
-    resources.images.elements[element] = love.graphics.newImage("resources/spritesheets/elements/" .. string.lower(element) .. ".png")
+    resources.images.elements[element] = love.graphics.newImage("resources/images/elements/" .. string.lower(element) .. ".png")
     resources.images.elements[v] = resources.images.elements[element]
+    resources.images.ward.inner = love.graphics.newImage("resources/images/wards/inner_alpha.png")
+    resources.images.ward.outer = love.graphics.newImage("resources/images/wards/outer_alpha.png")
   end
 
   resources.items = {}
