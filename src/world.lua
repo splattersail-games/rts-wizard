@@ -25,7 +25,7 @@ function World:load(level)
   Game.log.debug("Initialising lightworld")
   -- Initialise light world
   self.lightWorld = LightWorld({
-      ambient = {30, 30, 30}, --the general ambient light in the environment
+      ambient = {60, 60, 60}, --the general ambient light in the environment
       refractionStrength = 16.0,
       reflectionVisibility = 0.75
     })
@@ -176,8 +176,8 @@ function World:loadEntities(entities)
       player:add(Drawable(
           playerImage,
           0,
-          0.7, -- scale
-          0.7,
+          0.8, -- scale
+          0.8,
           playerImage:getWidth() / 2, -- offset
           playerImage:getHeight() / 2
       ))
@@ -192,9 +192,6 @@ function World:loadEntities(entities)
 
       -- Hardcode a ward component to test
       local wardComp = Ward()
-      wardComp[0] = Game.elements.FIRE
-      wardComp[1] = Game.elements.WATER
-      wardComp.size = 2
       player:add(wardComp)
 
       -- Create a light, and attach it to the player

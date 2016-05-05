@@ -5,10 +5,6 @@ DrawWard = class("DrawWard", System)
 
 function DrawWard:initialize()
   System.initialize(self)
-  self.scale = 0.35
-  self.innerWard = Game.resources.images.ward.inner
-  self.outerWard = Game.resources.images.ward.outer
-  self.imageWidth = self.innerWard:getWidth() * self.scale -- Assume they're both the same size and perfect square
   self.group = 'world'
 end
 
@@ -18,6 +14,7 @@ function DrawWard:draw()
   Then draw a spell caster's queued elements.
   ]]
   local previousBlendMode = love.graphics.getBlendMode()
+
   love.graphics.setBlendMode('add')
 
   for id, entity in pairs(self.targets) do
@@ -32,8 +29,15 @@ function DrawWard:draw()
     local imageWidthScaled = (drawable.image:getWidth() * drawable.sx)
     local imageHeightScaled = (drawable.image:getHeight() * drawable.sy)
 
-    love.graphics.draw(self.innerWard, x - (imageWidthScaled / 2), y - (imageHeightScaled / 4), 0, self.scale)
-    love.graphics.draw(self.outerWard, x - (imageWidthScaled / 2), y - (imageHeightScaled / 4), 0, self.scale)
+    love.graphics.setBlendMode("add")
+    if el1 then
+      love.graphics.draw(Game.resources.images.ward.inner[el1], x - (Game.resources.images.ward.offset), y - (imageHeightScaled / 3), 0)
+    end
+
+    if el2 then
+      love.graphics.draw(Game.resources.images.ward.outer[el2], x - (Game.resources.images.ward.offset), y - (imageHeightScaled / 3), 0)
+    end
+    love.graphics.setBlendMode("alpha")
   end
 
   love.graphics.setBlendMode(previousBlendMode)
