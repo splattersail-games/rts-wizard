@@ -10,14 +10,14 @@ function resources:init()
   resources.images = {
     elements = {
       RGB = {
-        WATER     = { 0, 0, 255 },
-        FIRE      = { 255, 90, 90 },
+        WATER     = { 30, 30, 255 },
+        FIRE      = { 255, 128, 51 },
         SHIELD    = { 255, 255, 0 },
-        COLD      = { 200, 200, 255 },
+        COLD      = { 220, 220, 255 },
         LIGHTNING = { 255, 20, 147 },
         DARK      = { 128, 0, 0 },
         LIGHT     = { 0, 255, 0 },
-        EARTH     = { 128, 128, 128 }
+        EARTH     = { 90, 90, 90 }
       }
     },
     ward = {}
