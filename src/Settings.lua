@@ -2,11 +2,11 @@ Settings = {
   controls = {
     elements = {
       WATER = 'q',
-      LIGHT = 'w',
+      LIFE = 'w',
       SHIELD = 'e',
       COLD = 'r',
       LIGHTNING = 'a',
-      DARK = 's',
+      DEATH = 's',
       EARTH = 'd',
       FIRE = 'f'
     }
