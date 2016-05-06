@@ -39,19 +39,22 @@ function ReadPlayerInput:update(dt)
 
       -- Just gonna hard code warding logic here for POC
       local hasShield = false
-      for el, v in pairs(spellCaster.spell.elements) do
-        hasShield = hasShield or (v == Game.elements.SHIELD)
+      for i, el in pairs(spellCaster:getSpellElements()) do
+        hasShield = hasShield or (el == Game.elements.SHIELD)
+        if hasShield then
+        end
       end
 
       if hasShield then
-        local wardComp = entity:get("Ward")
+        local wardComp = Ward() -- Nuke the old ward
         local elCount = 0
-        for el, v in pairs(spellCaster.spell.elements) do
-          if v ~= Game.elements.SHIELD then
-            wardComp[elCount] = v
+        for index, el in pairs(spellCaster:getSpellElements()) do
+          if el ~= Game.elements.SHIELD then
+            wardComp[elCount] = el
             elCount = elCount + 1
           end
         end
+        entity:set(wardComp)
       end
       Game.caster.cast(spellCaster.spell, x, y, { castType = 1 })
     end
