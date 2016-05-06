@@ -15,8 +15,8 @@ function resources:init()
         SHIELD    = { 255, 255, 0 },
         COLD      = { 220, 220, 255 },
         LIGHTNING = { 255, 20, 147 },
-        DARK      = { 128, 0, 0 },
-        LIGHT     = { 0, 255, 0 },
+        DEATH     = { 128, 0, 0 },
+        LIFE      = { 0, 255, 0 },
         EARTH     = { 90, 90, 90 }
       }
     },
@@ -65,9 +65,6 @@ function resources:init()
     resources.images.ward.outer[element] = outerCanvas
     resources.images.ward.outer[v] = resources.images.ward.outer[element]
   end
-
-  resources.items = {}
-  resources.items.pickaxe = love.graphics.newImage("resources/items/pickaxe.png")
 
   -- Declare fonts used by the game
   resources.fonts = {}

@@ -53,7 +53,7 @@ function Hud:drawElements()
   love.graphics.draw(Game.resources.images.elements['WATER'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(Game.resources.images.elements['LIGHT'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['LIFE'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
   love.graphics.draw(Game.resources.images.elements['SHIELD'], panelX, panelY, 0, elementScale, elementScale)
@@ -67,7 +67,7 @@ function Hud:drawElements()
   love.graphics.draw(Game.resources.images.elements['LIGHTNING'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
-  love.graphics.draw(Game.resources.images.elements['DARK'], panelX, panelY, 0, elementScale, elementScale)
+  love.graphics.draw(Game.resources.images.elements['DEATH'], panelX, panelY, 0, elementScale, elementScale)
 
   panelX = panelX + (elementSize + panelSpacing)
   love.graphics.draw(Game.resources.images.elements['EARTH'], panelX, panelY, 0, elementScale, elementScale)
