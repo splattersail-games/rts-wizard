@@ -13,3 +13,9 @@ Bitwizards is an unambitious MWW inspired game.
 - Do you have some cool design ideas?
 
 Please consider contacting me or working on an issue!
+
+# OK, Where is Everyone?
+
+You can join the discord channel with a temporary invite [here](https://discord.gg/armorer-midgardsormr-jayce).
+
+For permenanent membership ask Tattersail
