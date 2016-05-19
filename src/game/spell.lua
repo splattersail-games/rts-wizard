@@ -69,3 +69,18 @@ function Spell:push(element)
     self.currentElementCount = self.currentElementCount + 1
   end
 end
+
+function Spell:getElementCounts()
+  local elementCounts = {}
+  for _, el in pairs(Game.elements) do
+    elementCounts[el] = 0
+  end
+
+  local elementsCopy = shallowcopy(self.elements)
+  local i = nil
+  for i = elementsCopy.first, elementsCopy.last do
+    local el = elementsCopy[i]
+    elementCounts[el] = elementCounts[el] + 1
+  end
+  return elementCounts
+end

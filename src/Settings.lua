@@ -9,9 +9,12 @@ Settings = {
       DEATH = 's',
       EARTH = 'd',
       FIRE = 'f'
+    },
+    actions = {
+      SELF_CAST = 'x',
+      CAST = 'z',
+      MOVE = 1
     }
-  },
-  keyToAction = {
   }
 }
 

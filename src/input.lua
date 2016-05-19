@@ -10,6 +10,7 @@ Input = {
 
 -------------- Love callbacks
 function Input.mousepressed(x, y, button)
+  print("Mouse Pressed: " .. button)
   x, y = camera:scalePoint(x, y)
   Input.__lastMouseClickPoint = { x = x, y = y }
   Input.__mousePressed[button] = true
