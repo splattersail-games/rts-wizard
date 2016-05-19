@@ -21,6 +21,110 @@ GameController.keyToAction = {
   s = function(dt) Game:StopCommand() end
 }
 
+--[[
+  Half arsed data oriented methods for handling user input
+]]
+
+function GameController.selfCast(dt, entity, spellCaster)
+  local elementCounts = spellCaster.spell:getElementCounts()
+  local hasShield = elementCounts[Game.elements.SHIELD] > 0
+  if hasShield then
+    local wardComp = Ward() -- Nuke the old ward
+    local elCount = 0
+
+    for _, el in pairs(Game.elements) do
+      if el ~= Game.elements.SHIELD then
+        -- Add the non shield elements to the ward
+
+        local elementStrength = elementCounts[el]
+        if elementCounts[el] > 0 then
+
+          local strength = nil
+          for strength = 1, elementCounts[el] do
+            wardComp[elCount] = el
+            elCount = elCount + 1
+          end
+        end
+
+      end
+    end
+
+    entity:set(wardComp)
+  end
+  Game.caster.cast(spellCaster)
+end
+
+function GameController.cast(dt, spellCaster)
+  local elementCounts = spellCaster.spell:getElementCounts()
+  local x, y = love.mouse.getX(), love.mouse.getY()
+  x, y = camera:scalePoint(x, y)
+
+  -- Just some derpin' bools to make the alg below more readable
+  local hasShield = elementCounts[Game.elements.SHIELD] > 0
+  local hasEarth = elementCounts[Game.elements.EARTH] > 0
+  local hasIce = elementCounts[Game.elements.WATER] > 0 and
+                  elementCounts[Game.elements.COLD] > 0
+  local hasLifeOrDeath = elementCounts[Game.elements.LIFE] > 0 or
+                          elementCounts[Game.elements.DEATH] > 0
+  local hasLightning = elementCounts[Game.elements.LIGHTNING] > 0
+  local hasSpray = elementCounts[Game.elements.WATER] > 0 or
+                    elementCounts[Game.elements.COLD] > 0 or
+                    elementCounts[Game.elements.FIRE] > 0
+
+  -- Ice and earth are basically the same thing as far as spell forms are concerned
+  -- This is a useful heuristic for working out the spell form of the spell
+  local hasASolid = hasEarth or hasIce
+
+  if hasASolid then
+
+    if hasShield then
+      -- this is a wall
+    else
+      -- this is a projectile
+    end
+
+  elseif hasLifeOrDeath then
+
+    if hasShield then
+      -- this is a mine
+    else
+      -- this is a beam
+    end
+
+  elseif hasShield and (hasLightning or hasSpray) then
+    -- this is a storm
+  elseif hasShield then
+    -- this is a single shield element
+  elseif hasLightning then
+    -- this is lightning
+  else
+    -- this is a basic spray
+  end
+end
+
+function GameController.move(dt, entity, moveComp)
+  local x, y = love.mouse.getX(), love.mouse.getY()
+  x, y = camera:scalePoint(x, y)
+  moveComp = Moveable(x, y, 130)
+  entity:set(moveComp)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[
+  Legacy bullshit code below
+]]
+
 function GameController:update(dt)
 
   --- set currTime
