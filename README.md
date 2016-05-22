@@ -5,7 +5,7 @@ Bitwizards
 (http://i.imgur.com/zxgyfv5.png)
 
 # What is it?
-Bitwizards is an unambitious MWW inspired game.
+Bitwizards is an unambitious MWW inspired game/prototype.
 
 # Helping out
 - Are you an artist?
