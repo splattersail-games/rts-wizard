@@ -6,7 +6,6 @@ Game.log = require 'src.utils.debug'
 -- Main game
 require 'src.game.spell'
 Game.elements = require 'src.game.elements'
-Game.caster = require 'src.game.caster'
 Game.resources = require 'src.resource'
 
 Game.mainMenu = true

@@ -25,7 +25,7 @@ function World:load(level)
   Game.log.debug("Initialising lightworld")
   -- Initialise light world
   self.lightWorld = LightWorld({
-      ambient = {60, 60, 60}, --the general ambient light in the environment
+      ambient = {110, 110, 140}, --the general ambient light in the environment
       refractionStrength = 16.0,
       reflectionVisibility = 0.75
     })

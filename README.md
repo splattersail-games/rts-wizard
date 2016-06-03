@@ -6,6 +6,7 @@ Bitwizards
 
 # What is it?
 Bitwizards is an unambitious MWW inspired game.
+[Click here to read or contribute to the spec](/spec.md)
 
 # Helping out
 - Are you an artist?
