@@ -51,7 +51,7 @@ function GameController.selfCast(dt, entity, spellCaster)
 
     entity:set(wardComp)
   end
-  Game.caster.cast(spellCaster)
+  spellCaster.spell:initialize()
 end
 
 function GameController.cast(dt, spellCaster)
@@ -100,6 +100,8 @@ function GameController.cast(dt, spellCaster)
   else
     -- this is a basic spray
   end
+
+  spellCaster.spell:initialize()
 end
 
 function GameController.move(dt, entity, moveComp)
