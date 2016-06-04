@@ -1,3 +1,48 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Bitwizards](#bitwizards)
+  - [Game](#game)
+    - [Menu](#menu)
+      - [Select a map](#select-a-map)
+    - [Playing a game](#playing-a-game)
+  - [Gameplay spec](#gameplay-spec)
+    - [General Gameplay](#general-gameplay)
+      - [The Player](#the-player)
+        - [Health](#health)
+        - [Movement speed](#movement-speed)
+      - [Damage](#damage)
+        - [Damage Types](#damage-types)
+        - [Susceptibility and Wards](#susceptibility-and-wards)
+      - [Status effects](#status-effects)
+        - [Burning](#burning)
+        - [Wet](#wet)
+        - [Chilled](#chilled)
+  - [Controls](#controls)
+  - [Assets](#assets)
+    - [Wizard Character](#wizard-character)
+      - ["Basick" Blue](#basick-blue)
+      - ["Basick" Red](#basick-red)
+      - [Animation poses](#animation-poses)
+      - [Healthbar](#healthbar)
+      - [Player Name](#player-name)
+      - [Current Spell overlay](#current-spell-overlay)
+      - [Wards](#wards)
+    - [Spells](#spells)
+      - [Walls](#walls)
+      - [Sprays](#sprays)
+      - [Shield spells (E! and E)s](#shield-spells-e-and-es)
+      - [Beams](#beams)
+    - [HUD overlay](#hud-overlay)
+      - [Minimap](#minimap)
+      - [Elements](#elements)
+        - [Default](#default)
+        - [Currently Pressed](#currently-pressed)
+        - [Cancels currently queued](#cancels-currently-queued)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Bitwizards
 
 This document is not yet finalised.
