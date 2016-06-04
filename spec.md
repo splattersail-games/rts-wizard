@@ -16,12 +16,23 @@ The player has several important properties
 1500
 ##### Movement speed
 60
-##### Damage
+#### Damage
+##### Damage Types
+Damage types are super simple. Each element has its own damage type, and combinatorial elements like ice and steam, have their own damage type (whether or not any spell in the game deals that damage type)
+##### Susceptibility and Wards
 Damage in bitwizards is represented as integer values
 When an entity takes damage:
-- The damage value is multiplied by a susceptabiity value between 0 and 1
-- suscebtability is 1 by default. Each element in a ward subtracts 0.5 susceptability to that element
-##### Status effects
+- The damage value is multiplied by a susceptibility value between 0 and 1
+- Susceptibility is 1 by default. Each element in a ward subtracts 0.5 susceptibility to that element
+#### Status effects
+- ##### Burning
+Fire DoT, to be declared in more detail
+Cancelled by water or cold
+- ##### Wet
+More susceptible to lightning and cold, to be declared in more detail
+cancelled by fire, cold transitions to a strong chill status
+- ##### Chilled
+Movement speed and cast times are slowed, to be declared in more detail
 ## Controls
 
 ## Assets
