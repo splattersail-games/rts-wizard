@@ -11,13 +11,22 @@
 
 ## Assets
 ### Wizard Character
-#### Color 1
-#### Color 2
+#### "Basick" Blue
+![Basick 1](/resources/images/wizards/basick_blue.png)
+#### "Basick" Red
+![Basick 2](/resources/images/wizards/basick_red.png)
 #### Animation poses
+> TODO!!!!
 #### Healthbar
+Handled dynamically in game
 #### Player Name
+Handled dynamically in game
 #### Current Spell overlay
+Handled dynamically in game
 #### Wards
+Coloured dynamically in game
+![inner part of the ward](/resources/images/wards/inner_alpha.png)
+![outer part of the ward](/resources/images/wards/outer_alpha.png)
 ### Spells
 #### Walls
 #### Sprays
