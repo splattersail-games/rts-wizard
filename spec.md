@@ -1,53 +1,52 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Bitwizards](#bitwizards)
-  - [Game](#game)
-    - [Menu](#menu)
-      - [Select a map](#select-a-map)
-    - [Playing a game](#playing-a-game)
-  - [Gameplay spec](#gameplay-spec)
-    - [General Gameplay](#general-gameplay)
-      - [The Player](#the-player)
-        - [Health](#health)
-        - [Movement speed](#movement-speed)
-      - [Damage](#damage)
-        - [Damage Types](#damage-types)
-        - [Susceptibility and Wards](#susceptibility-and-wards)
-      - [Status effects](#status-effects)
-        - [Burning](#burning)
-        - [Wet](#wet)
-        - [Chilled](#chilled)
-  - [Controls](#controls)
-  - [Assets](#assets)
-    - [Wizard Character](#wizard-character)
-      - ["Basick" Blue](#basick-blue)
-      - ["Basick" Red](#basick-red)
-      - [Animation poses](#animation-poses)
-      - [Healthbar](#healthbar)
-      - [Player Name](#player-name)
-      - [Current Spell overlay](#current-spell-overlay)
-      - [Wards](#wards)
-    - [Spells](#spells)
-      - [Walls](#walls)
-      - [Sprays](#sprays)
-      - [Shield spells (E! and E)s](#shield-spells-e-and-es)
-      - [Beams](#beams)
-    - [HUD overlay](#hud-overlay)
-      - [Minimap](#minimap)
-      - [Elements](#elements)
-        - [Default](#default)
-        - [Currently Pressed](#currently-pressed)
-        - [Cancels currently queued](#cancels-currently-queued)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Bitwizards
 
 This document is not yet finalised.
 
 The intention is to explicitly define the scope of the prototype
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Game](#game)
+  - [Menu](#menu)
+    - [Select a map](#select-a-map)
+  - [Playing a game](#playing-a-game)
+- [Gameplay spec](#gameplay-spec)
+  - [The Player](#the-player)
+    - [Health](#health)
+    - [Movement speed](#movement-speed)
+  - [Damage](#damage)
+    - [Damage Types](#damage-types)
+    - [Susceptibility and Wards](#susceptibility-and-wards)
+  - [Status effects](#status-effects)
+    - [Burning](#burning)
+    - [Wet](#wet)
+    - [Chilled](#chilled)
+    - [Frozen](#frozen)
+- [Controls](#controls)
+- [Assets](#assets)
+  - [Wizard Character](#wizard-character)
+    - ["Basick" Blue](#basick-blue)
+    - ["Basick" Red](#basick-red)
+    - [Animation poses](#animation-poses)
+    - [Healthbar](#healthbar)
+    - [Player Name](#player-name)
+    - [Current Spell overlay](#current-spell-overlay)
+    - [Wards](#wards)
+  - [Spells](#spells)
+    - [Walls](#walls)
+    - [Sprays](#sprays)
+    - [Shield spells (E! and E)s](#shield-spells-e-and-es)
+    - [Beams](#beams)
+  - [HUD overlay](#hud-overlay)
+    - [Minimap](#minimap)
+    - [Elements](#elements)
+      - [Default](#default)
+      - [Currently Pressed](#currently-pressed)
+      - [Cancels currently queued](#cancels-currently-queued)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Game
 ### Menu
@@ -55,31 +54,32 @@ The intention is to explicitly define the scope of the prototype
 ### Playing a game
 
 ## Gameplay spec
-### General Gameplay
-#### The Player
+### The Player
 The player has several important properties
-##### Health
+#### Health
 1500
-##### Movement speed
+#### Movement speed
 60
-#### Damage
-##### Damage Types
+### Damage
+#### Damage Types
 Damage types are super simple. Each element has its own damage type, and combinatorial elements like ice and steam, have their own damage type (whether or not any spell in the game deals that damage type)
-##### Susceptibility and Wards
+#### Susceptibility and Wards
 Damage in bitwizards is represented as integer values
 When an entity takes damage:
 - The damage value is multiplied by a susceptibility value between 0 and 1
 - Susceptibility is 1 by default. Each element in a ward subtracts 0.5 susceptibility to that element
 
-#### Status effects
-##### Burning
+### Status effects
+#### Burning
 Fire DoT, to be declared in more detail
 Cancelled by water or cold
-##### Wet
+#### Wet
 More susceptible to lightning and cold, to be declared in more detail
 cancelled by fire, cold transitions to a strong chill status
-##### Chilled
+#### Chilled
 Movement speed and cast times are slowed, to be declared in more detail
+#### Frozen
+Player is encased in ice and immune to all damage, except for the swiggity shatter
 ## Controls
 
 ## Assets
