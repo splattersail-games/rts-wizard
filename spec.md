@@ -1,7 +1,7 @@
 # Bitwizards
 
 This document is not yet finalised
-The intention is to explicitly define the game
+The intention is to explicitly define the scope of the prototype
 
 ## Game
 ### Menu
