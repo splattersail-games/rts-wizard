@@ -1,12 +1,27 @@
 # Bitwizards
 
+This document is not yet finalised
+The intention is to explicitly define the game
+
 ## Game
 ### Menu
 #### Select a map
 ### Playing a game
 
 ## Gameplay spec
-
+### General Gameplay
+#### The Player
+The player has several important properties
+##### Health
+1500
+##### Movement speed
+60
+##### Damage
+Damage in bitwizards is represented as integer values
+When an entity takes damage:
+- The damage value is multiplied by a susceptabiity value between 0 and 1
+- suscebtability is 1 by default. Each element in a ward subtracts 0.5 susceptability to that element
+##### Status effects
 ## Controls
 
 ## Assets
@@ -16,7 +31,7 @@
 #### "Basick" Red
 ![Basick 2](/resources/images/wizards/basick_red.png)
 #### Animation poses
-> TODO!!!!
+TODO!!!!
 #### Healthbar
 Handled dynamically in game
 #### Player Name
@@ -25,6 +40,7 @@ Handled dynamically in game
 Handled dynamically in game
 #### Wards
 Coloured dynamically in game
+
 ![inner part of the ward](/resources/images/wards/inner_alpha.png)
 ![outer part of the ward](/resources/images/wards/outer_alpha.png)
 ### Spells
