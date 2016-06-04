@@ -1,6 +1,7 @@
 # Bitwizards
 
-This document is not yet finalised
+This document is not yet finalised.
+
 The intention is to explicitly define the scope of the prototype
 
 ## Game
@@ -24,14 +25,15 @@ Damage in bitwizards is represented as integer values
 When an entity takes damage:
 - The damage value is multiplied by a susceptibility value between 0 and 1
 - Susceptibility is 1 by default. Each element in a ward subtracts 0.5 susceptibility to that element
+
 #### Status effects
-- ##### Burning
+##### Burning
 Fire DoT, to be declared in more detail
 Cancelled by water or cold
-- ##### Wet
+##### Wet
 More susceptible to lightning and cold, to be declared in more detail
 cancelled by fire, cold transitions to a strong chill status
-- ##### Chilled
+##### Chilled
 Movement speed and cast times are slowed, to be declared in more detail
 ## Controls
 
