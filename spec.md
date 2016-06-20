@@ -1,8 +1,7 @@
 # Bitwizards
 
 This document is not yet finalised.
-
-The intention is to explicitly define the scope of the prototype
+It's purpose is to define the scope of the game.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -10,7 +9,10 @@ The intention is to explicitly define the scope of the prototype
 
 - [Game](#game)
   - [Menu](#menu)
-    - [Select a map](#select-a-map)
+    - [Play](#play)
+    - [Settings](#settings)
+      - [Controls](#controls)
+      - [Video](#video)
   - [Playing a game](#playing-a-game)
 - [Gameplay spec](#gameplay-spec)
   - [The Player](#the-player)
@@ -24,7 +26,7 @@ The intention is to explicitly define the scope of the prototype
     - [Wet](#wet)
     - [Chilled](#chilled)
     - [Frozen](#frozen)
-- [Controls](#controls)
+- [Controls](#controls-1)
 - [Assets](#assets)
   - [Wizard Character](#wizard-character)
     - ["Basick" Blue](#basick-blue)
@@ -50,9 +52,16 @@ The intention is to explicitly define the scope of the prototype
 
 ## Game
 ### Menu
-#### Select a map
+#### Play
+This screen lists levels. Clicking a level starts a game on that level
+#### Settings
+Various game settings can be configured here
+##### Controls
+Allows players to configure controls for the game
+##### Video
+Resolution, any video options
 ### Playing a game
-
+Level is loaded, player entity is added at a spawn location
 ## Gameplay spec
 ### The Player
 The player has several important properties
