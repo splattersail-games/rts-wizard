@@ -9,7 +9,6 @@ Bitwizards
 
 
 - [What is it?](#what-is-it)
-- [Helping out](#helping-out)
 - [OK, Where is Everyone?](#ok-where-is-everyone)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -18,15 +17,8 @@ Bitwizards
 Bitwizards is an unambitious MWW inspired game.
 [Click here to read or contribute to the spec](/spec.md)
 
-# Helping out
-- Are you an artist?
-- Are you a developer?
-- Do you have some cool design ideas?
-
 Please consider contacting me or working on an issue!
 
 # OK, Where is Everyone?
 
-You can join the discord channel with a temporary invite [here](https://discord.gg/armorer-midgardsormr-jayce).
-
-For permenanent membership ask Tattersail
+`¯\_(ツ)_/¯`
